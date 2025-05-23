@@ -3,6 +3,7 @@
 export(add_abstract)
 export(add_address)
 export(add_index)
+export(add_intro)
 export(add_recommendations)
 export(author2yaml)
 importFrom(assertthat,assert_that)
