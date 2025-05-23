@@ -18,6 +18,7 @@
 #' @export
 #' @importFrom assertthat assert_that is.flag is.string has_name noNA
 #' @importFrom fs is_dir is_file path
+#' @importFrom utils head tail
 #' @importFrom yaml read_yaml write_yaml
 add_recommendations <- function(
   report_path,
