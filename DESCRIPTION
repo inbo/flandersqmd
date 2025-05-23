@@ -13,7 +13,9 @@ BugReports: https://github.com/inbo/flandersqmd/issues
 Depends:
     R (>= 4.1.0)
 Imports:
-    assertthat
+    assertthat,
+    fs,
+    yaml
 Config/checklist/communities: inbo
 Config/checklist/keywords: corporate identity; quarto
 Encoding: UTF-8
