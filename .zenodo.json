@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "license": "GPL-3.0",
   "upload_type": "software",
-  "description": "<p>Prepare new documents using the Flandersqmd extensions<\/p>",
+  "description": "<p>Prepare new documents using the Flandersqmd extensions.<\/p>",
   "keywords": [
     "corporate identity",
     "quarto"

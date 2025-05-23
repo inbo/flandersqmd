@@ -1,8 +1,18 @@
 description: Configuration file for checklist::check_pkg()
 package: yes
 allowed:
-  warnings: []
-  notes: []
+  warnings:
+  - motivation: To do in a later stage
+    value: |-
+      checking for code which exercises the package ... WARNING
+      No examples, no tests, no vignettes
+  notes:
+  - motivation: Package not for CRAN
+    value: |-
+      checking CRAN incoming feasibility ... NOTE
+      Maintainer: 'Thierry Onkelinx <thierry.onkelinx@inbo.be>'
+
+      New submission
 required:
 - CITATION
 - DESCRIPTION
