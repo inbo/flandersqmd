@@ -32,11 +32,12 @@ add_intro <- function(report_path) {
     )
   )
 
-  filename <- c(
+  c(
     `nl-BE` = "inleiding.md",
     `en-GB` = "introduction.md",
     `fr-FR` = "introduction.md"
-  )[lang]
+  )[lang] |>
+    unname() -> filename
   title <- c(
     `nl-BE` = "Inleiding",
     `en-GB` = "Introduction",
@@ -53,14 +54,23 @@ add_intro <- function(report_path) {
     "**TO DO**"
   ) |>
     writeLines(con = path(report_path, filename))
-  if (filename %in% yaml$book$chapters) {
-    return(filename)
+  if (!filename %in% yaml$book$chapters) {
+    yaml$book$chapters <- c(
+      head(yaml$book$chapters, 3),
+      filename,
+      tail(yaml$book$chapters, -3)
+    )
   }
-  yaml$book$chapters <- c(
-    head(yaml$book$chapters, 3),
-    filename,
-    tail(yaml$book$chapters, -3)
+  yaml <- append_navbar(yaml, text = title, filename = filename)
+  write_yaml(
+    yaml,
+    file = target,
+    handlers = c(
+      "logical" = function(x) {
+        attr(x, "class") <- "verbatim"
+        ifelse(x, "true", "false")
+      }
+    )
   )
-  write_yaml(yaml, file = target)
   return(filename)
 }

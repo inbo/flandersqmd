@@ -59,13 +59,13 @@ add_recommendations <- function(
     `nl-BE` = "# Aanbevelingen voor het beleid {-}",
     `en-GB` = "# Recommendations for management and / or policy {-}",
     `fr-FR` = "# Recommandations pour la gestion et / ou la politique {-}"
-  )
+  )[lang]
   c(
     "---",
     "toc: false",
     "---",
     "",
-    chapter_title[lang],
+    chapter_title,
     "",
     "**TO DO**",
     rep("", 5),
@@ -120,20 +120,38 @@ add_recommendations <- function(
     "<!-- spell-check: ignore:end-->",
     "<!-- This part adds the tables of contents in the pdf -->"
   ) -> md
-  filename <- c(
+  c(
     `nl-BE` = "aanbevelingen.md",
     `en-GB` = "recommendations.md",
     `fr-FR` = "recommandations.md"
-  )
-  writeLines(md, con = path(report_path, filename[lang]))
-  if (filename[lang] %in% yaml$book$chapters) {
-    return(filename[lang])
+  )[lang] |>
+    unname() -> filename
+  writeLines(md, con = path(report_path, filename))
+  if (!filename %in% yaml$book$chapters) {
+    yaml$book$chapters <- c(
+      head(yaml$book$chapters, 2),
+      filename,
+      tail(yaml$book$chapters, -2)
+    )
   }
-  yaml$book$chapters <- c(
-    head(yaml$book$chapters, 2),
-    unname(filename[lang]),
-    tail(yaml$book$chapters, -2)
+  yaml <- append_navbar(
+    yaml,
+    text = c(
+      `nl-BE` = "Aanbevelingen",
+      `en-GB` = "Recommendations",
+      `fr-FR` = "Recommandations"
+    )[lang],
+    filename = filename
   )
-  write_yaml(yaml, file = target)
-  return(filename[lang])
+  write_yaml(
+    yaml,
+    file = target,
+    handlers = c(
+      "logical" = function(x) {
+        attr(x, "class") <- "verbatim"
+        ifelse(x, "true", "false")
+      }
+    )
+  )
+  return(filename)
 }

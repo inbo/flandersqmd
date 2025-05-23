@@ -54,10 +54,19 @@ add_index <- function(report_path) {
     sprintf("bibliography file %s.", bib_file[lang])
   ) |>
     writeLines(con = path(report_path, "index.md"))
-  if (has_name(yaml$book, "chapters") && "index.md" %in% yaml$book$chapters) {
-    return("index.md")
+  if (!has_name(yaml$book, "chapters") || !"index.md" %in% yaml$book$chapters) {
+    yaml$book$chapters <- c("index.md", yaml$book$chapters)
   }
-  yaml$book$chapters <- c("index.md", yaml$book$chapters)
-  write_yaml(yaml, file = target)
+  yaml <- append_navbar(yaml, text = "Cover", filename = "index.md")
+  write_yaml(
+    yaml,
+    file = target,
+    handlers = c(
+      "logical" = function(x) {
+        attr(x, "class") <- "verbatim"
+        ifelse(x, "true", "false")
+      }
+    )
+  )
   return("index.md")
 }
