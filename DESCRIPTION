@@ -14,8 +14,13 @@ Depends:
     R (>= 4.1.0)
 Imports:
     assertthat,
+    checklist,
     fs,
+    gert,
+    quarto,
     yaml
+Suggests:
+    rstudioapi
 Config/checklist/communities: inbo
 Config/checklist/keywords: corporate identity; quarto
 Encoding: UTF-8
