@@ -128,6 +128,8 @@ create_report <- function(path = ".", shortname, version = "main") {
     "    right:",
     "    - icon: mastodon",
     "      href: https://mastodon.online/&#64;inbo",
+    "    - icon: bluesky",
+    "      href: https://bsky.app/profile/inbo.be",
     "    - icon: facebook",
     "      href: https://www.facebook.com/INBOVlaanderen/"
   ) -> yaml

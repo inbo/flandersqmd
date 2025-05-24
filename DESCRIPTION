@@ -21,6 +21,7 @@ Imports:
     yaml
 Suggests:
     rstudioapi
+Additional_repositories: https://inbo.r-universe.dev
 Config/checklist/communities: inbo
 Config/checklist/keywords: corporate identity; quarto
 Encoding: UTF-8

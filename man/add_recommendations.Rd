@@ -16,11 +16,6 @@ If \code{TRUE}, a list of figures is added to the pdf version of the report.}
 \item{lot}{A logical value indicating whether to add a list of tables.
 Defaults to \code{TRUE}.
 If \code{TRUE}, a list of tables is added to the pdf version of the report.}
-
-\item{lang}{The language of the report.
-Defaults to \code{"nl-BE"}.
-The language must be one of the following:
-\code{"nl-BE"}, \code{"en-GB"} or \code{"fr-FR"}.}
 }
 \description{
 This function adds a recommendations section to a \code{flandersqmd} report.

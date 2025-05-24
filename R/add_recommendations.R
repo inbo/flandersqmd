@@ -5,10 +5,6 @@
 #' The file also add a table of contents, a list of figures and a list of
 #' tables to the pdf version of the report.
 #' @param report_path The path to the folder containing the report.
-#' @param lang The language of the report.
-#' Defaults to `"nl-BE"`.
-#' The language must be one of the following:
-#' `"nl-BE"`, `"en-GB"` or `"fr-FR"`.
 #' @param lof A logical value indicating whether to add a list of figures.
 #' Defaults to `TRUE`.
 #' If `TRUE`, a list of figures is added to the pdf version of the report.
