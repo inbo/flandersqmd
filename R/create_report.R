@@ -104,47 +104,14 @@ create_report <- function(path = ".", shortname, version = "main") {
     }
     cat("The short title may only contain lower case letters, digits and -")
   }
-  yaml <- c(
+  c(
     yaml,
     title,
     sprintf("  subtitle: \"%s\"", subtitle)[subtitle != ""],
     sprintf("  shorttitle: %s", short)
-  )
-
-  cat("Please select the corresponding author")
-  authors <- use_author()
-  c(yaml, "  author:", author2yaml(authors, corresponding = TRUE)) -> yaml
-  while (isTRUE(ask_yes_no("Add another author?", default = FALSE))) {
-    author <- use_author()
-    authors[, c("given", "family", "email")] |>
-      rbind(author[, c("given", "family", "email")]) |>
-      anyDuplicated() -> duplo
-    if (duplo > 0) {
-      cat(
-        paste(author$given, author$family, "is already listed as author")
-      )
-      next
-    }
-    c(yaml, author2yaml(author, corresponding = FALSE)) -> yaml
-    authors <- rbind(authors, author)
-  }
-  cat("Please select the reviewer")
-  duplo <- 1
-  while (duplo > 0) {
-    author <- use_author()
-    authors[, c("given", "family", "email")] |>
-      rbind(author[, c("given", "family", "email")]) |>
-      anyDuplicated() -> duplo
-    if (duplo > 0) {
-      cat(
-        paste(author$given, author$family, "is already listed as author")
-      )
-    }
-  }
+  ) -> yaml
   c(
-    yaml,
-    "  reviewer:",
-    author2yaml(author, corresponding = FALSE),
+    insert_author_reviewer(yaml),
     add_address("client"),
     add_address("cooperation"),
     "  public_report: true",
@@ -233,4 +200,39 @@ create_report <- function(path = ".", shortname, version = "main") {
     return(invisible(NULL))
   }
   rstudioapi::openProject(path(path, shortname), newSession = TRUE)
+}
+
+#' @importFrom checklist ask_yes_no
+insert_author_reviewer <- function(yaml) {
+  cat("Please select the corresponding author")
+  authors <- use_author()
+  c(yaml, "  author:", author2yaml(authors, corresponding = TRUE)) -> yaml
+  while (isTRUE(ask_yes_no("Add another author?", default = FALSE))) {
+    author <- use_author()
+    authors[, c("given", "family", "email")] |>
+      rbind(author[, c("given", "family", "email")]) |>
+      anyDuplicated() -> duplo
+    if (duplo > 0) {
+      cat(
+        paste(author$given, author$family, "is already listed as author")
+      )
+      next
+    }
+    c(yaml, author2yaml(author, corresponding = FALSE)) -> yaml
+    authors <- rbind(authors, author)
+  }
+  cat("Please select the reviewer")
+  duplo <- 1
+  while (duplo > 0) {
+    author <- use_author()
+    authors[, c("given", "family", "email")] |>
+      rbind(author[, c("given", "family", "email")]) |>
+      anyDuplicated() -> duplo
+    if (duplo > 0) {
+      cat(
+        paste(author$given, author$family, "is already listed as author")
+      )
+    }
+  }
+  c(yaml, "  reviewer:", author2yaml(author, corresponding = FALSE))
 }
