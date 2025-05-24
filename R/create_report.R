@@ -201,7 +201,7 @@ create_report <- function(path = ".", shortname, version = "main") {
     lof = ask_yes_no("Add a list of figures?", default = TRUE),
     lot = ask_yes_no("Add a list of tables?", default = TRUE)
   )
-  add_intro(path(path, shortname))
+  add_chapter(path(path, shortname))
   add_bibliography(path(path, shortname))
   c(
     "/\\.quarto",

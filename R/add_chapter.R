@@ -1,15 +1,15 @@
-#' Add an introduction file to a Quarto report
+#' Add a chapter file to a Quarto report
 #'
 #' @description
-#' This function adds an introduction file to a Quarto report.
+#' This function adds a chapter file to a Quarto report.
 #' @inheritParams add_recommendations
-#' @return The name of the index file.
+#' @return The name of the chapter file.
 #' @export
-#' @importFrom assertthat assert_that is.string has_name noNA
+#' @importFrom assertthat assert_that is.flag is.string has_name noNA
 #' @importFrom fs is_dir is_file path
 #' @importFrom utils head tail
 #' @importFrom yaml read_yaml write_yaml
-add_intro <- function(report_path) {
+add_chapter <- function(report_path, title, filename, toc = TRUE) {
   assert_that(is.string(report_path), noNA(report_path), is_dir(report_path))
   target <- path(report_path, "_quarto.yml")
   stopifnot("no `_quarto.yml` found at `report_path`" = is_file(target))
@@ -32,34 +32,47 @@ add_intro <- function(report_path) {
     )
   )
 
-  c(
-    `nl-BE` = "inleiding.md",
-    `en-GB` = "introduction.md",
-    `fr-FR` = "introduction.md"
-  )[lang] |>
-    unname() -> filename
-  title <- c(
-    `nl-BE` = "Inleiding",
-    `en-GB` = "Introduction",
-    `fr-FR` = "Introduction"
-  )[lang]
+  if (missing(title)) {
+    stopifnot(
+      "please provide both `title` and `filename` or neither" = missing(
+        filename
+      )
+    )
+    c(
+      `nl-BE` = "inleiding.md",
+      `en-GB` = "introduction.md",
+      `fr-FR` = "introduction.md"
+    )[lang] |>
+      unname() -> filename
+    c(
+      `nl-BE` = "Inleiding",
+      `en-GB` = "Introduction",
+      `fr-FR` = "Introduction"
+    )[lang] -> title
+    toc <- FALSE
+  } else {
+    assert_that(
+      is.string(title),
+      noNA(title),
+      is.string(filename),
+      noNA(filename),
+      is.flag(toc),
+      noNA(toc)
+    )
+  }
 
   c(
     "---",
-    "toc: false",
+    paste("toc:", ifelse(toc, "true", "false")),
     "---",
     "",
-    sprintf("# %s {-}", title),
+    sprintf("# %s", title),
     "",
     "**TO DO**"
   ) |>
     writeLines(con = path(report_path, filename))
   if (!filename %in% yaml$book$chapters) {
-    yaml$book$chapters <- c(
-      head(yaml$book$chapters, 3),
-      filename,
-      tail(yaml$book$chapters, -3)
-    )
+    yaml$book$chapters <- c(yaml$book$chapters, filename)
   }
   yaml <- append_navbar(yaml, text = title, filename = filename)
   write_yaml(
