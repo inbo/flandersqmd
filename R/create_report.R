@@ -65,7 +65,7 @@ create_report <- function(path = ".", shortname, version = "main") {
     "    - \"!LICENSE.md\" #ignore LICENSE.md",
     "    - \"!README.md\" #ignore README.md",
     paste("  output-dir:", output_dir),
-    "  post-render: _extensions/inbo/flandersqmd-book/filters/rename.R",
+    "  post-render: _extensions/inbo/flandersqmd-book/filters/post_render.R",
     "",
     "execute:",
     "  echo: false",
