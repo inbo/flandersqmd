@@ -120,8 +120,6 @@ create_report <- function(path = ".", shortname, version = "main") {
     "book:",
     "  downloads: pdf",
     "  open-graph: true",
-    "  sidebar:",
-    "    logo: media/cover.png",
     "  body-footer: '{{< footer >}}'",
     "  navbar:",
     "    pinned: true",

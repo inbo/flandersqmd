@@ -17,6 +17,7 @@ Imports:
     checklist,
     fs,
     gert,
+    pdftools,
     quarto,
     yaml
 Suggests:

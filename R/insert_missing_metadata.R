@@ -14,14 +14,25 @@ insert_missing_metadata <- function(report_path) {
     "No `flandersqmd` entry in `_quarto.yml`" = has_name(yaml, "flandersqmd")
   )
   metadata <- data.frame(
-    variable = c("year", "reportnr", "depotnr", "ordernr", "doi", "watermark"),
+    variable = c(
+      "year",
+      "reportnr",
+      "depotnr",
+      "ordernr",
+      "doi",
+      "watermark",
+      "coverphoto",
+      "coverdescription"
+    ),
     description = c(
       "Publication year of the report",
       "Report number",
       "Depot number",
       "Order number",
       "DOI of the report",
-      "Watermark text"
+      "Watermark text",
+      "URL or file path to the cover photo",
+      "description of the cover photo"
     )
   )
   metadata <- metadata[!metadata$variable %in% names(yaml$flandersqmd), ]
