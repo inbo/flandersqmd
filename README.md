@@ -27,7 +27,8 @@ size](https://img.shields.io/github/repo-size/inbo/flandersqmd.svg)
 
 # flandersqmd
 
-The goal of flandersqmd is to …
+The goal of `flandersqmd` is to provide a set of tools to create reports
+using the `flandersqmd` family of quarto extensions.
 
 ## Installation
 
@@ -35,37 +36,71 @@ You can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("inbo/flandersqmd")
+# install.packages("pak")
+pak::pkg_install("inbo/flandersqmd")
+```
+
+A stable version is available on
+[r-universe](https://inbo.r-universe.dev/):
+
+``` r
+install.packages("flandersqmd", repos = c("https://inbo.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+### Working on a book style report
+
+A book style report provides a structure to write a report in a book
+style format. It is based on the `quarto` book format and uses the
+`flandersqmd-book` extension. The available output formats are pdf and
+html.
+
+Though optional, we strongly recommend to first create a `checklist`
+project first. For more information on how to create a `checklist`
+project, see the
+[`checklist`](https://inbo.github.io/checklist/articles/getting_started_project.html)
+package documentation.
 
 ``` r
+library(checklist)
+# Where to store the checklist project
+path <- tempfile()
+dir.create(path)
+# create the checklist project
+create_project(path = path, project = "flandersqmd-book")
+```
+
+Then generate a skeleton for the report using `create_report()`. The
+function will guide you interactively through the process of setting up
+a report.
+
+``` r
+# Create a report skeleton
 library(flandersqmd)
-## basic example code
+create_report(file.path(path, "flandersqmd-book"), shortname = "myreport")
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+When starting a new report, you often don’t have all the metadata
+available yet. Run `insert_missing_metadata()` to add the required
+metadata to the report when it becomes available to you. E.g. the report
+number, DOI, …
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+insert_missing_metadata(file.path(path, "flandersqmd-book", "myreport"))
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+`flandersqmd` does not create a cover page. You have to provide a cover
+page yourself. Use `add_cover()` to add a cover page to the report and
+then render the report again to include the cover page. Note that you
+can render a draft version of the report without cover page or missing
+metadata.
 
-You can also embed plots, for example:
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+``` r
+add_cover(
+  report_path = file.path(path, "flandersqmd-book", "myreport"),
+  cover_pdf = "path/to/cover.pdf"
+)
+# Render the report
+quarto::quarto_render(file.path(path, "flandersqmd-book", "myreport"))
+```
