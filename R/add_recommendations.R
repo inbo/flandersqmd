@@ -139,15 +139,15 @@ add_recommendations <- function(
     )[lang],
     filename = filename
   )
-  write_yaml(
-    yaml,
-    file = target,
-    handlers = c(
-      "logical" = function(x) {
-        attr(x, "class") <- "verbatim"
-        ifelse(x, "true", "false")
-      }
+  fix_affiliation(yaml) |>
+    write_yaml(
+      file = target,
+      handlers = c(
+        "logical" = function(x) {
+          attr(x, "class") <- "verbatim"
+          ifelse(x, "true", "false")
+        }
+      )
     )
-  )
   return(filename)
 }

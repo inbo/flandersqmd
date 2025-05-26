@@ -55,15 +55,15 @@ add_abstract <- function(report_path) {
     filename,
     tail(yaml$book$chapters, -1)
   )
-  write_yaml(
-    yaml,
-    file = target,
-    handlers = c(
-      "logical" = function(x) {
-        attr(x, "class") <- "verbatim"
-        ifelse(x, "true", "false")
-      }
+  fix_affiliation(yaml) |>
+    write_yaml(
+      file = target,
+      handlers = c(
+        "logical" = function(x) {
+          attr(x, "class") <- "verbatim"
+          ifelse(x, "true", "false")
+        }
+      )
     )
-  )
   return(filename)
 }

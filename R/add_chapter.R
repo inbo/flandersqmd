@@ -84,15 +84,39 @@ add_chapter <- function(report_path, title, filename, toc = TRUE) {
     yaml$book$chapters <- c(yaml$book$chapters, filename)
   }
   yaml <- append_navbar(yaml, text = title, filename = filename)
-  write_yaml(
-    yaml,
-    file = target,
-    handlers = c(
-      "logical" = function(x) {
-        attr(x, "class") <- "verbatim"
-        ifelse(x, "true", "false")
-      }
+  fix_affiliation(yaml) |>
+    write_yaml(
+      file = target,
+      handlers = c(
+        "logical" = function(x) {
+          attr(x, "class") <- "verbatim"
+          ifelse(x, "true", "false")
+        }
+      )
     )
-  )
   return(filename)
+}
+
+#' @importFrom assertthat has_name
+fix_affiliation <- function(yaml) {
+  if (!has_name(yaml, "flandersqmd")) {
+    return(yaml)
+  }
+  for (i in seq_along(yaml$flandersqmd$author)) {
+    if (!has_name(yaml$flandersqmd$author[[1]], "affiliation")) {
+      next
+    }
+    yaml$flandersqmd$author[[1]]$affiliation <- list(
+      yaml$flandersqmd$author[[1]]$affiliation
+    )
+  }
+  for (i in seq_along(yaml$flandersqmd$reviewer)) {
+    if (!has_name(yaml$flandersqmd$reviewer[[1]], "affiliation")) {
+      next
+    }
+    yaml$flandersqmd$reviewer[[1]]$affiliation <- list(
+      yaml$flandersqmd$reviewer[[1]]$affiliation
+    )
+  }
+  return(yaml)
 }

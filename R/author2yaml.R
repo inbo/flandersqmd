@@ -26,7 +26,10 @@ author2yaml <- function(author, corresponding = FALSE) {
     yaml <- c(yaml, sprintf("    orcid: \"%s\"", author$orcid))
   }
   if (!is.na(author$affiliation) && author$affiliation != "") {
-    yaml <- c(yaml, sprintf("    affiliation: \"%s\"", author$affiliation))
+    yaml <- c(
+      yaml,
+      sprintf("    affiliation:\n      - \"%s\"", author$affiliation)
+    )
   }
   if (!corresponding) {
     return(paste(yaml, collapse = "\n"))
