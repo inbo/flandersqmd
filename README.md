@@ -9,7 +9,7 @@ or
 proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![License](https://img.shields.io/badge/license-GPL--3-blue.svg?style=flat)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![License](https://img.shields.io/badge/license-GPL--3-blue.svg?style=flat)](https://spdx.org/licenses/GPL-3.0-only.html)
 [![Release](https://img.shields.io/github/release/inbo/flandersqmd.svg)](https://github.com/inbo/flandersqmd/releases)
 ![GitHub](https://img.shields.io/github/license/inbo/flandersqmd) [![R
 build
