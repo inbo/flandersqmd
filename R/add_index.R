@@ -57,16 +57,7 @@ add_index <- function(report_path) {
   if (!has_name(yaml$book, "chapters") || !"index.md" %in% yaml$book$chapters) {
     yaml$book$chapters <- c("index.md", yaml$book$chapters)
   }
-  yaml <- append_navbar(yaml, text = "Cover", filename = "index.md")
-  fix_affiliation(yaml) |>
-    write_yaml(
-      file = target,
-      handlers = c(
-        "logical" = function(x) {
-          attr(x, "class") <- "verbatim"
-          ifelse(x, "true", "false")
-        }
-      )
-    )
+  append_navbar(yaml, text = "Cover", filename = "index.md") |>
+    store_yaml(target = target)
   return("index.md")
 }

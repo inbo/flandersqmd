@@ -17,7 +17,7 @@
 #' @importFrom assertthat assert_that is.flag is.string has_name noNA
 #' @importFrom fs is_dir is_file path
 #' @importFrom utils head tail
-#' @importFrom yaml read_yaml write_yaml
+#' @importFrom yaml read_yaml
 add_chapter <- function(report_path, title, filename, toc = TRUE) {
   assert_that(is.string(report_path), noNA(report_path), is_dir(report_path))
   target <- path(report_path, "_quarto.yml")
@@ -83,7 +83,14 @@ add_chapter <- function(report_path, title, filename, toc = TRUE) {
   if (!filename %in% yaml$book$chapters) {
     yaml$book$chapters <- c(yaml$book$chapters, filename)
   }
-  yaml <- append_navbar(yaml, text = title, filename = filename)
+  append_navbar(yaml, text = title, filename = filename) |>
+    store_yaml(target = target)
+  return(filename)
+}
+
+
+#' @importFrom yaml read_yaml write_yaml
+store_yaml <- function(yaml, target) {
   fix_affiliation(yaml) |>
     write_yaml(
       file = target,
@@ -94,7 +101,6 @@ add_chapter <- function(report_path, title, filename, toc = TRUE) {
         }
       )
     )
-  return(filename)
 }
 
 #' @importFrom assertthat has_name

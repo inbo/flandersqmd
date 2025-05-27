@@ -67,15 +67,6 @@ add_bibliography <- function(report_path) {
     return(filename)
   }
   yaml$book$chapters <- c(yaml$book$chapters, filename)
-  fix_affiliation(yaml) |>
-    write_yaml(
-      file = target,
-      handlers = c(
-        "logical" = function(x) {
-          attr(x, "class") <- "verbatim"
-          ifelse(x, "true", "false")
-        }
-      )
-    )
+  store_yaml(yaml, target = target)
   return(filename)
 }

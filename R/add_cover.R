@@ -30,15 +30,6 @@ add_cover <- function(report_path, cover_pdf) {
   file_move("cover-1.png", "cover.png")
   yaml$flandersqmd$cover <- "cover.pdf"
   yaml$book$sidebar$logo <- "cover.png"
-  fix_affiliation(yaml) |>
-    write_yaml(
-      file = target,
-      handlers = c(
-        "logical" = function(x) {
-          attr(x, "class") <- "verbatim"
-          ifelse(x, "true", "false")
-        }
-      )
-    )
+  store_yaml(yaml, target = target)
   return(target)
 }

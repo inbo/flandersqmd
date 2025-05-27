@@ -130,7 +130,7 @@ add_recommendations <- function(
       tail(yaml$book$chapters, -2)
     )
   }
-  yaml <- append_navbar(
+  append_navbar(
     yaml,
     text = c(
       `nl-BE` = "Aanbevelingen",
@@ -138,16 +138,7 @@ add_recommendations <- function(
       `fr-FR` = "Recommandations"
     )[lang],
     filename = filename
-  )
-  fix_affiliation(yaml) |>
-    write_yaml(
-      file = target,
-      handlers = c(
-        "logical" = function(x) {
-          attr(x, "class") <- "verbatim"
-          ifelse(x, "true", "false")
-        }
-      )
-    )
+  ) |>
+    store_yaml(target = target)
   return(filename)
 }
