@@ -2,6 +2,7 @@
 
 export(add_abstract)
 export(add_address)
+export(add_author)
 export(add_bibliography)
 export(add_chapter)
 export(add_cover)
