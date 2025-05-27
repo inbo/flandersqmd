@@ -109,20 +109,22 @@ fix_affiliation <- function(yaml) {
     return(yaml)
   }
   for (i in seq_along(yaml$flandersqmd$author)) {
-    if (!has_name(yaml$flandersqmd$author[[1]], "affiliation")) {
+    if (!has_name(yaml$flandersqmd$author[[i]], "affiliation")) {
       next
     }
-    yaml$flandersqmd$author[[1]]$affiliation <- list(
-      yaml$flandersqmd$author[[1]]$affiliation
-    )
+    yaml$flandersqmd$author[[i]]$affiliation <- unlist(
+      yaml$flandersqmd$author[[i]]$affiliation
+    ) |>
+      as.list()
   }
   for (i in seq_along(yaml$flandersqmd$reviewer)) {
-    if (!has_name(yaml$flandersqmd$reviewer[[1]], "affiliation")) {
+    if (!has_name(yaml$flandersqmd$reviewer[[i]], "affiliation")) {
       next
     }
-    yaml$flandersqmd$reviewer[[1]]$affiliation <- list(
-      yaml$flandersqmd$reviewer[[1]]$affiliation
-    )
+    yaml$flandersqmd$reviewer[[i]]$affiliation <- unlist(
+      yaml$flandersqmd$reviewer[[i]]$affiliation
+    ) |>
+      as.list()
   }
   return(yaml)
 }
