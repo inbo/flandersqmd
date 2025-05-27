@@ -6,10 +6,9 @@ post_render <- function() {
     strsplit(split = "\n") |>
     unlist() -> candidates
   # fmt: skip
-  stopifnot(
-    "This function is only relevant during quarto post render" =
-      length(candidates) > 0
-  )
+  if (length(candidates) == 0) {
+    return(invisible(NULL))
+  }
   relevant <- candidates[grepl("\\.pdf$", candidates)]
   if (length(relevant) == 0) {
     return(invisible(NULL))
