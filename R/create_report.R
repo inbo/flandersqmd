@@ -8,8 +8,6 @@
 #'  session.
 #' @param shortname The name of the report project.
 #' The location of the folder `shortname` depends on the content of `path`.
-#' When `path` is a subfolder of a git repository, it is changed to the root
-#' of that git repository.
 #' When `path` is a `checklist::checklist` project, you will find the new report
 #' at `path/source/shortname`.
 #' When `path` is a `checklist::checklist` package, you will find the new report
@@ -35,11 +33,9 @@ create_report <- function(path = ".", shortname, version = "main") {
       "The report name folder may only contain lower case letters, digits and _"
     )
   )
-  root <- try(git_find(path), silent = TRUE)
-  path <- ifelse(inherits(root, "try-error"), path, root)
-  if (is_file(path(path, "checklist.yml"))) {
-    x <- read_checklist(path)
-    path <- path(path, ifelse(x$package, "inst", "source"))
+  x <- try(read_checklist(path), silent = TRUE)
+  if (inherits(x, "checklist")) {
+    path <- path(x$get_path, ifelse(x$package, "inst", "source"))
     dir_create(path)
     output_dir <- "../../output"
   } else {

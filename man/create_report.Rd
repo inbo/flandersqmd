@@ -16,8 +16,6 @@ session.}
 
 \item{shortname}{The name of the report project.
 The location of the folder \code{shortname} depends on the content of \code{path}.
-When \code{path} is a subfolder of a git repository, it is changed to the root
-of that git repository.
 When \code{path} is a \code{checklist::checklist} project, you will find the new report
 at \code{path/source/shortname}.
 When \code{path} is a \code{checklist::checklist} package, you will find the new report
