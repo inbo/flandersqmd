@@ -53,7 +53,7 @@ A book style report provides a structure to write a report in a book style forma
 It is based on the `quarto` book format and uses the `flandersqmd-book` extension.
 The available output formats are pdf and html.
 
-Though optional, we strongly recommend to first create a `checklist` project first.
+Though optional, we strongly recommend to create a `checklist` project first.
 For more information on how to create a `checklist` project, see the [`checklist`](https://inbo.github.io/checklist/articles/getting_started_project.html) package documentation.
 
 ```{r prepare-checklist, eval = FALSE}
@@ -67,6 +67,8 @@ create_project(path = path, project = "flandersqmd-book")
 
 Then generate a skeleton for the report using `create_report()`.
 The function will guide you interactively through the process of setting up a report.
+Once the setup is completed the report will automatically be rendered in both html and pdf format.
+The respective output files are located in the output folder of the report folder.
 
 ```{r prepare-skeleton, eval = FALSE}
 # Create a report skeleton
