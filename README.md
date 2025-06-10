@@ -56,9 +56,9 @@ style format. It is based on the `quarto` book format and uses the
 `flandersqmd-book` extension. The available output formats are pdf and
 html.
 
-Though optional, we strongly recommend to first create a `checklist`
-project first. For more information on how to create a `checklist`
-project, see the
+Though optional, we strongly recommend to create a `checklist` project
+first. For more information on how to create a `checklist` project, see
+the
 [`checklist`](https://inbo.github.io/checklist/articles/getting_started_project.html)
 package documentation.
 
@@ -73,7 +73,12 @@ create_project(path = path, project = "flandersqmd-book")
 
 Then generate a skeleton for the report using `create_report()`. The
 function will guide you interactively through the process of setting up
-a report.
+a report. Once the setup is completed the report will automatically be
+rendered in both html and pdf format. The respective output files are
+located in the output folder of the report folder. The function will
+also create an Rstudio project file in the report folder. When you run
+the function from Rstudio, the project will be opened automatically in a
+new session.
 
 ``` r
 # Create a report skeleton

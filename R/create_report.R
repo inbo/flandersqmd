@@ -2,6 +2,10 @@
 #'
 #' @param path The folder in which to create the folder containing the report.
 #'  Defaults to the current working directory.
+#'  The function renders the skeleton report to the HTML and pdf formats.
+#'  It also creates an RStudio project file in the report folder.
+#'  When ran from RStudio, the project will be opened automatically in a new
+#'  session.
 #' @param shortname The name of the report project.
 #' The location of the folder `shortname` depends on the content of `path`.
 #' When `path` is a subfolder of a git repository, it is changed to the root
