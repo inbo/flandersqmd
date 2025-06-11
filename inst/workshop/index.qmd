@@ -244,8 +244,8 @@ todo <- data.frame(
 )
 for (i in nrow(todo)) {
   knitr::knit_expand(
-      "macro.qmd", species = todo$species[i],
-      vernacular = todo$vernacular[i]
+    "macro.qmd", species = todo$species[i],
+    vernacular = todo$vernacular[i]
   ) |>
     writeLines(todo$file[i])
 }
