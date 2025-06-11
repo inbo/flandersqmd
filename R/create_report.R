@@ -229,9 +229,13 @@ insert_author_reviewer <- function(yaml) {
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
     if (duplo > 0) {
-      cat(
-        paste(author$given, author$family, "is already listed as author")
-      )
+      paste(
+        author$given,
+        author$family,
+        "is already listed as author.",
+        "\nPlease select someone else."
+      ) |>
+        cat()
     }
   }
   c(yaml, "  reviewer:", author2yaml(author, corresponding = FALSE))
