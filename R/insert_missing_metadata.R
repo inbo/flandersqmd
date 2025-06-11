@@ -44,15 +44,6 @@ insert_missing_metadata <- function(report_path = ".") {
     as.list(metadata$answer) |>
       setNames(metadata$variable)
   )
-  write_yaml(
-    yaml,
-    file = target,
-    handlers = c(
-      "logical" = function(x) {
-        attr(x, "class") <- "verbatim"
-        ifelse(x, "true", "false")
-      }
-    )
-  )
+  store_yaml(yaml, target = target)
   return(target)
 }
