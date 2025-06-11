@@ -4,10 +4,11 @@
 \alias{add_recommendations}
 \title{Add a recommendations section to a \code{flandersqmd} report}
 \usage{
-add_recommendations(report_path, lof = TRUE, lot = TRUE)
+add_recommendations(report_path = ".", lof = TRUE, lot = TRUE)
 }
 \arguments{
-\item{report_path}{The path to the folder containing the report.}
+\item{report_path}{The path to the folder containing the report.
+Defaults to the current working directory.}
 
 \item{lof}{A logical value indicating whether to add a list of figures.
 Defaults to \code{TRUE}.

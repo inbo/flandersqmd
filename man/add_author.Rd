@@ -7,7 +7,8 @@
 add_author(report_path = ".", reviewer = FALSE)
 }
 \arguments{
-\item{report_path}{The path to the folder containing the report.}
+\item{report_path}{The path to the folder containing the report.
+Defaults to the current working directory.}
 
 \item{reviewer}{If \code{TRUE}, the person is added as a reviewer.
 Defaults to \code{FALSE}.

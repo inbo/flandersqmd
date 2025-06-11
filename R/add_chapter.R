@@ -18,7 +18,7 @@
 #' @importFrom fs is_dir is_file path
 #' @importFrom utils head tail
 #' @importFrom yaml read_yaml
-add_chapter <- function(report_path, title, filename, toc = TRUE) {
+add_chapter <- function(report_path = ".", title, filename, toc = TRUE) {
   assert_that(is.string(report_path), noNA(report_path), is_dir(report_path))
   target <- path(report_path, "_quarto.yml")
   stopifnot("no `_quarto.yml` found at `report_path`" = is_file(target))

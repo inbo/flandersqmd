@@ -4,10 +4,11 @@
 \alias{insert_missing_metadata}
 \title{Insert missing metadata in \verb{_quarto.yml}}
 \usage{
-insert_missing_metadata(report_path)
+insert_missing_metadata(report_path = ".")
 }
 \arguments{
-\item{report_path}{The path to the folder containing the report.}
+\item{report_path}{The path to the folder containing the report.
+Defaults to the current working directory.}
 }
 \description{
 Insert missing metadata in \verb{_quarto.yml}

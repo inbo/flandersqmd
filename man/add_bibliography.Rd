@@ -4,10 +4,11 @@
 \alias{add_bibliography}
 \title{Add a bibliography file to a Quarto report}
 \usage{
-add_bibliography(report_path)
+add_bibliography(report_path = ".")
 }
 \arguments{
-\item{report_path}{The path to the folder containing the report.}
+\item{report_path}{The path to the folder containing the report.
+Defaults to the current working directory.}
 }
 \value{
 The name of the bibliography file.

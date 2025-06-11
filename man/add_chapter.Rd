@@ -4,10 +4,11 @@
 \alias{add_chapter}
 \title{Add a chapter file to a Quarto report}
 \usage{
-add_chapter(report_path, title, filename, toc = TRUE)
+add_chapter(report_path = ".", title, filename, toc = TRUE)
 }
 \arguments{
-\item{report_path}{The path to the folder containing the report.}
+\item{report_path}{The path to the folder containing the report.
+Defaults to the current working directory.}
 
 \item{title}{The title of the chapter.
 If missing, the chapter is assumed the introduction with a default title

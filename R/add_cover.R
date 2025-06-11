@@ -7,7 +7,7 @@
 #' @importFrom fs file_move is_dir is_file path
 #' @importFrom pdftools pdf_convert pdf_subset
 #' @importFrom yaml read_yaml write_yaml
-add_cover <- function(report_path, cover_pdf) {
+add_cover <- function(report_path = ".", cover_pdf) {
   assert_that(
     is.string(report_path),
     noNA(report_path),

@@ -8,7 +8,7 @@
 #' @importFrom assertthat assert_that is.string has_name noNA
 #' @importFrom fs is_dir is_file path
 #' @importFrom yaml read_yaml write_yaml
-add_index <- function(report_path) {
+add_index <- function(report_path = ".") {
   assert_that(is.string(report_path), noNA(report_path), is_dir(report_path))
   target <- path(report_path, "_quarto.yml")
   stopifnot("no `_quarto.yml` found at `report_path`" = is_file(target))

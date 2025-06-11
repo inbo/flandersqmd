@@ -5,6 +5,7 @@
 #' The file also add a table of contents, a list of figures and a list of
 #' tables to the pdf version of the report.
 #' @param report_path The path to the folder containing the report.
+#' Defaults to the current working directory.
 #' @param lof A logical value indicating whether to add a list of figures.
 #' Defaults to `TRUE`.
 #' If `TRUE`, a list of figures is added to the pdf version of the report.
@@ -17,7 +18,7 @@
 #' @importFrom utils head tail
 #' @importFrom yaml read_yaml write_yaml
 add_recommendations <- function(
-  report_path,
+  report_path = ".",
   lof = TRUE,
   lot = TRUE
 ) {

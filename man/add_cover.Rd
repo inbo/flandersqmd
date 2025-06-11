@@ -4,10 +4,11 @@
 \alias{add_cover}
 \title{Add cover to \verb{_quarto.yml}}
 \usage{
-add_cover(report_path, cover_pdf)
+add_cover(report_path = ".", cover_pdf)
 }
 \arguments{
-\item{report_path}{The path to the folder containing the report.}
+\item{report_path}{The path to the folder containing the report.
+Defaults to the current working directory.}
 
 \item{cover_pdf}{The path to a PDF file.
 The first page of this PDF file will be used as the cover of the report.}

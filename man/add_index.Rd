@@ -4,10 +4,11 @@
 \alias{add_index}
 \title{Add an index file to a Quarto report}
 \usage{
-add_index(report_path)
+add_index(report_path = ".")
 }
 \arguments{
-\item{report_path}{The path to the folder containing the report.}
+\item{report_path}{The path to the folder containing the report.
+Defaults to the current working directory.}
 }
 \value{
 The name of the index file.
