@@ -1,0 +1,252 @@
+# `flandersqmd`?
+
+## Why Quarto instead of Bookdown?
+
+- Quarto is the successor of Bookdown
+- Quarto is a more modern and flexible framework
+- Quarto supports R, Python, Julia and Observable JavaScript
+
+## Why `flandersqmd` instead of `INBOqmd`?
+
+- we could only reuse a part of the code from `INBOmd`
+- the Flemish government has a common style guide for all entities
+- `R` is becoming more common in other entities
+- `flandersqmd` parametrised the entity specific settings
+- `flandersqmd`
+    - clear distinction with `INBOmd`
+    - allows other entities to use the same framework
+
+## Available extensions
+
+- `flandersqmd-book`: report in pdf and or HTML format
+- `flandersqmd-website`: HTML format for pages
+        - recommended for reports with a lot of interactive figures
+- `flandersqmd-revealjs`: slides in HTML format
+
+# Differences between Quarto and Rmarkdown/Bookdown
+
+## Files 
+
+- with out code: stays `.md`
+- with code: `.Rmd` becomes `.qmd`
+- `_bookdown.yml` becomes `_quarto.yml`
+- same bibliography file
+- `yaml` header from `index.Rmd` moves to `_quarto.yml`
+
+## Input and output files
+
+- both require an main `index` file.
+- Bookdown includes all markdown file in alphabetical order
+- quarto requires you to list the files in the `_quarto.yml` file
+    - list them in the relevant order in the `chapters` section under the `book` section
+- for HTML output
+    - Bookdown splits the report into one file per chapter or section
+    - Quarto converts each input file into one output file with the same name
+        - we recommend to have a single chapter per file
+
+## Formats
+
+- Bookdown stores the formats in R packages like `bookdown` or `INBOmd`
+    - you need to install the package to render the report
+    - updating the package can change things
+- Quarto install the extensions into the project
+    - you need a copy of the extension in every project
+    - the copy in a project is independent of the extension source
+    - you need to update the extension manually in every project
+
+## Render strategies
+
+- Bookdown uses the merge and knit strategy
+    - pro: reusable objects from earlier chapters
+    - contra: chapters require earlier chapters
+- Quarto uses the knit and merge strategy
+    - pro: chapters can be rendered independently
+    - contra: you need to store and load objects to reuse them 
+
+## Rendering the report in RStudio GUI
+
+- Create an RStudio project in the root folder of the report
+- go to the `Build` pane
+- click the `Render book` button
+    - renders the selected format (HTML and/or pdf)
+- you can also render a single chapter by clicking the `Render` button in the editor toolbar
+    - only works for HTML output
+
+## Rendering the report in the terminal
+
+- `quarto render` to run all formats
+- `quarto render --to flandersqmd-book-pdf` to render only the pdf format
+- `quarto render --to flandersqmd-book-html` to render only the HTML format
+- `quarto preview` to preview the HTML output in your browser
+
+## Code chunk options
+
+- Rmarkdown style (options in chunk header) still works
+- Quarto style is preferred
+    - Options in the chunk, starting with `#|`
+    - Options can span multiple lines
+        - Start extra lines with two extra spaces
+    - Captions can contain markdown formatting
+
+```r
+#| echo: false
+#| fig-cap: This is a _long_ figure caption that
+#|   spans **multiple** lines
+```
+
+## Cross-references
+
+- Bookdown uses `@ref(fig:chunk-label)` to refer to a chunk
+- Quarto uses `@chunk-label` to refer to a chunk
+- Quarto determines the type of cross-reference automatically based on the prefix
+    - `fig-:` for figures
+    - `tbl-:` for tables
+    - `sec-:` for sections
+    - `eq-:` for equations
+
+# Getting started with `flandersqmd`
+
+## The easy way: the `flandersqmd` package
+
+- functions to set up a report interactively
+- set a proper `_quarto.yml` file
+- currently only supports the book format
+
+1. `create_report()` generates a skeleton
+1. `insert_missing_metadata()` adds missing metadata
+1. `add_cover()` adds a cover page
+
+## The hard way: manually
+
+Full instructions are available in the [`flandersqmd-book` documentation](https://github.com/inbo/flandersqmd-book).
+
+1. Create an empty Quarto book project
+1. Install the extension with `quarto install extension inbo/flandersqmd-book`
+1. Update the `_quarto.yml` as instructed in the [documentation](https://github.com/inbo/flandersqmd-book)
+
+The documentation provides source code for all available format options.
+
+# `flandersqmd` section in `_quarto.yml`
+
+## Selection of corporate identity style
+
+- `entity`: the name of the entity.
+- `level`: the level of the corporate identity style.
+    - 1: Flanders
+    - 2: entity
+- `public_report`: whether the report is a public report or not.
+- `colophon`: whether to display a colophon.
+- `shortname`: a short name for the report, used in the file names
+
+## Mandatory fields
+
+:::: {.columns}
+
+::: {.column width="40%"}
+- `title`
+- `author`
+- `reviewer`
+- `year`
+- `reportnr`
+:::
+
+::: {.column width="40%"}
+- `cover`
+- `coverphoto`
+- `coverdescription`
+- `doi` ^[Only public report]
+- `depotnr` <sup>1</sup>
+:::
+
+::::
+
+
+Use `flandersqmd::add_author()` to add an author or reviewer to the report
+
+## Optional fields
+
+:::: {.columns}
+
+::: {.column width="40%"}
+- `client`
+- `clientlogo`
+- `clienturl`
+- `subtitle`
+- `ordernr`
+:::
+
+::: {.column width="40%"}
+- `cooperation`
+- `cooperationlogo`
+- `cooperationurl`
+- `watermark`
+:::
+
+::::
+
+# Demo
+
+## Create a report skeleton
+
+1. Generate a skeleton with `create_report()`.
+1. Add a `R` figure and table and a cross-reference to them.
+1. Add missing metadata with `insert_missing_metadata()`.
+1. Add the cover page with `add_cover()`.
+
+# Child documents in quarto
+
+## Child documents
+
+- A child document is a single macro file that you can reuse multiple times in the document
+    - e.g. a standard analysis repeated for several species, region, variables, ...
+- Unlike bookdown, quarto does not support child documents out of the box
+- We still can use bookdown machinery in a work around
+
+## Macro `qmd` file
+
+- Create a working `qmd` file for a single analysis
+- Make sure you can do the selection based on the parameters
+- Add one or more macro variables by using the `{{macro_name}}` syntax
+    - `{{macro_name}}` will be replaced by the value of the variable
+- Use `knitr::knit_expand()` to replace the macro variables with their values
+- Write the result to a `qmd` file
+
+## Workflow
+
+1. Create a project with the macro `qmd` files
+1. Create a render script that
+    - reads the macro variables from a data frame
+    - loops over the rows of the data frame
+    - calls `knitr::knit_expand()` to replace the macro variables with their values
+    - writes the result to a `qmd` file in a different quarto folder
+    - update the `_quarto.yml` in the other quarto folder
+
+## Example macro file
+
+```
+---
+title: "Analysis for {{species}}"
+----
+
+{{vernacular}}
+```
+
+## Example render script
+
+```{r}
+#| echo: true
+#| eval: false
+
+todo <- data.frame(
+  species = c("Erinaceus europaeus", "Talpa europaea"),
+  vernacular = c("European hedgehog", "European mole"),
+  file = c("hedgehog.qmd", "mole.qmd")
+)
+for (i in nrow(todo)) {
+  knitr::knit_expand(
+      "macro.qmd", species = todo$species[i],
+      vernacular = todo$vernacular[i]
+  ) |>
+    writeLines(todo$file[i])
+}
+```
