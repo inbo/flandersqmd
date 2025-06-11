@@ -1,8 +1,8 @@
 # `flandersqmd`?
 
-## Why Quarto instead of Bookdown?
+## Why Quarto instead of bookdown?
 
-- Quarto is the successor of Bookdown
+- Quarto is the successor of bookdown
 - Quarto is a more modern and flexible framework
 - Quarto supports R, Python, Julia and Observable JavaScript
 
@@ -23,7 +23,7 @@
         - recommended for reports with a lot of interactive figures
 - `flandersqmd-revealjs`: slides in HTML format
 
-# Differences between Quarto and Rmarkdown/Bookdown
+# Differences between Quarto and Rmarkdown/bookdown
 
 ## Files 
 
@@ -36,17 +36,17 @@
 ## Input and output files
 
 - both require an main `index` file.
-- Bookdown includes all markdown file in alphabetical order
+- bookdown includes all markdown file in alphabetical order
 - quarto requires you to list the files in the `_quarto.yml` file
     - list them in the relevant order in the `chapters` section under the `book` section
 - for HTML output
-    - Bookdown splits the report into one file per chapter or section
+    - bookdown splits the report into one file per chapter or section
     - Quarto converts each input file into one output file with the same name
         - we recommend to have a single chapter per file
 
 ## Formats
 
-- Bookdown stores the formats in R packages like `bookdown` or `INBOmd`
+- bookdown stores the formats in R packages like `bookdown` or `INBOmd`
     - you need to install the package to render the report
     - updating the package can change things
 - Quarto install the extensions into the project
@@ -56,7 +56,7 @@
 
 ## Render strategies
 
-- Bookdown uses the merge and knit strategy
+- bookdown uses the merge and knit strategy
     - pro: reusable objects from earlier chapters
     - contra: chapters require earlier chapters
 - Quarto uses the knit and merge strategy
@@ -96,7 +96,7 @@
 
 ## Cross-references
 
-- Bookdown uses `@ref(fig:chunk-label)` to refer to a chunk
+- bookdown uses `@ref(fig:chunk-label)` to refer to a chunk
 - Quarto uses `@chunk-label` to refer to a chunk
 - Quarto determines the type of cross-reference automatically based on the prefix
     - `fig-:` for figures
