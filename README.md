@@ -76,8 +76,8 @@ function will guide you interactively through the process of setting up
 a report. Once the setup is completed the report will automatically be
 rendered in both html and pdf format. The respective output files are
 located in the output folder of the report folder. The function will
-also create an Rstudio project file in the report folder. When you run
-the function from Rstudio, the project will be opened automatically in a
+also create an RStudio project file in the report folder. When you run
+the function from RStudio, the project will be opened automatically in a
 new session.
 
 ``` r
