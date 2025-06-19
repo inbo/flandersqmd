@@ -20,14 +20,14 @@
 
 - `flandersqmd-book`: report in pdf and or HTML format
 - `flandersqmd-website`: HTML format for pages
-        - recommended for reports with a lot of interactive figures
+    - recommended for reports with a lot of interactive figures
 - `flandersqmd-revealjs`: slides in HTML format
 
 # Differences between Quarto and Rmarkdown/bookdown
 
 ## Files 
 
-- with out code: stays `.md`
+- without code: stays `.md`
 - with code: `.Rmd` becomes `.qmd`
 - `_bookdown.yml` becomes `_quarto.yml`
 - same bibliography file
@@ -42,7 +42,6 @@
 - for HTML output
     - bookdown splits the report into one file per chapter or section
     - Quarto converts each input file into one output file with the same name
-        - we recommend to have a single chapter per file
 
 ## Formats
 
