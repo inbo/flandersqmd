@@ -2,7 +2,6 @@
 #'
 #' @param path The folder in which to create the folder containing the report.
 #'  Defaults to the current working directory.
-#'  The function renders the skeleton report to the HTML and pdf formats.
 #'  It also creates an RStudio project file in the report folder.
 #'  When ran from RStudio, the project will be opened automatically in a new
 #'  session.
@@ -21,7 +20,7 @@
 #' @importFrom checklist ask_yes_no menu_first read_checklist use_author
 #' @importFrom fs dir_create is_dir is_file path
 #' @importFrom gert git_find
-#' @importFrom quarto quarto_add_extension quarto_render
+#' @importFrom quarto quarto_add_extension
 #' @importFrom utils citation toBibtex
 create_report <- function(path = ".", shortname, version = "main") {
   assert_that(is.string(path), noNA(path), is_dir(path))
@@ -187,12 +186,6 @@ create_report <- function(path = ".", shortname, version = "main") {
   setwd(path(path, shortname))
   paste0("inbo/flandersqmd-book@", version) |>
     quarto_add_extension(no_prompt = TRUE)
-  quarto_render(
-    use_freezer = FALSE,
-    cache = FALSE,
-    quiet = FALSE,
-    as_job = FALSE
-  )
   if (
     !requireNamespace("rstudioapi", quietly = TRUE) ||
       !rstudioapi::isAvailable()

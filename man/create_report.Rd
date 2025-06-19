@@ -9,7 +9,6 @@ create_report(path = ".", shortname, version = "main")
 \arguments{
 \item{path}{The folder in which to create the folder containing the report.
 Defaults to the current working directory.
-The function renders the skeleton report to the HTML and pdf formats.
 It also creates an RStudio project file in the report folder.
 When ran from RStudio, the project will be opened automatically in a new
 session.}
