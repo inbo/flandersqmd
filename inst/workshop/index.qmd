@@ -117,11 +117,11 @@
 
 ## The hard way: manually
 
-Full instructions are available in the [`flandersqmd-book` documentation](https://github.com/inbo/flandersqmd-book).
+Full instructions are available in the [`flandersqmd-book` documentation](https://github.com/inbo/flandersqmd-book){target="_blank"}.
 
 1. Create an empty Quarto book project
 1. Install the extension with `quarto install extension inbo/flandersqmd-book`
-1. Update the `_quarto.yml` as instructed in the [documentation](https://github.com/inbo/flandersqmd-book)
+1. Update the `_quarto.yml` as instructed in the [documentation](https://github.com/inbo/flandersqmd-book){target="_blank"}
 
 The documentation provides source code for all available format options.
 
