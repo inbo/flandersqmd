@@ -109,3 +109,15 @@ add_cover(
 # Render the report
 quarto::quarto_render(file.path(path, "flandersqmd-book", "myreport"))
 ```
+
+## Workshop
+
+This package contains the slides of a workshop. Run the code below to
+render and view the slides.
+
+``` r
+system.file("workshop", package = "flandersqmd") |>
+  quarto::quarto_render()
+system.file("output/index.html", package = "flandersqmd") |>
+  browseURL()
+```
