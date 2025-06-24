@@ -1,0 +1,22 @@
+<div class="sidebar"></div>
+<div class="sidebar-url">$translation.url$</div>
+<section id="$idprefix$title-slide"$for(title-slide-attributes/pairs)$ $it.key$="$it.value$"$endfor$ $if(flandersqmd.cover)$data-background-image="$flandersqmd.cover$"$endif$>
+  <div class = "title-logo" style = "$translation.title_logo_style$">
+  <img src = "$translation.flanders_title_logo$" alt="$translation.flanders_alt$" class = "title-logo-img">
+  $if(translation.entity_title_logo)$
+    <br><img src = "$translation.entity_title_logo$" alt = "$translation.entity_title_logo$" class = "title-logo-img">
+  $endif$
+  </div>
+  $if(flandersqmd.cover)$$else$<h1>!!! missing: flandersqmd.cover !!!</h1>$endif$
+  <h1 class="title">$flandersqmd.title$</h1>
+$if(flandersqmd.subtitle)$
+  <p class="title subtitle">$flandersqmd.subtitle$</p>
+$endif$
+<p class="title author">$title_author$</p>
+$if(flandersqmd.date)$
+  <p class="title date">$flandersqmd.date$</p>
+$endif$
+</section>
+$if(flandersqmd.photographer)$
+<div class="title photographer">$flandersqmd.photographer$</div>
+$endif$

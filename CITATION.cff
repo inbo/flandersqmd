@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it using these metadata.
+title: "flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions"
+authors:
+- given-names: Thierry
+  family-names: Onkelinx
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0001-8804-4216
+keywords:
+- corporate identity
+- quarto
+contact:
+- given-names: Thierry
+  family-names: Onkelinx
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0001-8804-4216
+doi: ~
+license: GPL-3.0
+repository-code: https://github.com/inbo/flandersqmd/
+type: software
+abstract: "Prepare new documents using the Flandersqmd extensions."
+version: 0.0.1

@@ -1,0 +1,32 @@
+project:
+  type: default
+  preview:
+    port: 4201
+    browser: true
+  render:
+  - '*.md'
+  - '*.qmd'
+  - '!LICENSE.md'
+  - '!README.md'
+  output-dir: ../output
+lang: en-GB
+flandersqmd:
+  level: 2
+  entity: INBO
+  title: Workshop on flandersqmd
+  subtitle: For users familiar with Rmarkdown and bookdown
+  date: '2025-06-25'
+  cover: pexels-pixabay-355887.jpg
+  author:
+  - name:
+      given: Thierry
+      family: Onkelinx
+    email: thierry.onkelinx@inbo.be
+    orcid: 0000-0001-8804-4216
+    affiliation:
+    - Research Institute for Nature and Forest (INBO)
+format:
+  flandersqmd-revealjs: default
+execute:
+  cache: false
+  freeze: false
