@@ -45,9 +45,9 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
   if (inherits(x, "checklist")) {
     path <- path(x$get_path, ifelse(x$package, "inst", "source"))
     dir_create(path)
-    output_dir <- "../../output"
+    output_dir <- path("..", "..", "output", reportname)
   } else {
-    output_dir <- "output"
+    output_dir <- path("output", reportname)
   }
   path <- normalizePath(path, mustWork = TRUE)
 
