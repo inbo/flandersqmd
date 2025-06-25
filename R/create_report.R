@@ -5,15 +5,17 @@
 #'  It also creates an RStudio project file in the report folder.
 #'  When ran from RStudio, the project will be opened automatically in a new
 #'  session.
-#' @param shortname The name of the report project.
-#' The location of the folder `shortname` depends on the content of `path`.
+#' @param reportname The folder name of the report.
+#' The location of the folder `reportname` depends on the content of `path`.
 #' When `path` is a `checklist::checklist` project, you will find the new report
-#' at `path/source/shortname`.
+#' at `path/source/reportname`.
 #' When `path` is a `checklist::checklist` package, you will find the new report
-#' at `path/inst/shortname`.
-#' Otherwise you will find the new report at `path/shortname`.
+#' at `path/inst/reportname`.
+#' Otherwise you will find the new report at `path/reportname`.
 #' @param version The version of the `flandersqmd-book` extension to use.
 #' Defaults to `"main"`, which refers to the current version.
+#' @param shortname Deprecated.
+#' Use `reportname` instead.
 #' @family utils
 #' @export
 #' @importFrom assertthat assert_that is.string noNA
@@ -22,12 +24,19 @@
 #' @importFrom gert git_find
 #' @importFrom quarto quarto_add_extension
 #' @importFrom utils citation toBibtex
-create_report <- function(path = ".", shortname, version = "main") {
+create_report <- function(path = ".", reportname, version = "main", shortname) {
+  if (missing(reportname) && !missing(shortname)) {
+    warning(
+      "`shortname` is deprecated, use `reportname` instead.",
+      call. = FALSE
+    )
+    reportname <- shortname
+  }
   assert_that(is.string(path), noNA(path), is_dir(path))
-  assert_that(is.string(shortname), noNA(shortname))
+  assert_that(is.string(reportname), noNA(reportname))
   assert_that(is.string(version), noNA(version))
   assert_that(
-    grepl("^[a-z0-9_]+$", shortname),
+    grepl("^[a-z0-9_]+$", reportname),
     msg = paste(
       "The report name folder may only contain lower case letters, digits and _"
     )
@@ -41,9 +50,8 @@ create_report <- function(path = ".", shortname, version = "main") {
     output_dir <- "output"
   }
 
-  assert_that(
-    !is_dir(path(path, shortname)),
-    msg = "The report name folder already exists."
+  stopifnot(
+    "The report name folder already exists." = !is_dir(path(path, reportname))
   )
 
   # build new yaml
@@ -97,7 +105,7 @@ create_report <- function(path = ".", shortname, version = "main") {
   ) |>
     gsub(pattern = "[\"|']", replacement = "") -> subtitle
   while (TRUE) {
-    short <- readline(prompt = "Enter the short title used for the filename: ")
+    short <- readline(prompt = "Enter the filename used for the output: ")
     if (grepl("^[a-z0-9-]+$", short)) {
       break
     }
@@ -131,8 +139,8 @@ create_report <- function(path = ".", shortname, version = "main") {
     "      href: https://www.facebook.com/INBOVlaanderen/"
   ) -> yaml
 
-  dir_create(path(path, shortname))
-  writeLines(yaml, path(path, shortname, "_quarto.yml"))
+  dir_create(path(path, reportname))
+  writeLines(yaml, path(path, reportname, "_quarto.yml"))
   writeLines(
     text = c(
       "Version: 1.0",
@@ -158,17 +166,17 @@ create_report <- function(path = ".", shortname, version = "main") {
       "MarkdownReferences: Document",
       "MarkdownCanonical: Yes"
     ),
-    con = path(path, shortname, shortname, ext = "Rproj")
+    con = path(path, reportname, reportname, ext = "Rproj")
   )
-  add_index(path(path, shortname))
-  add_abstract(path(path, shortname))
+  add_index(path(path, reportname))
+  add_abstract(path(path, reportname))
   add_recommendations(
-    path(path, shortname),
+    path(path, reportname),
     lof = ask_yes_no("Add a list of figures?", default = TRUE),
     lot = ask_yes_no("Add a list of tables?", default = TRUE)
   )
-  add_chapter(path(path, shortname))
-  add_bibliography(path(path, shortname))
+  add_chapter(path(path, reportname))
+  add_bibliography(path(path, reportname))
   c(
     "/\\.quarto",
     "/\\.Rproj.user",
@@ -179,11 +187,11 @@ create_report <- function(path = ".", shortname, version = "main") {
     "output",
     "site_libs"
   ) |>
-    writeLines(path(path, shortname, ".gitignore"))
+    writeLines(path(path, reportname, ".gitignore"))
 
   old_wd <- getwd()
   on.exit(setwd(old_wd), add = TRUE)
-  setwd(path(path, shortname))
+  setwd(path(path, reportname))
   paste0("inbo/flandersqmd-book@", version) |>
     quarto_add_extension(no_prompt = TRUE)
   if (
@@ -192,7 +200,7 @@ create_report <- function(path = ".", shortname, version = "main") {
   ) {
     return(invisible(NULL))
   }
-  rstudioapi::openProject(path(path, shortname), newSession = TRUE)
+  rstudioapi::openProject(path(path, reportname), newSession = TRUE)
 }
 
 #' @importFrom checklist ask_yes_no
