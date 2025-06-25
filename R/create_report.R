@@ -49,6 +49,7 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
   } else {
     output_dir <- "output"
   }
+  path <- normalizePath(path, mustWork = TRUE)
 
   stopifnot(
     "The report name folder already exists." = !is_dir(path(path, reportname))
@@ -190,10 +191,10 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
     writeLines(path(path, reportname, ".gitignore"))
 
   old_wd <- getwd()
-  on.exit(setwd(old_wd), add = TRUE)
   setwd(path(path, reportname))
   paste0("inbo/flandersqmd-book@", version) |>
     quarto_add_extension(no_prompt = TRUE)
+  setwd(old_wd)
   if (
     !requireNamespace("rstudioapi", quietly = TRUE) ||
       !rstudioapi::isAvailable()
