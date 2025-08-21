@@ -1,0 +1,38 @@
+project:
+  type: book
+  preview:
+    port: 4201
+    browser: true
+  render:
+    - "*.md"
+  output-dir: .
+  post-render: _extensions/inbo/flandersqmd-book/filters/post_render.R
+
+execute:
+  echo: false
+  freeze: auto
+
+lang: %s
+
+format:
+  flandersqmd-book-pdf: default
+
+flandersqmd:
+  entity: INBO
+  level: %i
+  title: %s
+  shorttitle: %s
+  author:
+%s
+  reviewer:
+%s
+  year: %i
+  reportnr: %s
+  coverdescription: %s
+  public_report: %s
+%s%s%s
+%s
+
+book:
+  chapters:
+    - index.md
