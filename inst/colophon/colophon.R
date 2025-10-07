@@ -113,18 +113,15 @@ read_colophon <- function(
   token = "1MOMUI3pzBzxJNtFRDbJrSOKYfYlRR5CAG_TMquFm-bI"
 ) {
   requireNamespace("googlesheets4", quietly = TRUE)
-  paste0("https://docs.google.com/spreadsheets/d/", token) |>
-    googlesheets4::read_sheet() -> colophons
-  if (missing(pure_id)) {
-    return(tail(colophons, n = 1))
-  }
   requireNamespace("assertthat", quietly = TRUE)
   requireNamespace("rlang", quietly = TRUE)
   assertthat::assert_that(
     assertthat::is.number(pure_id),
-    assertthat::noNA(pure_id),
-    pure_id %in% colophons$`PURE id`
+    assertthat::noNA(pure_id)
   )
+  paste0("https://docs.google.com/spreadsheets/d/", token) |>
+    googlesheets4::read_sheet() -> colophons
+  stopifnot("PURE id not avialable in form" = pure_id %in% colophons$`PURE id`)
   colophons[colophons$`PURE id` == pure_id, ]
 }
 
