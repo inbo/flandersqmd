@@ -45,6 +45,30 @@ display_client_coop <- function(
 }
 
 create_quarto_yml <- function(this_colophon, path = ".") {
+  if (nrow(this_colophon) > 1) {
+    use_this_colophon <- tail(order(this_colophon$Tijdstempel), 1)
+    warning(
+      "Meerdere colofons gevonden met deze PURE ID. ",
+      "We gebruiken de meest recente."
+    )
+    c(
+      "Meerdere colofons gevonden met deze PURE ID.",
+      "We gebruiken de meest recente:",
+      "",
+      sprintf(
+        "- Ingevoerd door %s op %s.",
+        this_colophon$`E-mailadres`,
+        this_colophon$Tijdstempel
+      ),
+      "",
+      "",
+      this_colophon$Opmerkingen[use_this_colophon][
+        !is.na(this_colophon$Opmerkingen[use_this_colophon])
+      ]
+    ) |>
+      paste(collapse = "\n") -> this_colophon$Opmerkingen[use_this_colophon]
+    this_colophon <- this_colophon[use_this_colophon, ]
+  }
   system.file("colophon/template.yml", package = "flandersqmd") |>
     readLines() |>
     paste(collapse = "\n") |>
@@ -137,8 +161,9 @@ generate_colophon <- function(pure_id, path = ".") {
   setwd(path)
   quarto::quarto_add_extension("inbo/flandersqmd-book@bugfix", no_prompt = TRUE)
   quarto::quarto_render(input = "index.md")
-  pdf_file <- sprintf("colofon_%i.pdf", this_colophon$`PURE id`)
   qpdf::pdf_subset(pdf_file, pages = 1:2) -> cover_pdf
+  unique(this_colophon$`PURE id`) |>
+    sprintf(fmt = "colofon_%i.pdf") -> pdf_file
   file.remove(pdf_file)
   file.rename(cover_pdf, pdf_file)
 }
