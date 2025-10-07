@@ -1,5 +1,0 @@
----
-toc: false
----
-
-{{< colophon >}}

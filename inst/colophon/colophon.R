@@ -130,6 +130,18 @@ create_quarto_yml <- function(this_colophon, path = ".") {
         paste(collapse = "\n")
     ) |>
     writeLines(file.path(path, "_quarto.yml"))
+  c(
+    "---",
+    "toc: false",
+    "---",
+    "",
+    "{{< colophon >}}",
+    "",
+    "# Opmerkingen {-}",
+    "",
+    this_colophon$Opmerkingen[!is.na(this_colophon$Opmerkingen)]
+  ) |>
+    writeLines(file.path(path, "index.md"))
 }
 
 read_colophon <- function(
@@ -154,16 +166,15 @@ generate_colophon <- function(pure_id, path = ".") {
   requireNamespace("qpdf", quietly = TRUE)
   this_colophon <- read_colophon(pure_id = pure_id)
   create_quarto_yml(this_colophon = this_colophon, path = path)
-  system.file("colophon/index.md", package = "flandersqmd") |>
-    file.copy(file.path(path, "index.md"))
   old_wd <- getwd()
   on.exit(setwd(old_wd), add = TRUE)
   setwd(path)
   quarto::quarto_add_extension("inbo/flandersqmd-book@bugfix", no_prompt = TRUE)
   quarto::quarto_render(input = "index.md")
-  qpdf::pdf_subset(pdf_file, pages = 1:2) -> cover_pdf
   unique(this_colophon$`PURE id`) |>
     sprintf(fmt = "colofon_%i.pdf") -> pdf_file
+  n <- 2 + (nrow(this_colophon) > 1 || any(!is.na(this_colophon$Opmerkingen)))
+  qpdf::pdf_subset(pdf_file, pages = seq_len(n)) -> cover_pdf
   file.remove(pdf_file)
   file.rename(cover_pdf, pdf_file)
 }
