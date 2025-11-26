@@ -3,7 +3,7 @@ citHeader("To cite `flandersqmd` in publications please use:")
 bibentry(
   bibtype = "Manual",
   title = "flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions. Version 0.0.2",
-  author = c( author = c(person(given = "Thierry", family = "Onkelinx"))),
+  author = c(person(given = "Thierry", family = "Onkelinx")),
   year = 2025,
   url = "https://github.com/inbo/flandersqmd/",
   abstract = "Prepare new documents using the Flandersqmd extensions.",

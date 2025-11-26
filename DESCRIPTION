@@ -4,7 +4,8 @@ Version: 0.0.2
 Authors@R: c(
     person("Thierry", "Onkelinx", , "thierry.onkelinx@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8804-4216", affiliation = "Research Institute for Nature and Forest (INBO)")),
-    person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"))
+    person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"),
+           comment = c(ROR = "https://ror.org/00j54wy13"))
   )
 Description: Prepare new documents using the Flandersqmd extensions.
 License: GPL-3
@@ -28,4 +29,4 @@ Config/checklist/keywords: corporate identity; quarto
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
