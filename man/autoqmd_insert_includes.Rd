@@ -58,13 +58,13 @@ detects when the template or any sourced dependency has changed.
 }
 \examples{
 \dontrun{
-species_vec <- c("Geelgors", "Gele Kwikstaart")
+my_species <- paste("Iris", levels(iris$Species))
 
 # Create child document for each species
-# Use freeze to keep child files with "label" names
+# Use freeze to keep child files with label names
 out_files <- autoqmd_generate_children(
-  species = species_vec,
-  label   = gsub("\\\\s", ".", tolower(species_vec)),
+  species = my_species,
+  label = gsub("\\\\s", ".", tolower(my_species)),
   template = "species_template.qmd",
   child_dir = "spec_files",
   freeze = "label"
