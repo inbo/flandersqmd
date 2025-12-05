@@ -5,9 +5,9 @@ bibentry(
   title = "flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions. Version 0.0.3",
   author = c(person(given = "Thierry", family = "Onkelinx")),
   year = 2025,
-  url = "https://github.com/inbo/flandersqmd/",
+  url = "https://inbo.github.io/flandersqmd",
   abstract = "Prepare new documents using the Flandersqmd extensions.",
-  textVersion = "Onkelinx, Thierry (2025) flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions. Version 0.0.3. https://github.com/inbo/flandersqmd/",
+  textVersion = "Onkelinx, Thierry (2025) flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions. Version 0.0.3. https://inbo.github.io/flandersqmd",
   keywords = "corporate identity; quarto",
 )
 # end checklist entry
