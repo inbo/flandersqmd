@@ -5,10 +5,6 @@
 #' written to a specified directory and given either a random unique name or,
 #' if `freeze` is specified, a name derived from the provided variable.
 #'
-#' When `freeze` is used, existing files are not regenerated unless the
-#' template has been modified since their last creation. This enables
-#' incremental regeneration for long or expensive builds.
-#'
 #' @param ... Named vectors or lists of equal length, passed to
 #'   `knitr::knit_expand`. Each position across vectors represents
 #'   one document to generate.

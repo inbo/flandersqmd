@@ -32,9 +32,6 @@ written to a specified directory and given either a random unique name or,
 if \code{freeze} is specified, a name derived from the provided variable.
 }
 \details{
-When \code{freeze} is used, existing files are not regenerated unless the
-template has been modified since their last creation. This enables
-incremental regeneration for long or expensive builds.
 \itemize{
 \item Random names (default) are generated using 8-digit hexadecimal strings.
 \item When \code{freeze} is used, existing files are not regenerated unless the
