@@ -57,13 +57,11 @@ autoqmd_generate_children <- function(
   dots <- list(...)
 
   # Validation
-  if (length(dots) == 0) {
-    stop("You must provide at least one named argument via ...")
-  }
+  stopifnot("You must provide at least one named argument via ..." =
+              length(dots) == 0)
   lens <- vapply(dots, length, integer(1))
-  if (any(lens != lens[1])) {
-    stop("All arguments in ... must have the same length")
-  }
+  stopifnot("All arguments in ... must have the same length." =
+              length(dots) == 0)
   n <- lens[1]
 
   # Create directory if needed
@@ -71,9 +69,8 @@ autoqmd_generate_children <- function(
 
   # Determine filenames
   if (!is.null(freeze)) {
-    if (!freeze %in% names(dots)) {
-      stop("`freeze` must match one of the named arguments in ...")
-    }
+    stopifnot("`freeze` must match one of the named arguments in ..." =
+                !freeze %in% names(dots))
 
     # Sanitize freeze names (replace spaces etc.)
     base_names <- gsub("[^a-zA-Z0-9_.-]", "_", as.character(dots[[freeze]]))

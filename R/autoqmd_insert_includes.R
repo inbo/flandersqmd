@@ -70,9 +70,10 @@ autoqmd_insert_includes <- function(
   quiet = FALSE
 ) {
   # Validate page_break
-  if (!is.null(page_break) && !page_break %in% c("newpage", "clearpage")) {
-    stop("page_break must be NULL, 'newpage', or 'clearpage'.")
-  }
+  stopifnot(
+    "page_break must be NULL, 'newpage', or 'clearpage'." =
+      !is.null(page_break) && !page_break %in% c("newpage", "clearpage")
+  )
 
   # Read QMD file
   lines <- readLines(qmd_file)
