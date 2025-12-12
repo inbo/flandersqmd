@@ -28,7 +28,8 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
   if (missing(reportname) && !missing(shortname)) {
     warning(
       "`shortname` is deprecated, use `reportname` instead.",
-      call. = FALSE
+      call. = FALSE,
+      immediate. = TRUE
     )
     reportname <- shortname
   }

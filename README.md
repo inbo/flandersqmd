@@ -90,7 +90,7 @@ new session.
 ``` r
 # Create a report skeleton
 library(flandersqmd)
-create_report(file.path(path, "flandersqmd-book"), shortname = "myreport")
+create_report(file.path(path, "flandersqmd-book"), reportname = "myreport")
 ```
 
 When starting a new report, you often don’t have all the metadata
