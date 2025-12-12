@@ -13,6 +13,19 @@ allowed:
         checklist
       Availability using Additional_repositories specification:
         checklist   yes   https://inbo.r-universe.dev
+  - motivation: package not intended for CRAN
+    value: |-
+      checking CRAN incoming feasibility ... WARNING
+      Maintainer: 'Thierry Onkelinx <thierry.onkelinx@inbo.be>'
+
+      New submission
+
+      Strong dependencies not in mainstream repositories:
+        checklist
+      Availability using Additional_repositories specification:
+        checklist   yes   https://inbo.r-universe.dev
+
+      Size of tarball: 5809376 bytes
   - motivation: To do in a later stage
     value: |-
       checking for code which exercises the package ... WARNING
@@ -29,10 +42,12 @@ required:
 - folder conventions
 - license
 - lintr
+- organisation
 - repository secret
 - spelling
 spelling:
   default: en-GB
   ignore:
   - .github
+  - docs
   - LICENSE.md

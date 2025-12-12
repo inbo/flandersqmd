@@ -3,32 +3,39 @@
 
 <!-- badges: start -->
 
-[![Project Status: Concept – Minimal or no implementation has been done
-yet, or the repository is only intended to be a limited example, demo,
-or
-proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+[![Project Status: Active - The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![License](https://img.shields.io/badge/license-GPL--3-blue.svg?style=flat)](https://spdx.org/licenses/GPL-3.0-only.html)
+stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![GPL-3](https://img.shields.io/badge/License-GPL-3-brightgreen)](https://raw.githubusercontent.com/inbo/checklist/refs/heads/main/inst/generic_template/gplv3.md)
 [![Release](https://img.shields.io/github/release/inbo/flandersqmd.svg)](https://github.com/inbo/flandersqmd/releases)
-![GitHub](https://img.shields.io/github/license/inbo/flandersqmd) [![R
-build
-status](https://github.com/inbo/flandersqmd/workflows/check%20package%20on%20main/badge.svg)](https://github.com/inbo/flandersqmd/actions)
+![GitHub Workflow
+Status](https://github.com/inbo/flandersqmd/actions/workflows/check_on_main.yml/badge.svg)
+![GitHub repo
+size](https://img.shields.io/github/repo-size/inbo/flandersqmd) ![GitHub
+code size in
+bytes](https://img.shields.io/github/languages/code-size/inbo/flandersqmd.svg)
 ![r-universe
 name](https://inbo.r-universe.dev/badges/:name?color=c04384)
 ![r-universe package](https://inbo.r-universe.dev/badges/flandersqmd)
 [![Codecov test
 coverage](https://codecov.io/gh/inbo/flandersqmd/branch/main/graph/badge.svg)](https://app.codecov.io/gh/inbo/flandersqmd?branch=main)
-![GitHub code size in
-bytes](https://img.shields.io/github/languages/code-size/inbo/flandersqmd.svg)
-![GitHub repo
-size](https://img.shields.io/github/repo-size/inbo/flandersqmd.svg)
 <!-- badges: end -->
 
-# flandersqmd
+# flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions
 
-The goal of `flandersqmd` is to provide a set of tools to create reports
-using the `flandersqmd` family of quarto extensions.
+[Onkelinx, Thierry![ORCID
+logo](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0001-8804-4216)[^1][^2][^3]
+[Research Institute for Nature and Forest
+(INBO)](mailto:info%40inbo.be)[^4][^5]
+
+**keywords**: corporate identity; quarto
+
+<!-- description: start -->
+
+Prepare new documents using the Flandersqmd extensions.
+<!-- description: end -->
 
 ## Installation
 
@@ -121,3 +128,13 @@ system.file("workshop", package = "flandersqmd") |>
 system.file("output/index.html", package = "flandersqmd") |>
   browseURL()
 ```
+
+[^1]: author
+
+[^2]: contact person
+
+[^3]: Research Institute for Nature and Forest (INBO)
+
+[^4]: copyright holder
+
+[^5]: funder
