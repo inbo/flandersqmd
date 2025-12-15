@@ -15,6 +15,10 @@
 #'   whose values will be used for deterministic file names.
 #'   If provided, filenames will be of the form `"_qmd_<value>.qmd"`,
 #'   and files will only be regenerated if the template is newer.
+#' @param delim Character vector of length 2 giving the opening and closing
+#'   delimiters used for template variables. Passed to `knitr::knit_expand`.
+#'   Defaults to `c("{{", "}}")`, which is convenient for Quarto templates and
+#'   avoids conflicts with LaTeX or Pandoc syntax.
 #'
 #' @details
 #' - Random names (default) are generated using 8-digit hexadecimal strings.
@@ -27,7 +31,7 @@
 #' @return Invisibly returns a character vector with the paths of the generated
 #'   QMD files. Files are written to disk (unless all were skipped).
 #'
-#' @seealso [autoqmd_prepare()]
+#' @seealso [autoqmd_prepare()], [knitr::knit_expand()]
 #'
 #' @export
 #'
@@ -52,7 +56,8 @@ autoqmd_generate_children <- function(
   ...,
   template,
   child_dir,
-  freeze = NULL
+  freeze = NULL,
+  delim = c("{{", "}}")
 ) {
   # Capture input arguments
   dots <- list(...)
@@ -69,6 +74,8 @@ autoqmd_generate_children <- function(
               assertthat::is.string(template))
   stopifnot("`template` must be a path to a Quarto template." =
               file.exists(template))
+  stopifnot("`delim` must be a character vector of length 2." =
+              is.character(delim) && length(delim) == 2)
 
   # Create directory if needed
   dir.create(child_dir, recursive = TRUE, showWarnings = FALSE)
@@ -110,7 +117,10 @@ autoqmd_generate_children <- function(
     }
 
     # Expand template and write to file
-    content <- do.call(knitr::knit_expand, c(list(template), args))
+    content <- do.call(
+      knitr::knit_expand,
+      c(list(template, delim = delim), args)
+    )
     writeLines(content, out_file)
     generated <- generated + 1
   }

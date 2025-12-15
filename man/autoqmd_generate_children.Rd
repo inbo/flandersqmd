@@ -4,10 +4,16 @@
 \alias{autoqmd_generate_children}
 \title{Generate child QMD files from a template}
 \usage{
-autoqmd_generate_children(..., template, child_dir, freeze = NULL)
+autoqmd_generate_children(
+  ...,
+  template,
+  child_dir,
+  freeze = NULL,
+  delim = c("{{", "}}")
+)
 }
 \arguments{
-\item{...}{Named vectors or lists of equal length, passed to
+\item{...}{Named vectors or list of variables of equal length, passed to
 \code{knitr::knit_expand}. Each position across vectors represents
 one document to generate.}
 
@@ -20,6 +26,11 @@ The directory is created if it does not exist.}
 whose values will be used for deterministic file names.
 If provided, filenames will be of the form \code{"_qmd_<value>.qmd"},
 and files will only be regenerated if the template is newer.}
+
+\item{delim}{Character vector of length 2 giving the opening and closing
+delimiters used for template variables. Passed to \code{knitr::knit_expand}.
+Defaults to \code{c("{{", "}}")}, which is convenient for Quarto templates and
+avoids conflicts with LaTeX or Pandoc syntax.}
 }
 \value{
 Invisibly returns a character vector with the paths of the generated
@@ -57,5 +68,5 @@ autoqmd_generate_children(
 }
 }
 \seealso{
-\code{\link[=autoqmd_prepare]{autoqmd_prepare()}}
+\code{\link[=autoqmd_prepare]{autoqmd_prepare()}}, \code{\link[knitr:knit_expand]{knitr::knit_expand()}}
 }
