@@ -38,6 +38,8 @@
 #'
 #' @export
 #'
+#' @importFrom assertthat is.string is.flag
+#'
 #' @examples
 #' \dontrun{
 #' my_species <- paste("Iris", levels(iris$Species))
@@ -69,11 +71,25 @@ autoqmd_insert_includes <- function(
   template = NULL,
   quiet = FALSE
 ) {
-  # Validate page_break
+  # Validation
+  stopifnot("`qmd_file` must be a path to a Quarto file to modify." =
+              assertthat::is.string(qmd_file))
+  stopifnot("`qmd_file` must be a path to a Quarto file to modify." =
+              file.exists(qmd_file))
+  stopifnot("`child_files` must be a path to child files to include." =
+              all(sapply(child_files, assertthat::is.string)))
+  stopifnot("`qmd_file` must be a path to child files to include." =
+              all(sapply(child_files, file.exists)))
+  stopifnot("`start_marker` must be a scalar character vector." =
+              is.string(start_marker))
+  stopifnot("`end_marker` must be a scalar character vector." =
+              assertthat::is.string(end_marker))
   stopifnot(
     "page_break must be NULL, 'newpage', or 'clearpage'." =
       !is.null(page_break) && !page_break %in% c("newpage", "clearpage")
   )
+  stopifnot("`quiet` must be a scalar logical vector." =
+              assertthat::is.flag(quiet))
 
   # Read QMD file
   lines <- readLines(qmd_file)
