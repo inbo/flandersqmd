@@ -9,13 +9,13 @@ Authors@R: c(
   )
 Description: Prepare new documents using the Flandersqmd extensions.
 License: GPL-3
-URL: https://inbo.github.io/flandersqmd
+URL: https://inbo.github.io/flandersqmd/
 BugReports: https://github.com/inbo/flandersqmd/issues
 Depends:
     R (>= 4.1.0)
 Imports:
     assertthat,
-    checklist,
+    checklist (>= 0.5.1),
     fs,
     gert,
     pdftools,

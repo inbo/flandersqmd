@@ -19,4 +19,7 @@ license: GPL-3.0
 repository-code: https://github.com/inbo/flandersqmd/
 type: software
 abstract: "Prepare new documents using the Flandersqmd extensions."
+identifiers:
+- type: url
+  value: https://inbo.github.io/flandersqmd/
 version: 0.0.2

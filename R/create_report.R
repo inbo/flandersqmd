@@ -120,7 +120,7 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
     sprintf("  shorttitle: %s", short)
   ) -> yaml
   c(
-    insert_author_reviewer(yaml),
+    insert_author_reviewer(yaml, lang = lang),
     add_address("client"),
     add_address("cooperation"),
     "  public_report: true",
@@ -206,12 +206,12 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
 }
 
 #' @importFrom checklist ask_yes_no
-insert_author_reviewer <- function(yaml) {
+insert_author_reviewer <- function(yaml, lang) {
   cat("Please select the corresponding author")
-  authors <- use_author()
+  authors <- use_author(lang = lang)
   c(yaml, "  author:", author2yaml(authors, corresponding = TRUE)) -> yaml
   while (isTRUE(ask_yes_no("Add another author?", default = FALSE))) {
-    author <- use_author()
+    author <- use_author(lang = lang)
     authors[, c("given", "family", "email")] |>
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
@@ -227,7 +227,7 @@ insert_author_reviewer <- function(yaml) {
   cat("Please select the reviewer")
   duplo <- 1
   while (duplo > 0) {
-    author <- use_author()
+    author <- use_author(lang = lang)
     authors[, c("given", "family", "email")] |>
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
