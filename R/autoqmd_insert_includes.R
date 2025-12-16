@@ -78,7 +78,7 @@ autoqmd_insert_includes <- function(
               file.exists(qmd_file))
   stopifnot("`child_files` must be a path to child files to include." =
               all(sapply(child_files, assertthat::is.string)))
-  stopifnot("`qmd_file` must be a path to child files to include." =
+  stopifnot("`child_files` must be a path to child files to include." =
               all(sapply(child_files, file.exists)))
   stopifnot("`start_marker` must be a scalar character vector." =
               is.string(start_marker))

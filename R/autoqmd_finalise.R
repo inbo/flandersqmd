@@ -48,6 +48,15 @@ autoqmd_finalise <- function(
   message = "default",
   child_dirs_rm = NULL
 ) {
+  # Validation
+  stopifnot("`qmd_files` must be a path to QMD files to update." =
+              all(sapply(qmd_files, assertthat::is.string)))
+  stopifnot("`qmd_files` must be a path to QMD files to update." =
+              all(sapply(qmd_files, file.exists)))
+  stopifnot("`message` must be a character vector of length." =
+              is.character(message))
+
+  # Get message
   if (all(message == "default")) {
     message <- c(
       "",
