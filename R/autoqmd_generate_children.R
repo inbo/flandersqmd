@@ -55,7 +55,7 @@
 autoqmd_generate_children <- function(
   ...,
   template,
-  child_dir,
+  child_dir = ".",
   freeze = NULL,
   delim = c("{{", "}}")
 ) {
