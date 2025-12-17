@@ -85,7 +85,7 @@ autoqmd_generate_children <- function(
     stopifnot("`freeze` must be a scalar character vector." =
                 assertthat::is.string(freeze))
     stopifnot("`freeze` must match one of the named arguments in ..." =
-                !freeze %in% names(dots))
+                freeze %in% names(dots))
 
     # Sanitize freeze names (replace spaces etc.)
     base_names <- gsub("[^a-zA-Z0-9_.-]", "_", as.character(dots[[freeze]]))
