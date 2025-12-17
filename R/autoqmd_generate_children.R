@@ -48,7 +48,7 @@
 #'   species = my_species,
 #'   label = gsub("\\s", ".", tolower(my_species)),
 #'   template = "species_template.qmd",
-#'   child_dir = "spec_files",
+#'   child_dir = "child_qmd",
 #'   freeze = "label"
 #' )
 #' }
@@ -64,10 +64,10 @@ autoqmd_generate_children <- function(
 
   # Validation
   stopifnot("You must provide at least one named argument via ..." =
-              length(dots) == 0)
+              length(dots) != 0)
   lens <- vapply(dots, length, integer(1))
   stopifnot("All arguments in ... must have the same length." =
-              length(dots) == 0)
+              length(dots) != 0)
   n <- lens[1]
 
   stopifnot("`template` must be a path to a Quarto template." =

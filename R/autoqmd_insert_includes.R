@@ -50,7 +50,7 @@
 #'   species = my_species,
 #'   label = gsub("\\s", ".", tolower(my_species)),
 #'   template = "species_template.qmd",
-#'   child_dir = "spec_files",
+#'   child_dir = "child_qmd",
 #'   freeze = "label"
 #' )
 #'
@@ -86,7 +86,7 @@ autoqmd_insert_includes <- function(
               assertthat::is.string(end_marker))
   stopifnot(
     "page_break must be NULL, 'newpage', or 'clearpage'." =
-      !is.null(page_break) && !page_break %in% c("newpage", "clearpage")
+      is.null(page_break) || page_break %in% c("newpage", "clearpage")
   )
   stopifnot("`quiet` must be a scalar logical vector." =
               assertthat::is.flag(quiet))
