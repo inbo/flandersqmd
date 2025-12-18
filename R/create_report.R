@@ -56,12 +56,41 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
     "The report name folder already exists." = !is_dir(path(path, reportname))
   )
 
-  # build new yaml
+  # ask required information
   lang <- c(`nl-BE` = "Dutch", `en-GB` = "English", `fr-FR` = "French")
   lang <- names(lang)[
     menu_first(lang, title = "What is the main language of the report?")
   ]
-  level <- c(`2` = "entity", `1` = "Flanders")
+  level <- c(`2` = "INBO", `1` = "Flanders")
+  selected_level <- menu_first(
+    level,
+    title = "Which type of corporate identity?"
+  )
+  readline(prompt = "Enter the title: ") |>
+    gsub(pattern = "[\"|']", replacement = "") |>
+    sprintf(fmt = "  title: \"%s\"") -> title
+  readline(
+    prompt = "Enter the optional subtitle (leave empty to omit): "
+  ) |>
+    gsub(pattern = "[\"|']", replacement = "") -> subtitle
+  while (TRUE) {
+    short <- readline(
+      prompt = "Enter the filename (without extension) used for the output: "
+    )
+    if (grepl("^[a-z0-9-]+$", short)) {
+      break
+    }
+    warning(
+      "The filename may only contain lower case letters, digits and -",
+      call. = FALSE,
+      immediate. = TRUE
+    )
+  }
+  lof <- ask_yes_no("Add a list of figures?", default = FALSE)
+  lot <- ask_yes_no("Add a list of tables?", default = FALSE)
+  authors <- insert_author_reviewer(lang = lang)
+
+  # build new yaml
   c(
     "project:",
     "  type: book",
@@ -92,35 +121,11 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
     "",
     "flandersqmd:",
     "  entity: INBO",
-    sprintf(
-      "  level: %s",
-      names(level)[
-        menu_first(level, title = "Which type of corporate identity?")
-      ]
-    )
-  ) -> yaml
-  readline(prompt = "Enter the title: ") |>
-    gsub(pattern = "[\"|']", replacement = "") |>
-    sprintf(fmt = "  title: \"%s\"") -> title
-  readline(
-    prompt = "Enter the optional subtitle (leave empty to omit): "
-  ) |>
-    gsub(pattern = "[\"|']", replacement = "") -> subtitle
-  while (TRUE) {
-    short <- readline(prompt = "Enter the filename used for the output: ")
-    if (grepl("^[a-z0-9-]+$", short)) {
-      break
-    }
-    cat("The short title may only contain lower case letters, digits and -")
-  }
-  c(
-    yaml,
+    sprintf("  level: %s", names(level)[selected_level]),
     title,
     sprintf("  subtitle: \"%s\"", subtitle)[subtitle != ""],
-    sprintf("  shorttitle: %s", short)
-  ) -> yaml
-  c(
-    insert_author_reviewer(yaml, lang = lang),
+    sprintf("  shorttitle: %s", short),
+    authors,
     add_address("client"),
     add_address("cooperation"),
     "  public_report: true",
@@ -161,22 +166,13 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
       "",
       "AutoAppendNewline: Yes",
       "StripTrailingWhitespace: Yes",
-      "LineEndingConversion: Posix",
-      "",
-      "",
-      "MarkdownWrap: Sentence",
-      "MarkdownReferences: Document",
-      "MarkdownCanonical: Yes"
+      "LineEndingConversion: Posix"
     ),
     con = path(path, reportname, reportname, ext = "Rproj")
   )
   add_index(path(path, reportname))
   add_abstract(path(path, reportname))
-  add_recommendations(
-    path(path, reportname),
-    lof = ask_yes_no("Add a list of figures?", default = TRUE),
-    lot = ask_yes_no("Add a list of tables?", default = TRUE)
-  )
+  add_recommendations(path(path, reportname), lof = lof, lot = lot)
   add_chapter(path(path, reportname))
   add_bibliography(path(path, reportname))
   c(
@@ -206,18 +202,20 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
 }
 
 #' @importFrom checklist ask_yes_no
-insert_author_reviewer <- function(yaml, lang) {
+insert_author_reviewer <- function(lang) {
   cat("Please select the corresponding author")
   authors <- use_author(lang = lang)
-  c(yaml, "  author:", author2yaml(authors, corresponding = TRUE)) -> yaml
+  c("  author:", author2yaml(authors, corresponding = TRUE)) -> yaml
   while (isTRUE(ask_yes_no("Add another author?", default = FALSE))) {
     author <- use_author(lang = lang)
     authors[, c("given", "family", "email")] |>
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
     if (duplo > 0) {
-      cat(
-        paste(author$given, author$family, "is already listed as author")
+      warning(
+        paste(author$given, author$family, "is already listed as author"),
+        call. = FALSE,
+        immediate. = TRUE
       )
       next
     }
@@ -232,13 +230,15 @@ insert_author_reviewer <- function(yaml, lang) {
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
     if (duplo > 0) {
-      paste(
+      warning(
         author$given,
+        " ",
         author$family,
         "is already listed as author.",
-        "\nPlease select someone else."
-      ) |>
-        cat()
+        "\nPlease select someone else.",
+        call. = FALSE,
+        immediate. = TRUE
+      )
     }
   }
   c(yaml, "  reviewer:", author2yaml(author, corresponding = FALSE))
