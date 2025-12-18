@@ -24,8 +24,6 @@ allowed:
         checklist
       Availability using Additional_repositories specification:
         checklist   yes   https://inbo.r-universe.dev
-
-      Size of tarball: 5809376 bytes
   - motivation: To do in a later stage
     value: |-
       checking for code which exercises the package ... WARNING
