@@ -19,7 +19,8 @@
 #' @family utils
 #' @export
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom checklist ask_yes_no menu_first read_checklist use_author
+#' @importFrom checklist ask_yes_no get_branches_tags menu_first read_checklist
+#'   use_author
 #' @importFrom fs dir_create is_dir is_file path
 #' @importFrom gert git_find
 #' @importFrom quarto quarto_add_extension
@@ -40,6 +41,14 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
     grepl("^[a-z0-9_]+$", reportname),
     msg = paste(
       "The report name folder may only contain lower case letters, digits and _"
+    )
+  )
+  available <- get_branches_tags(owner = "inbo", repo = "flandersqmd-book")
+  assert_that(
+    version %in% available,
+    msg = paste(
+      "Version not found. Available versions are:",
+      paste(available, collapse = ", ")
     )
   )
   x <- try(read_checklist(path), silent = TRUE)
