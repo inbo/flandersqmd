@@ -1,0 +1,33 @@
+### {{species}}
+
+```{r}
+#| echo: false
+# Data preparation
+iris_spec_df <- iris[iris$Species == sub("Iris\\s", "", "{{species}}"), ]
+
+# Data analysis
+lm_results <- summary(lm(Sepal.Width ~ Sepal.Length, data = iris_spec_df))
+
+# Get results
+slope <- round(lm_results$coefficients["Sepal.Length", "Estimate"], 3)
+se <- round(lm_results$coefficients["Sepal.Length", "Std. Error"], 3)
+p_val <- round(lm_results$coefficients["Sepal.Length", "Pr(>|t|)"], 3)
+
+trend <- ifelse(slope > 0, "increases", "decreases")
+sign <- ifelse(p_val < 0.05, "significant", "not significant")
+```
+
+Sepal width `r trend` with sepal length for *{{species}}* (@fig-corr-{{label}}).
+This association is `r sign` at the $\alpha = 0.05$ level (est.: `r slope`,
+se: `r se`, p: `r p_val`).
+
+```{r}
+#| echo: false
+#| label: fig-corr-{{label}}
+#| fig-cap: "Association between sepal length and sepal width."
+library(ggplot2) # Data visualisation
+ggplot(iris_spec_df, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = "y ~ x", se = TRUE) +
+  labs(x = "Sepal length", y = "Sepal width", title = "{{species}}")
+```
