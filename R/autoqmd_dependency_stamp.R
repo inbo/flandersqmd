@@ -22,7 +22,7 @@
 #' \dontrun{
 #' autoqmd_dependency_stamp("species_template.qmd")
 #' }
-autoqmd_dependency_stamp <- function(file = NULL, quiet = FALSE) {
+autoqmd_dependency_stamp <- function(file = NULL, quiet = FALSE) { # nolint: cyclocomp_linter
   # If no valid file -> fallback to current time
   if (is.null(file) || !file.exists(file)) {
     return(sprintf("<!-- DEPENDENCY-MTIME: %s -->",

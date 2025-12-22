@@ -87,6 +87,11 @@ Next, define a template .qmd file that describes the structure of one repeated s
 
 Example: `species_template.qmd`
 
+```{r}
+#| echo: false
+# nolint start
+```
+
 ````{text}
 ### {{species}}
 
@@ -122,6 +127,11 @@ ggplot(iris_spec_df, aes(x = Sepal.Length, y = Sepal.Width)) +
   labs(x = "Sepal length", y = "Sepal width", title = "{{species}}")
 ```
 ````
+
+```{r}
+#| echo: false
+# nolint end
+```
 
 Each generated child document will be a fully valid `.qmd` file derived from this template. Template files are never rendered directly by Quarto; they are only used as blueprints for generating temporary child documents.
 
