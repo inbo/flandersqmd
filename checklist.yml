@@ -36,3 +36,5 @@ spelling:
   ignore:
   - .github
   - LICENSE.md
+  - tests/testthat/species_template.qmd
+  - tests/testthat/iris_chapter.qmd
