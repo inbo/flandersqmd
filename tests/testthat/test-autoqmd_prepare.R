@@ -1,6 +1,10 @@
 qmd <- "iris_chapter_copy.qmd"
 file.copy("iris_chapter.qmd", qmd)
 
+# QMD without markers
+qmd1 <- "bad_chapter.qmd"
+writeLines(c("# Title", "Some content here"), qmd1)
+
 test_that("autoqmd_prepare generates children and inserts includes correctly", {
   # Directory to store generated child QMD files
   child_dir <- "child_qmd"
@@ -81,9 +85,6 @@ test_that("autoqmd_prepare respects page breaks when requested", {
 })
 
 test_that("autoqmd_prepare errors if parent QMD missing markers", {
-  # Create a minimal QMD file without markers
-  qmd <- "bad_chapter.qmd"
-
   child_dir <- "child_qmd"
   species <- paste("Iris", levels(iris$Species))
   labels  <- gsub("\\s", ".", tolower(species))
@@ -95,7 +96,7 @@ test_that("autoqmd_prepare errors if parent QMD missing markers", {
       label     = labels,
       template  = "species_template.qmd",
       child_dir = child_dir,
-      qmd_file  = qmd,
+      qmd_file  = qmd1,
       quiet     = TRUE
     ),
     "Markers not found in parent QMD"
@@ -138,3 +139,4 @@ test_that("autoqmd_prepare errors if template or parent file does not exist", {
 # Cleanup generated files after tests
 unlink("child_qmd", recursive = TRUE)
 unlink(qmd, recursive = TRUE)
+unlink(qmd1, recursive = TRUE)
