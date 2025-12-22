@@ -1,7 +1,7 @@
-test_that("autoqmd_prepare generates children and inserts includes correctly", {
-  # Path to the parent QMD file
-  qmd <- "iris_chapter.qmd"
+qmd <- "iris_chapter_copy.qmd"
+file.copy("iris_chapter.qmd", qmd)
 
+test_that("autoqmd_prepare generates children and inserts includes correctly", {
   # Directory to store generated child QMD files
   child_dir <- "child_qmd"
 
@@ -59,9 +59,6 @@ test_that("autoqmd_prepare generates children and inserts includes correctly", {
 })
 
 test_that("autoqmd_prepare respects page breaks when requested", {
-  # Parent QMD file
-  qmd <- "iris_chapter.qmd"
-
   child_dir <- "child_qmd"
   species <- paste("Iris", levels(iris$Species))
   labels  <- gsub("\\s", ".", tolower(species))
@@ -138,5 +135,6 @@ test_that("autoqmd_prepare errors if template or parent file does not exist", {
   )
 })
 
-# Cleanup generated child files after tests
+# Cleanup generated files after tests
 unlink("child_qmd", recursive = TRUE)
+unlink(qmd, recursive = TRUE)

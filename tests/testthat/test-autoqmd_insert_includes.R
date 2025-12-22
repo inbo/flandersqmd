@@ -1,7 +1,7 @@
-test_that("autoqmd_insert_includes inserts child includes correctly", {
-  # Path to the QMD file used in the test
-  qmd <- "iris_chapter.qmd"
+qmd <- "iris_chapter_copy.qmd"
+file.copy("iris_chapter.qmd", qmd)
 
+test_that("autoqmd_insert_includes inserts child includes correctly", {
   # Create a directory for generated child QMD files
   dir.create("child_qmd", showWarnings = FALSE)
 
@@ -59,8 +59,6 @@ test_that("autoqmd_insert_includes inserts child includes correctly", {
 })
 
 test_that("autoqmd_insert_includes adds page breaks when requested", {
-  qmd <- "iris_chapter.qmd"
-
   # Create child QMD files
   dir.create("child_qmd", showWarnings = FALSE)
   child_files <- c(
@@ -83,5 +81,6 @@ test_that("autoqmd_insert_includes adds page breaks when requested", {
   expect_equal(sum(grepl("\\\\newpage", txt)), 1)
 })
 
-# Remove child documents folder
+# Cleanup generated files after tests
 unlink("child_qmd", recursive = TRUE)
+unlink(qmd, recursive = TRUE)
