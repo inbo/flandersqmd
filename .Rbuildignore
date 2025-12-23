@@ -14,8 +14,8 @@
 ^man-roxygen$
 ^organisation.yml$
 ^pkgdown$
+^vignettes/*_files$
+^vignettes/\.quarto$
 ^vignettes/articles$
 ^vignettes/articles/*_files$
 ^vignettes/articles/\.quarto$
-^vignettes/\.quarto$
-^vignettes/*_files$
