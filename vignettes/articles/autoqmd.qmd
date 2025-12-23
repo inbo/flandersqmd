@@ -395,7 +395,7 @@ The `autoqmd_*()` helpers are intentionally minimal, but a number of customisati
 | Generate | Verbosity                  | *all helpers*                 | `quiet`                      |
 | Insert   | Marker placement           | `autoqmd_insert_includes()`   | `start_marker`, `end_marker` |
 | Insert   | Page breaks                | `autoqmd_insert_includes()`   | `page_break`                 |
-| Cleanup  | Placeholder messages       | `autoqmd_cleanup()`           | `message`                    |
+| Cleanup  | Placeholder messages       | `autoqmd_finalise()`          | `message`                    |
 | Cleanup  | Cleanup of generated files | `autoqmd_finalise()`          | `child_dir`                  |
 
 ### Generated file location
