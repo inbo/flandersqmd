@@ -39,7 +39,7 @@ autoqmd_finalise("report.qmd")
 autoqmd_finalise(
   qmd_files = "report.qmd",
   message = c(
-    "> ⚠️ Auto-generated content below",
+    "> Auto-generated content below",
     "> Do not edit manually."
   )
 )

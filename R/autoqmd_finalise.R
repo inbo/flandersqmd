@@ -32,7 +32,7 @@
 #' autoqmd_finalise(
 #'   qmd_files = "report.qmd",
 #'   message = c(
-#'     "> ⚠️ Auto-generated content below",
+#'     "> Auto-generated content below",
 #'     "> Do not edit manually."
 #'   )
 #' )
@@ -60,7 +60,7 @@ autoqmd_finalise <- function(
   if (all(message == "default")) {
     message <- c(
       "",
-      "> ⚠️ **Note:** The content below is automatically generated",
+      "> **Note:** The content below is automatically generated",
       "> during rendering. Do not edit this part manually."
     )
   }
