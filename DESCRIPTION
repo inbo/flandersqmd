@@ -29,6 +29,8 @@ Imports:
 Suggests:
     rstudioapi,
     testthat (>= 3.0.0)
+VignetteBuilder: 
+    quarto
 Additional_repositories: https://inbo.r-universe.dev
 Config/checklist/communities: inbo
 Config/checklist/keywords: corporate identity; quarto
