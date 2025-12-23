@@ -9,7 +9,8 @@ autoqmd_generate_children(
   template,
   child_dir,
   freeze = NULL,
-  delim = c("{{", "}}")
+  delim = c("{{", "}}"),
+  quiet = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ and files will only be regenerated if the template is newer.}
 delimiters used for template variables. Passed to \code{knitr::knit_expand}.
 Defaults to \code{c("{{", "}}")}, which is convenient for Quarto templates and
 avoids conflicts with LaTeX or Pandoc syntax.}
+
+\item{quiet}{Logical; if \code{TRUE}, suppresses messages.}
 }
 \value{
 Invisibly returns a character vector with the paths of the generated

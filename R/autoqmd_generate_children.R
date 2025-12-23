@@ -19,6 +19,7 @@
 #'   delimiters used for template variables. Passed to `knitr::knit_expand`.
 #'   Defaults to `c("{{", "}}")`, which is convenient for Quarto templates and
 #'   avoids conflicts with LaTeX or Pandoc syntax.
+#' @param quiet Logical; if `TRUE`, suppresses messages.
 #'
 #' @details
 #' - Random names (default) are generated using 8-digit hexadecimal strings.
@@ -57,7 +58,8 @@ autoqmd_generate_children <- function(
   template,
   child_dir,
   freeze = NULL,
-  delim = c("{{", "}}")
+  delim = c("{{", "}}"),
+  quiet = FALSE
 ) {
   # Capture input arguments
   dots <- list(...)
@@ -126,11 +128,13 @@ autoqmd_generate_children <- function(
   }
 
   # Message summary
-  msg <- sprintf(
-    "Processed %d QMD files (%d generated, %d skipped) in '%s'.",
-    n, generated, skipped, child_dir
-  )
-  message(msg)
+  if (!quiet) {
+    msg <- sprintf(
+      "Processed %d QMD files (%d generated, %d skipped) in '%s'.",
+      n, generated, skipped, child_dir
+    )
+    message(msg)
+  }
 
   invisible(out_files)
 }

@@ -107,7 +107,8 @@ autoqmd_prepare <- function(
     template = template,
     child_dir = child_dir,
     freeze = freeze,
-    delim = delim
+    delim = delim,
+    quiet = quiet
   )
 
   # Insert includes
