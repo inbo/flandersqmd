@@ -13,10 +13,6 @@ allowed:
         checklist
       Availability using Additional_repositories specification:
         checklist   yes   https://inbo.r-universe.dev
-  - motivation: To do in a later stage
-    value: |-
-      checking for code which exercises the package ... WARNING
-      No examples, no tests, no vignettes
   notes: []
 required:
 - CITATION
@@ -29,6 +25,7 @@ required:
 - folder conventions
 - license
 - lintr
+- organisation
 - repository secret
 - spelling
 spelling:
@@ -38,3 +35,4 @@ spelling:
   - LICENSE.md
   - tests/testthat/species_template.qmd
   - tests/testthat/iris_chapter.qmd
+pak: []
