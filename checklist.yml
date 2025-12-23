@@ -36,4 +36,3 @@ spelling:
   - docs
   - tests/testthat/species_template.qmd
   - tests/testthat/iris_chapter.qmd
-pak: []
