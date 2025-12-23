@@ -1,5 +1,9 @@
 ---
 title: "Automating repeated report sections in Quarto"
+vignette: >
+  %\VignetteIndexEntry{Automating repeated report sections in Quarto}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 knitr:
   opts_chunk:
     collapse: true
