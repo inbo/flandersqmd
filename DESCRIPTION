@@ -12,7 +12,7 @@ Authors@R: c(
 Description: Prepare new documents using the Flandersqmd extensions.
 License: GPL-3
 URL: https://github.com/inbo/flandersqmd,
-    https://inbo.github.io/flandersqmd
+    https://inbo.github.io/flandersqmd/
 BugReports: https://github.com/inbo/flandersqmd/issues
 Depends:
     R (>= 4.1.0)
