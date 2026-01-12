@@ -16,14 +16,19 @@ author2yaml <- function(author, corresponding = FALSE) {
   assert_that(is.flag(corresponding), noNA(corresponding))
   c(
     "  - name:",
-    sprintf("      given: \"%s\"", author$given),
-    sprintf("      family: \"%s\"", author$family)
+    sprintf("      given: \"%s\"", author$given)
   ) -> yaml
+  if (!is.na(author$family) && author$family != "") {
+    yaml <- c(yaml, sprintf("      family: \"%s\"", author$family))
+  }
   if (!is.na(author$email) && author$email != "") {
     yaml <- c(yaml, sprintf("    email: \"%s\"", author$email))
   }
   if (!is.na(author$orcid) && author$orcid != "") {
     yaml <- c(yaml, sprintf("    orcid: \"%s\"", author$orcid))
+  }
+  if (!is.null(author$ror) && author$ror != "") {
+    yaml <- c(yaml, sprintf("    ror: \"%s\"", author$ror))
   }
   if (!is.na(author$affiliation) && author$affiliation != "") {
     yaml <- c(
