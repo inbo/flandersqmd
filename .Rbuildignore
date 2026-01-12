@@ -12,6 +12,13 @@
 ^data-raw$
 ^docs$
 ^inst/output$
+^inst/workshop/*.csl$
+^inst/workshop/*.css$
+^inst/workshop/*.jpg$
+^inst/workshop/*.png$
+^inst/workshop/*.ttf$
+^inst/workshop/.quarto$
+^inst/workshop/_extensions$
 ^man-roxygen$
 ^organisation.yml$
 ^pkgdown$

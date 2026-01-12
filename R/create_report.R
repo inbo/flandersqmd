@@ -208,7 +208,8 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
   rstudioapi::openProject(path(path, reportname), newSession = TRUE)
 }
 
-#' @importFrom checklist ask_yes_no ask_rightsholder_funder author2df inbo_org_list
+#' @importFrom checklist ask_yes_no ask_rightsholder_funder author2df
+#' inbo_org_list
 insert_author_reviewer <- function(lang) {
   cat("Please select the corresponding author")
   authors <- use_author(lang = lang)
