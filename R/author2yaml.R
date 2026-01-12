@@ -16,20 +16,12 @@ author2yaml <- function(author, corresponding = FALSE) {
   assert_that(is.flag(corresponding), noNA(corresponding))
   c(
     "  - name:",
-    sprintf("      given: \"%s\"", author$given)
+    sprintf("      given: \"%s\"", author$given),
+    paste0("  ", append_element(author, "family")),
+    append_element(author, "email"),
+    append_element(author, "orcid"),
+    append_element(author, "ror")
   ) -> yaml
-  if (!is.na(author$family) && author$family != "") {
-    yaml <- c(yaml, sprintf("      family: \"%s\"", author$family))
-  }
-  if (!is.na(author$email) && author$email != "") {
-    yaml <- c(yaml, sprintf("    email: \"%s\"", author$email))
-  }
-  if (!is.na(author$orcid) && author$orcid != "") {
-    yaml <- c(yaml, sprintf("    orcid: \"%s\"", author$orcid))
-  }
-  if (!is.null(author$ror) && author$ror != "") {
-    yaml <- c(yaml, sprintf("    ror: \"%s\"", author$ror))
-  }
   if (!is.na(author$affiliation) && author$affiliation != "") {
     yaml <- c(
       yaml,
@@ -45,4 +37,17 @@ author2yaml <- function(author, corresponding = FALSE) {
     msg = "please provide an email for the corresponding author"
   )
   paste(c(yaml, "    corresponding: true"), collapse = "\n")
+}
+
+append_element <- function(author, element) {
+  if (is.null(author[[element]])) {
+    return(character(0))
+  }
+  if (is.na(author[[element]])) {
+    return(character(0))
+  }
+  if (author[[element]] == "") {
+    return(character(0))
+  }
+  sprintf("    %s: \"%s\"", element, author[[element]])
 }
