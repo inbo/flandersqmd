@@ -1,10 +1,19 @@
 # `flandersqmd`?
 
-## Why Quarto instead of bookdown?
+## What is Quarto?
 
 - Quarto is the successor of bookdown
 - Quarto is a more modern and flexible framework
+- It allows to combine code and text in a single source
+- It can generate documents in multiple formats from the same source
+    - pdf, HTML, epub, ...
 - Quarto supports R, Python, Julia and Observable JavaScript
+
+## What is `flandersqmd`?
+
+- `flandersqmd` is an R package that helps to set-up and render Quarto reports
+- it provides templates and functions to create reports in the Flemish government style
+- it is inspired by the `INBOmd` package for Rmarkdown/bookdown reports
 
 ## Why `flandersqmd` instead of `INBOqmd`?
 
@@ -22,32 +31,28 @@
 - `flandersqmd-website`: HTML format for pages
     - recommended for reports with a lot of interactive figures
 - `flandersqmd-revealjs`: slides in HTML format
+- `flandersqmd-leaflet`: Brochure-like report without title page and colophon
 
-# Differences between Quarto and Rmarkdown/bookdown
+# Structure of a Quarto project
 
 ## Files 
 
-- without code: stays `.md`
-- with code: `.Rmd` becomes `.qmd`
-- `_bookdown.yml` becomes `_quarto.yml`
-- same bibliography file
-- `yaml` header from `index.Rmd` moves to `_quarto.yml`
+- content
+    - text only files: `*.md`
+    - files with text and code: `*.qmd`
+- configuration file: `_quarto.yml`
+- references: `*.bib`
 
 ## Input and output files
 
-- both require an main `index` file.
-- bookdown includes all markdown file in alphabetical order
+- require main `index.md` or `index.qmd` file is required.
 - quarto requires you to list the files in the `_quarto.yml` file
     - list them in the relevant order in the `chapters` section under the `book` section
 - for HTML output
-    - bookdown splits the report into one file per chapter or section
     - Quarto converts each input file into one output file with the same name
 
 ## Formats
 
-- bookdown stores the formats in R packages like `bookdown` or `INBOmd`
-    - you need to install the package to render the report
-    - updating the package can change things
 - Quarto install the extensions into the project
     - you need a copy of the extension in every project
     - the copy in a project is independent of the extension source
@@ -55,12 +60,18 @@
 
 ## Render strategies
 
-- bookdown uses the merge and knit strategy
-    - pro: reusable objects from earlier chapters
-    - contra: chapters require earlier chapters
 - Quarto uses the knit and merge strategy
     - pro: chapters can be rendered independently
-    - contra: you need to store and load objects to reuse them 
+    - contra: you need to store and load objects to reuse them
+
+## Caching
+
+- cache: stores the results of a code chunk
+    - reuses the cached results if the **code** did not change
+    - note that changes in data or packages are not detected
+- freeze: stored the rendered output of a file
+    - reuses the stored output if the **file** did not change
+    - renders only the files that changed
 
 ## Rendering the report in RStudio GUI
 
@@ -85,7 +96,7 @@
     - Options in the chunk, starting with `#|`
     - Options can span multiple lines
         - Start extra lines with two extra spaces
-    - Captions can contain markdown formatting
+    - Captions can contain markdown formatting and special characters
 
 ```r
 #| echo: false
@@ -93,15 +104,25 @@
 #|   spans **multiple** lines
 ```
 
+## Dynamic chunk options
+
+- You can use `!expr` to set chunk options dynamically
+- The expression is evaluated in `R` and the result is used as the option value
+
+```r
+#| eval: !expr 'nrow(observed) > 0'
+#| fig.cap: !expr 'sprintf(toestand, params$name)'
+```
+
 ## Cross-references
 
-- bookdown uses `@ref(fig:chunk-label)` to refer to a chunk
 - Quarto uses `@chunk-label` to refer to a chunk
-- Quarto determines the type of cross-reference automatically based on the prefix
+- the prefix determines the type of cross-reference
     - `fig-:` for figures
     - `tbl-:` for tables
     - `sec-:` for sections
     - `eq-:` for equations
+- You need to set the figure and table captions with the `fig-cap` and `tbl-cap` options
 
 # Getting started with `flandersqmd`
 
@@ -111,9 +132,23 @@
 - set a proper `_quarto.yml` file
 - currently only supports the book format
 
-1. `create_report()` generates a skeleton
-1. `insert_missing_metadata()` adds missing metadata
-1. `add_cover()` adds a cover page
+## The easy way: the `flandersqmd` package
+
+1. `flandersqmd::create_report()` generates a skeleton
+1. Write the report content
+1. Request the required metadata (report number, DOI, ...)
+1. `flandersqmd::insert_missing_metadata()` adds missing metadata
+1. Request a cover
+1. `flandersqmd::add_cover()` adds the cover page
+
+## The easy way: the `flandersqmd` package
+
+- `flandersqmd::add_author()`: add an author or reviewer to the report
+- `flandersqmd::add_address()`: add a client or cooperation partner to the report
+- `flandersqmd::add_abstract()`: add an abstract to the report
+- `flandersqmd::add_recommendations()`: add recommendations to the report
+- `flandersqmd::add_chapter()`: add a chapter to the report
+- `flandersqmd::add_bibliography()`: add a bibliography to the report
 
 ## The hard way: manually
 
@@ -191,6 +226,39 @@ Use `flandersqmd::add_author()` to add an author or reviewer to the report
 1. Add a `R` figure and table and a cross-reference to them.
 1. Add missing metadata with `insert_missing_metadata()`.
 1. Add the cover page with `add_cover()`.
+
+# Parametrised reports
+
+## Prepare the report
+
+- Add parameters to the report to make it reusable for different analyses.
+- Place it in the yaml front matter of every file.
+- Access the parameters in the code chunks with `params$parameter_name`.
+
+```
+---
+params:
+  data: "data"
+  location: 20502
+  name: Fort Lier (3010)
+---
+```
+
+## Render the report with different parameters
+
+- Create a data frame with the different parameter sets.
+- Loop over the rows of the data frame.
+
+```{r}
+#| echo: true
+#| eval: FALSE
+for (i in seq_len(nrow(to_do))) {
+  quarto_render(
+    ".", quiet = FALSE, as_job = FALSE,
+    execute_params = list(name = to_do$name[i])
+  )
+}
+```
 
 # Child documents in quarto
 
