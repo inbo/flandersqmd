@@ -208,7 +208,7 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
   rstudioapi::openProject(path(path, reportname), newSession = TRUE)
 }
 
-#' @importFrom checklist ask_yes_no
+#' @importFrom checklist ask_yes_no ask_rightsholder_funder author2df inbo_org_list
 insert_author_reviewer <- function(lang) {
   cat("Please select the corresponding author")
   authors <- use_author(lang = lang)
@@ -248,5 +248,52 @@ insert_author_reviewer <- function(lang) {
       )
     }
   }
-  c(yaml, "  reviewer:", author2yaml(author, corresponding = FALSE))
+  yaml <- c(yaml, "  reviewer:", author2yaml(author, corresponding = FALSE))
+
+  inbo_org_list() |>
+    ask_rightsholder_funder(type = "rightsholder") -> rh
+  fund <- ask_rightsholder_funder(org = rh$org, type = "funder")
+  org <- fund$org
+
+  vapply(
+    rh$selection,
+    FUN = function(x) {
+      org$get_person(x, role = "cph", lang = lang) |>
+        author2df() |>
+        author2yaml() |>
+        list()
+    },
+    FUN.VALUE = vector("list", 1)
+  ) |>
+    unlist() |>
+    gsub(pattern = "\n", replacement = "\n  ") |>
+    gsub(pattern = "^", replacement = "  ") -> rh_yaml
+  vapply(
+    fund$selection,
+    FUN = function(x) {
+      org$get_person(x, role = "fnd", lang = lang) |>
+        author2df() |>
+        author2yaml() |>
+        list()
+    },
+    FUN.VALUE = vector("list", 1)
+  ) |>
+    unlist() |>
+    gsub(pattern = "\n", replacement = "\n  ") |>
+    gsub(pattern = "^", replacement = "  ") -> fund_yaml
+  org$get_zenodo_by_email(rh$selection) |>
+    c(org$get_zenodo_by_email(fund$selection)) |>
+    unique() |>
+    paste(collapse = "; ") -> zenodo
+  if (zenodo != "") {
+    zenodo <- paste("  community:", zenodo)
+  }
+  c(
+    yaml,
+    "  rightsholder:",
+    unlist(rh_yaml),
+    "  funder:",
+    unlist(fund_yaml),
+    zenodo
+  )
 }
