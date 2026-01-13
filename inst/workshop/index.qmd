@@ -149,6 +149,7 @@
 - `flandersqmd::add_recommendations()`: add recommendations to the report
 - `flandersqmd::add_chapter()`: add a chapter to the report
 - `flandersqmd::add_bibliography()`: add a bibliography to the report
+- `flandersqmd::inbo_website()`: create a zip file for the INBO website
 
 ## The hard way: manually
 
@@ -193,9 +194,6 @@ The documentation provides source code for all available format options.
 :::
 
 ::::
-
-
-Use `flandersqmd::add_author()` to add an author or reviewer to the report
 
 ## Optional fields
 
@@ -252,6 +250,7 @@ params:
 ```{r}
 #| echo: true
 #| eval: FALSE
+#| label: render-parameters
 for (i in seq_len(nrow(to_do))) {
   quarto_render(
     ".", quiet = FALSE, as_job = FALSE,
