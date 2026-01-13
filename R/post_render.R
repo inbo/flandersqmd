@@ -28,5 +28,21 @@ post_render <- function() {
       ) |>
       file.rename(from = x)
   }
+  list.files(
+    "_extensions",
+    pattern = "_extension.yml",
+    full.names = TRUE,
+    recursive = TRUE
+  ) |>
+    grepv(pattern = "flandersqmd-book") |>
+    read_yaml() -> resources
+  c(
+    resources$contributes$format$common[["format-resources"]],
+    resources$contributes$format$html[["format-resources"]],
+    resources$contributes$format$pdf[["format-resources"]]
+  ) |>
+    basename() |>
+    file.remove()
+
   return(invisible(NULL))
 }

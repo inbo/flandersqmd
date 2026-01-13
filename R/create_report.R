@@ -5,53 +5,101 @@
 #'  It also creates an RStudio project file in the report folder.
 #'  When ran from RStudio, the project will be opened automatically in a new
 #'  session.
-#' @param shortname The name of the report project.
-#' The location of the folder `shortname` depends on the content of `path`.
+#' @param reportname The folder name of the report.
+#' The location of the folder `reportname` depends on the content of `path`.
 #' When `path` is a `checklist::checklist` project, you will find the new report
-#' at `path/source/shortname`.
+#' at `path/source/reportname`.
 #' When `path` is a `checklist::checklist` package, you will find the new report
-#' at `path/inst/shortname`.
-#' Otherwise you will find the new report at `path/shortname`.
+#' at `path/inst/reportname`.
+#' Otherwise you will find the new report at `path/reportname`.
 #' @param version The version of the `flandersqmd-book` extension to use.
 #' Defaults to `"main"`, which refers to the current version.
+#' @param shortname Deprecated.
+#' Use `reportname` instead.
 #' @family utils
 #' @export
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom checklist ask_yes_no menu_first read_checklist use_author
+#' @importFrom checklist ask_yes_no get_branches_tags menu_first read_checklist
+#'   use_author
 #' @importFrom fs dir_create is_dir is_file path
 #' @importFrom gert git_find
 #' @importFrom quarto quarto_add_extension
 #' @importFrom utils citation toBibtex
-create_report <- function(path = ".", shortname, version = "main") {
+create_report <- function(path = ".", reportname, version = "main", shortname) {
+  if (missing(reportname) && !missing(shortname)) {
+    warning(
+      "`shortname` is deprecated, use `reportname` instead.",
+      call. = FALSE,
+      immediate. = TRUE
+    )
+    reportname <- shortname
+  }
   assert_that(is.string(path), noNA(path), is_dir(path))
-  assert_that(is.string(shortname), noNA(shortname))
+  assert_that(is.string(reportname), noNA(reportname))
   assert_that(is.string(version), noNA(version))
   assert_that(
-    grepl("^[a-z0-9_]+$", shortname),
+    grepl("^[a-z0-9_]+$", reportname),
     msg = paste(
       "The report name folder may only contain lower case letters, digits and _"
+    )
+  )
+  available <- get_branches_tags(owner = "inbo", repo = "flandersqmd-book")
+  assert_that(
+    version %in% available,
+    msg = paste(
+      "Version not found. Available versions are:",
+      paste(available, collapse = ", ")
     )
   )
   x <- try(read_checklist(path), silent = TRUE)
   if (inherits(x, "checklist")) {
     path <- path(x$get_path, ifelse(x$package, "inst", "source"))
     dir_create(path)
-    output_dir <- "../../output"
+    output_dir <- path("..", "..", "output", reportname)
   } else {
-    output_dir <- "output"
+    output_dir <- path("output", reportname)
   }
+  path <- normalizePath(path, mustWork = TRUE)
 
-  assert_that(
-    !is_dir(path(path, shortname)),
-    msg = "The report name folder already exists."
+  stopifnot(
+    "The report name folder already exists." = !is_dir(path(path, reportname))
   )
 
-  # build new yaml
+  # ask required information
   lang <- c(`nl-BE` = "Dutch", `en-GB` = "English", `fr-FR` = "French")
   lang <- names(lang)[
     menu_first(lang, title = "What is the main language of the report?")
   ]
-  level <- c(`2` = "entity", `1` = "Flanders")
+  level <- c(`2` = "INBO", `1` = "Flanders")
+  selected_level <- menu_first(
+    level,
+    title = "Which type of corporate identity?"
+  )
+  readline(prompt = "Enter the title: ") |>
+    gsub(pattern = "[\"|']", replacement = "") |>
+    sprintf(fmt = "  title: \"%s\"") -> title
+  readline(
+    prompt = "Enter the optional subtitle (leave empty to omit): "
+  ) |>
+    gsub(pattern = "[\"|']", replacement = "") -> subtitle
+  while (TRUE) {
+    short <- readline(
+      prompt = "Enter the filename (without extension) used for the output: "
+    )
+    if (grepl("^[a-z0-9-]+$", short)) {
+      break
+    }
+    warning(
+      "The filename may only contain lower case letters, digits and -",
+      call. = FALSE,
+      immediate. = TRUE
+    )
+  }
+  lof <- ask_yes_no("Add a list of figures?", default = FALSE)
+  lot <- ask_yes_no("Add a list of tables?", default = FALSE)
+  authors <- insert_author_reviewer(lang = lang)
+
+  # build new yaml
   c(
     "project:",
     "  type: book",
@@ -82,35 +130,11 @@ create_report <- function(path = ".", shortname, version = "main") {
     "",
     "flandersqmd:",
     "  entity: INBO",
-    sprintf(
-      "  level: %s",
-      names(level)[
-        menu_first(level, title = "Which type of corporate identity?")
-      ]
-    )
-  ) -> yaml
-  readline(prompt = "Enter the title: ") |>
-    gsub(pattern = "[\"|']", replacement = "") |>
-    sprintf(fmt = "  title: \"%s\"") -> title
-  readline(
-    prompt = "Enter the optional subtitle (leave empty to omit): "
-  ) |>
-    gsub(pattern = "[\"|']", replacement = "") -> subtitle
-  while (TRUE) {
-    short <- readline(prompt = "Enter the short title used for the filename: ")
-    if (grepl("^[a-z0-9-]+$", short)) {
-      break
-    }
-    cat("The short title may only contain lower case letters, digits and -")
-  }
-  c(
-    yaml,
+    sprintf("  level: %s", names(level)[selected_level]),
     title,
     sprintf("  subtitle: \"%s\"", subtitle)[subtitle != ""],
-    sprintf("  shorttitle: %s", short)
-  ) -> yaml
-  c(
-    insert_author_reviewer(yaml),
+    sprintf("  shorttitle: %s", short),
+    authors,
     add_address("client"),
     add_address("cooperation"),
     "  public_report: true",
@@ -125,14 +149,12 @@ create_report <- function(path = ".", shortname, version = "main") {
     "    right:",
     "    - icon: mastodon",
     "      href: https://mastodon.online/&#64;inbo",
-    "    - icon: bluesky",
-    "      href: https://bsky.app/profile/inbo.be",
     "    - icon: facebook",
     "      href: https://www.facebook.com/INBOVlaanderen/"
   ) -> yaml
 
-  dir_create(path(path, shortname))
-  writeLines(yaml, path(path, shortname, "_quarto.yml"))
+  dir_create(path(path, reportname))
+  writeLines(yaml, path(path, reportname, "_quarto.yml"))
   writeLines(
     text = c(
       "Version: 1.0",
@@ -151,24 +173,15 @@ create_report <- function(path = ".", shortname, version = "main") {
       "",
       "AutoAppendNewline: Yes",
       "StripTrailingWhitespace: Yes",
-      "LineEndingConversion: Posix",
-      "",
-      "",
-      "MarkdownWrap: Sentence",
-      "MarkdownReferences: Document",
-      "MarkdownCanonical: Yes"
+      "LineEndingConversion: Posix"
     ),
-    con = path(path, shortname, shortname, ext = "Rproj")
+    con = path(path, reportname, reportname, ext = "Rproj")
   )
-  add_index(path(path, shortname))
-  add_abstract(path(path, shortname))
-  add_recommendations(
-    path(path, shortname),
-    lof = ask_yes_no("Add a list of figures?", default = TRUE),
-    lot = ask_yes_no("Add a list of tables?", default = TRUE)
-  )
-  add_chapter(path(path, shortname))
-  add_bibliography(path(path, shortname))
+  add_index(path(path, reportname))
+  add_abstract(path(path, reportname))
+  add_recommendations(path(path, reportname), lof = lof, lot = lot)
+  add_chapter(path(path, reportname))
+  add_bibliography(path(path, reportname))
   c(
     "/\\.quarto",
     "/\\.Rproj.user",
@@ -179,35 +192,38 @@ create_report <- function(path = ".", shortname, version = "main") {
     "output",
     "site_libs"
   ) |>
-    writeLines(path(path, shortname, ".gitignore"))
+    writeLines(path(path, reportname, ".gitignore"))
 
   old_wd <- getwd()
-  on.exit(setwd(old_wd), add = TRUE)
-  setwd(path(path, shortname))
+  setwd(path(path, reportname))
   paste0("inbo/flandersqmd-book@", version) |>
     quarto_add_extension(no_prompt = TRUE)
+  setwd(old_wd)
   if (
     !requireNamespace("rstudioapi", quietly = TRUE) ||
       !rstudioapi::isAvailable()
   ) {
     return(invisible(NULL))
   }
-  rstudioapi::openProject(path(path, shortname), newSession = TRUE)
+  rstudioapi::openProject(path(path, reportname), newSession = TRUE)
 }
 
-#' @importFrom checklist ask_yes_no
-insert_author_reviewer <- function(yaml) {
+#' @importFrom checklist ask_yes_no ask_rightsholder_funder author2df
+#' inbo_org_list
+insert_author_reviewer <- function(lang) {
   cat("Please select the corresponding author")
-  authors <- use_author()
-  c(yaml, "  author:", author2yaml(authors, corresponding = TRUE)) -> yaml
+  authors <- use_author(lang = lang)
+  c("  author:", author2yaml(authors, corresponding = TRUE)) -> yaml
   while (isTRUE(ask_yes_no("Add another author?", default = FALSE))) {
-    author <- use_author()
+    author <- use_author(lang = lang)
     authors[, c("given", "family", "email")] |>
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
     if (duplo > 0) {
-      cat(
-        paste(author$given, author$family, "is already listed as author")
+      warning(
+        paste(author$given, author$family, "is already listed as author"),
+        call. = FALSE,
+        immediate. = TRUE
       )
       next
     }
@@ -217,19 +233,68 @@ insert_author_reviewer <- function(yaml) {
   cat("Please select the reviewer")
   duplo <- 1
   while (duplo > 0) {
-    author <- use_author()
+    author <- use_author(lang = lang)
     authors[, c("given", "family", "email")] |>
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
     if (duplo > 0) {
-      paste(
+      warning(
         author$given,
+        " ",
         author$family,
         "is already listed as author.",
-        "\nPlease select someone else."
-      ) |>
-        cat()
+        "\nPlease select someone else.",
+        call. = FALSE,
+        immediate. = TRUE
+      )
     }
   }
-  c(yaml, "  reviewer:", author2yaml(author, corresponding = FALSE))
+  yaml <- c(yaml, "  reviewer:", author2yaml(author, corresponding = FALSE))
+
+  inbo_org_list() |>
+    ask_rightsholder_funder(type = "rightsholder") -> rh
+  fund <- ask_rightsholder_funder(org = rh$org, type = "funder")
+  org <- fund$org
+
+  vapply(
+    rh$selection,
+    FUN = function(x) {
+      org$get_person(x, role = "cph", lang = lang) |>
+        author2df() |>
+        author2yaml() |>
+        list()
+    },
+    FUN.VALUE = vector("list", 1)
+  ) |>
+    unlist() |>
+    gsub(pattern = "\n", replacement = "\n  ") |>
+    gsub(pattern = "^", replacement = "  ") -> rh_yaml
+  vapply(
+    fund$selection,
+    FUN = function(x) {
+      org$get_person(x, role = "fnd", lang = lang) |>
+        author2df() |>
+        author2yaml() |>
+        list()
+    },
+    FUN.VALUE = vector("list", 1)
+  ) |>
+    unlist() |>
+    gsub(pattern = "\n", replacement = "\n  ") |>
+    gsub(pattern = "^", replacement = "  ") -> fund_yaml
+  org$get_zenodo_by_email(rh$selection) |>
+    c(org$get_zenodo_by_email(fund$selection)) |>
+    unique() |>
+    paste(collapse = "; ") -> zenodo
+  if (zenodo != "") {
+    zenodo <- paste("  community:", zenodo)
+  }
+  c(
+    yaml,
+    "  rightsholder:",
+    unlist(rh_yaml),
+    "  funder:",
+    unlist(fund_yaml),
+    zenodo
+  )
 }
