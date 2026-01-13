@@ -30,4 +30,8 @@ Use \code{reportname} instead.}
 \description{
 Create a template for a \code{flandersqmd} report
 }
+\seealso{
+Other utils: 
+\code{\link{inbo_website}()}
+}
 \concept{utils}
