@@ -4,7 +4,7 @@
 \alias{create_report}
 \title{Create a template for a \code{flandersqmd} report}
 \usage{
-create_report(path = ".", shortname, version = "main")
+create_report(path = ".", reportname, version = "main", shortname)
 }
 \arguments{
 \item{path}{The folder in which to create the folder containing the report.
@@ -13,18 +13,25 @@ It also creates an RStudio project file in the report folder.
 When ran from RStudio, the project will be opened automatically in a new
 session.}
 
-\item{shortname}{The name of the report project.
-The location of the folder \code{shortname} depends on the content of \code{path}.
+\item{reportname}{The folder name of the report.
+The location of the folder \code{reportname} depends on the content of \code{path}.
 When \code{path} is a \code{checklist::checklist} project, you will find the new report
-at \code{path/source/shortname}.
+at \code{path/source/reportname}.
 When \code{path} is a \code{checklist::checklist} package, you will find the new report
-at \code{path/inst/shortname}.
-Otherwise you will find the new report at \code{path/shortname}.}
+at \code{path/inst/reportname}.
+Otherwise you will find the new report at \code{path/reportname}.}
 
 \item{version}{The version of the \code{flandersqmd-book} extension to use.
 Defaults to \code{"main"}, which refers to the current version.}
+
+\item{shortname}{Deprecated.
+Use \code{reportname} instead.}
 }
 \description{
 Create a template for a \code{flandersqmd} report
+}
+\seealso{
+Other utils: 
+\code{\link{inbo_website}()}
 }
 \concept{utils}

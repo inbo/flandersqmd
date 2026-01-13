@@ -20,9 +20,10 @@ add_author <- function(report_path = ".", reviewer = FALSE) {
   stopifnot("no `_quarto.yml` found at `report_path`" = is_file(target))
   yaml <- read_yaml(target)
   stopifnot(
-    "No `flandersqmd` entry in `_quarto.yml`" = has_name(yaml, "flandersqmd")
+    "No `flandersqmd` entry in `_quarto.yml`" = has_name(yaml, "flandersqmd"),
+    "No `lang` entry in `_quarto.yml`" = has_name(yaml, "lang")
   )
-  use_author() |>
+  use_author(lang = yaml$lang) |>
     author2list() -> extra
   if (reviewer) {
     yaml$flandersqmd$reviewer <- c(yaml$flandersqmd$reviewer, list(extra))
