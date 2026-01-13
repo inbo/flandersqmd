@@ -18,7 +18,7 @@ Depends:
     R (>= 4.1.0)
 Imports:
     assertthat,
-    checklist,
+    checklist (>= 0.5.2),
     fs,
     gert,
     knitr,
