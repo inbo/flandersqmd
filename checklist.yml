@@ -32,6 +32,7 @@ spelling:
   default: en-GB
   ignore:
   - .github
+  - docs
   - LICENSE.md
   - docs
   - tests/testthat/species_template.qmd
