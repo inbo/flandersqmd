@@ -48,7 +48,7 @@
 #' autoqmd_generate_children(
 #'   species = my_species,
 #'   label = gsub("\\s", ".", tolower(my_species)),
-#'   template = "species_template.qmd",
+#'   template = "_species_template.qmd",
 #'   child_dir = "child_qmd",
 #'   freeze = "label"
 #' )

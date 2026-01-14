@@ -35,6 +35,6 @@ spelling:
   - docs
   - LICENSE.md
   - docs
-  - tests/testthat/species_template.qmd
+  - tests/testthat/_species_template.qmd
   - tests/testthat/iris_chapter.qmd
 pak: pdftools

@@ -17,7 +17,7 @@ test_that("autoqmd_prepare generates children and inserts includes correctly", {
   out <- autoqmd_prepare(
     species   = species,
     label     = labels,
-    template  = "species_template.qmd",
+    template  = "_species_template.qmd",
     child_dir = child_dir,
     qmd_file  = qmd,
     freeze    = "label",
@@ -71,7 +71,7 @@ test_that("autoqmd_prepare respects page breaks when requested", {
   autoqmd_prepare(
     species   = species,
     label     = labels,
-    template  = "species_template.qmd",
+    template  = "_species_template.qmd",
     child_dir = child_dir,
     qmd_file  = qmd,
     page_break = "newpage",
@@ -94,7 +94,7 @@ test_that("autoqmd_prepare errors if parent QMD missing markers", {
     autoqmd_prepare(
       species   = species,
       label     = labels,
-      template  = "species_template.qmd",
+      template  = "_species_template.qmd",
       child_dir = child_dir,
       qmd_file  = qmd1,
       quiet     = TRUE
@@ -127,7 +127,7 @@ test_that("autoqmd_prepare errors if template or parent file does not exist", {
     autoqmd_prepare(
       species   = species,
       label     = labels,
-      template  = "species_template.qmd",
+      template  = "_species_template.qmd",
       child_dir = child_dir,
       qmd_file  = "no_parent.qmd",
       quiet     = TRUE

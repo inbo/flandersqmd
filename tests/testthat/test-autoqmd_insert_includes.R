@@ -16,7 +16,7 @@ test_that("autoqmd_insert_includes inserts child includes correctly", {
   out <- autoqmd_insert_includes(
     qmd_file    = qmd,
     child_files = child_files,
-    template    = "species_template.qmd",
+    template    = "_species_template.qmd",
     quiet       = TRUE
   )
 

@@ -7,7 +7,7 @@ test_that("autoqmd_generate_children works with the real species template", {
   out <- autoqmd_generate_children(
     species   = species,
     label     = labels,
-    template  = "species_template.qmd",
+    template  = "_species_template.qmd",
     child_dir = "child_qmd"
   )
 
@@ -33,7 +33,7 @@ test_that("freeze = 'label' reuses real child documents", {
   out1 <- autoqmd_generate_children(
     species   = species,
     label     = labels,
-    template  = "species_template.qmd",
+    template  = "_species_template.qmd",
     child_dir = "child_qmd",
     freeze    = "label"
   )
@@ -48,7 +48,7 @@ test_that("freeze = 'label' reuses real child documents", {
   out2 <- autoqmd_generate_children(
     species   = species,
     label     = labels,
-    template  = "species_template.qmd",
+    template  = "_species_template.qmd",
     child_dir = "child_qmd",
     freeze    = "label"
   )

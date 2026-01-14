@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' autoqmd_dependency_stamp("species_template.qmd")
+#' autoqmd_dependency_stamp("_species_template.qmd")
 #' }
 autoqmd_dependency_stamp <- function(file = NULL, quiet = FALSE) { # nolint: cyclocomp_linter
   # If no valid file -> fallback to current time

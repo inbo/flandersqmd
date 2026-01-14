@@ -23,7 +23,7 @@ and collect \code{mtimes} of the file and any dependency files.
 }
 \examples{
 \dontrun{
-autoqmd_dependency_stamp("species_template.qmd")
+autoqmd_dependency_stamp("_species_template.qmd")
 }
 }
 \seealso{

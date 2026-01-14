@@ -49,7 +49,7 @@
 #' out_files <- autoqmd_generate_children(
 #'   species = my_species,
 #'   label = gsub("\\s", ".", tolower(my_species)),
-#'   template = "species_template.qmd",
+#'   template = "_species_template.qmd",
 #'   child_dir = "child_qmd",
 #'   freeze = "label"
 #' )
@@ -59,7 +59,7 @@
 #'   qmd_file = "report.qmd",
 #'   child_files = out_files,
 #'   page_break = "newpage",
-#'   template = "species_template.qmd"
+#'   template = "_species_template.qmd"
 #' )
 #' }
 autoqmd_insert_includes <- function(

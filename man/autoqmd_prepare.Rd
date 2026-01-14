@@ -92,7 +92,7 @@ my_species <- paste("Iris", levels(iris$Species))
 autoqmd_prepare(
   species = my_species,
   label = gsub("\\\\s", ".", tolower(my_species)),
-  template = "species_template.qmd",
+  template = "_species_template.qmd",
   child_dir = "child_qmd",
   qmd_file = "report.qmd",
   freeze = "label"
