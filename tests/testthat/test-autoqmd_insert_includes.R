@@ -7,8 +7,8 @@ test_that("autoqmd_insert_includes inserts child includes correctly", {
 
   # Create dummy child QMD files to be included
   child_files <- c(
-    "child_qmd/_qmd_setosa.qmd",
-    "child_qmd/_qmd_versicolor.qmd"
+    "child_qmd/setosa.qmd",
+    "child_qmd/versicolor.qmd"
   )
   file.create(child_files)
 
@@ -62,8 +62,8 @@ test_that("autoqmd_insert_includes adds page breaks when requested", {
   # Create child QMD files
   dir.create("child_qmd", showWarnings = FALSE)
   child_files <- c(
-    "child_qmd/_qmd_setosa.qmd",
-    "child_qmd/_qmd_versicolor.qmd"
+    "child_qmd/setosa.qmd",
+    "child_qmd/versicolor.qmd"
   )
   file.create(child_files)
 

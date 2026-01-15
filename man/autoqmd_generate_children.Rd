@@ -25,7 +25,7 @@ The directory is created if it does not exist.}
 
 \item{freeze}{Optional string giving the name of a variable in \code{...}
 whose values will be used for deterministic file names.
-If provided, filenames will be of the form \code{"_qmd_<value>.qmd"},
+If provided, filenames will be of the form \code{"<value>.qmd"},
 and files will only be regenerated if the template is newer.}
 
 \item{delim}{Character vector of length 2 giving the opening and closing

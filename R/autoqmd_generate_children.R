@@ -13,7 +13,7 @@
 #'   The directory is created if it does not exist.
 #' @param freeze Optional string giving the name of a variable in `...`
 #'   whose values will be used for deterministic file names.
-#'   If provided, filenames will be of the form `"_qmd_<value>.qmd"`,
+#'   If provided, filenames will be of the form `"<value>.qmd"`,
 #'   and files will only be regenerated if the template is newer.
 #' @param delim Character vector of length 2 giving the opening and closing
 #'   delimiters used for template variables. Passed to `knitr::knit_expand`.
@@ -91,7 +91,7 @@ autoqmd_generate_children <- function(
 
     # Sanitize freeze names (replace spaces etc.)
     base_names <- gsub("[^a-zA-Z0-9_.-]", "_", as.character(dots[[freeze]]))
-    random_names <- paste0("_qmd_", tolower(base_names), ".qmd")
+    random_names <- paste0(tolower(base_names), ".qmd")
   } else {
     random_names <- paste0(
       "_qmd_", sprintf("%08x", sample.int(16^7, n, replace = TRUE)), ".qmd"
