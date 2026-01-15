@@ -127,10 +127,12 @@ workshop_path <- tempfile("flandersqmd_workshop")
 dir.create(workshop_path)
 system.file("workshop", package = "flandersqmd") |>
   file.copy(workshop_path, recursive = TRUE)
+oldwd <- getwd()
 file.path(workshop_path, "workshop") |>
   setwd()
-quarto::quarto_add_extension("inbo/flandersqmd-revealjs")
+quarto::quarto_add_extension("inbo/flandersqmd-revealjs", no_prompt = TRUE)
 quarto::quarto_render(as_job = FALSE)
+setwd(oldwd)
 file.path(workshop_path, "output", "index.html") |>
   browseURL()
 ```
