@@ -23,6 +23,8 @@
 #'
 #' @export
 #'
+#' @importFrom assertthat is.string
+#'
 #' @examples
 #' \dontrun{
 #' # Clean up a single QMD file
