@@ -2,28 +2,28 @@
 % Please edit documentation in R/autoqmd_dependency_stamp.R
 \name{autoqmd_dependency_stamp}
 \alias{autoqmd_dependency_stamp}
-\title{Generate dependency timestamp from a QMD}
+\title{Generate dependency timestamp from files}
 \usage{
 autoqmd_dependency_stamp(file = NULL, quiet = FALSE)
 }
 \arguments{
-\item{file}{Path to a \code{.qmd} file.}
+\item{file}{Character vector of file paths.}
 
-\item{quiet}{Logical; if TRUE suppresses messages about unresolved sources.}
+\item{quiet}{Logical; if TRUE suppress warnings about missing files.}
 }
 \value{
-A single string: an HTML comment with dependency \code{mtimes}, e.g.
-\verb{<!-- DEPENDENCY-MTIME: template.qmd 2025-10-08 14:30:11 -->}
+A single string: an HTML comment with dependency \code{mtimes}.
 }
 \description{
-Parse a QMD (via \code{knitr::purl}), detect \code{source()} calls (including
-\code{file.path(...)} forms), attempt to evaluate simple assignments that appear
-before the first \code{source()} (so variables become available),
-and collect \code{mtimes} of the file and any dependency files.
+Collect modification times (\code{mtime}) of one or more files and return
+them as a single dependency stamp comment.
 }
 \examples{
 \dontrun{
-autoqmd_dependency_stamp("_species_template.qmd")
+autoqmd_dependency_stamp("_template.qmd")
+autoqmd_dependency_stamp(
+  c("_template.qmd", "helpers.R", "style.scss")
+)
 }
 }
 \seealso{
