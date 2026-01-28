@@ -96,7 +96,7 @@ autoqmd_insert_includes <- function(
     "`template_deps` must be NULL or a character vector of file paths." =
       is.null(template_deps) ||
       (all(sapply(template_deps, assertthat::is.string)) &&
-         all(sapply(template_deps, file.exists)))
+       all(sapply(template_deps, file.exists)))
   )
   stopifnot("`quiet` must be a scalar logical vector." =
               assertthat::is.flag(quiet))
