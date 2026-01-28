@@ -37,7 +37,7 @@
 #' @export
 #'
 #' @importFrom knitr knit_expand
-#' @importFrom assertthat is.string
+#' @importFrom assertthat is.string is.flag
 #'
 #' @examples
 #' \dontrun{
@@ -78,6 +78,8 @@ autoqmd_generate_children <- function(
               file.exists(template))
   stopifnot("`delim` must be a character vector of length 2." =
               is.character(delim) && length(delim) == 2)
+  stopifnot("`quiet` must be a scalar logical vector." =
+              assertthat::is.flag(quiet))
 
   # Create directory if needed
   dir.create(child_dir, recursive = TRUE, showWarnings = FALSE)
