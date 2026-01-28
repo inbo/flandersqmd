@@ -149,8 +149,23 @@ Child documents are created and inserted before rendering, using a pre-render sc
 2. Inserting `{{< include >}}` directives between the markers in the main chapter
 
 This can be done either explicitly or via a convenience wrapper.
+Both approaches produce the same result, but they differ in how much control they give you over each step.
+If you’re not sure which to choose, start with `autoqmd_prepare()` and switch to the explicit approach only if you need more control.
 
 *Option 1: explicit generation and insertion*
+
+Advantages:
+
+* Full control over each step of the workflow.
+* Easier to customise or extend (e.g. inspect, filter, or reorder `child_files` before inserting).
+* Clear separation between generation and insertion, which can be useful for debugging or advanced setups.
+
+Disadvantages:
+
+* Slightly more verbose.
+* Requires you to keep the arguments to both functions in sync.
+
+This option is well suited for advanced workflows, debugging, or when generation and insertion need to be customised independently.
 
 ```r
 library(flandersqmd)
@@ -173,7 +188,20 @@ autoqmd_insert_includes(
 )
 ```
 
-*Option 2: single-step wrapper*
+*Option 2: single-step wrapper* (`autoqmd_prepare()`)
+
+Advantages:
+
+* More concise and easier to read.
+* Fewer moving parts to manage.
+* Good default for common use cases and simple pre-render scripts.
+
+Disadvantages:
+
+* Less flexible if you need to intervene between generation and insertion.
+* Custom behaviour may require switching back to the explicit approach.
+
+This option is recommended for most users and standard report workflows, especially when you want a clean and minimal pre-render script.
 
 ```r
 library(flandersqmd)
