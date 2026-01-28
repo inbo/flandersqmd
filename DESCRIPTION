@@ -24,7 +24,6 @@ Imports:
     knitr,
     pdftools,
     quarto,
-    rprojroot,
     yaml
 Suggests:
     rstudioapi,
