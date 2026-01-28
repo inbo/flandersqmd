@@ -26,6 +26,7 @@ Suggests:
 Additional_repositories: https://inbo.r-universe.dev
 Config/checklist/communities: inbo
 Config/checklist/keywords: corporate identity; quarto
+DOI: 10.5281/zenodo.18230608
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
