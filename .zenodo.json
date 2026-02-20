@@ -1,6 +1,6 @@
 {
   "title": "flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "GPL-3.0",
   "upload_type": "software",
   "description": "<p>Prepare new documents using the Flandersqmd extensions.<\/p>",

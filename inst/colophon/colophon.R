@@ -101,7 +101,7 @@ create_quarto_yml <- function(this_colophon, path = ".") {
       doi = ifelse(
         this_colophon$`Type rapport` == "Intern rapport",
         "",
-        sprintf("\n  doi: doi.org/10.21436/inbor.%i", this_colophon$`PURE id`)
+        sprintf("\n  doi: 10.21436/inbor.%i", this_colophon$`PURE id`)
       ),
       deportnr = ifelse(
         is.na(this_colophon$Depotnummer),
