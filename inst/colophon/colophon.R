@@ -92,7 +92,10 @@ create_quarto_yml <- function(this_colophon, path = ".") {
       reviewer = form2person(this_colophon$Reviewer),
       year = this_colophon$Jaartal,
       reportnr = this_colophon$Rapportnummer,
-      coverdescription = this_colophon$`Beschrijving coverfoto`,
+      coverdescription = sprintf(
+        "\"%s\"",
+        this_colophon$`Beschrijving coverfoto`
+      ),
       public_report = ifelse(
         this_colophon$`Type rapport` == "Intern rapport",
         "false",
