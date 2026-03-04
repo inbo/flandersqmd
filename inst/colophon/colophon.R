@@ -169,7 +169,7 @@ generate_colophon <- function(pure_id, path = ".") {
   old_wd <- getwd()
   on.exit(setwd(old_wd), add = TRUE)
   setwd(path)
-  quarto::quarto_add_extension("inbo/flandersqmd-book@bugfix", no_prompt = TRUE)
+  quarto::quarto_add_extension("inbo/flandersqmd-book", no_prompt = TRUE)
   quarto::quarto_render(input = "index.md")
   unique(this_colophon$`PURE id`) |>
     sprintf(fmt = "colofon_%i.pdf") -> pdf_file
