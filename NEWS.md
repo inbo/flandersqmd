@@ -1,4 +1,4 @@
-# flandersqmd 0.0.3
+# flandersqmd 0.0.4
 
 * Add automated pre-/post-render helper functions (#6)
 * Add tutorial on child documents with pre-/post-render functions

@@ -22,4 +22,4 @@ abstract: "Prepare new documents using the Flandersqmd extensions."
 identifiers:
 - type: url
   value: https://inbo.github.io/flandersqmd/
-version: 0.0.3
+version: 0.0.4
