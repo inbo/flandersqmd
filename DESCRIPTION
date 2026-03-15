@@ -7,7 +7,7 @@ Authors@R: c(
     person("Ward", "Langeraert", , "ward.langeraert@inbo.be", role = "ctb",
            comment = c(ORCID = "0000-0002-5900-8109", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"),
-           comment = c(ROR = "https://ror.org/00j54wy13"))
+           comment = c(ROR = "00j54wy13"))
   )
 Description: Prepare new documents using the Flandersqmd extensions.
 License: GPL-3
