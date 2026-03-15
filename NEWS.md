@@ -3,6 +3,13 @@
 * Add automated pre-/post-render helper functions (#6)
 * Add tutorial on child documents with pre-/post-render functions
 
+# flandersqmd 0.0.3
+
+* Create Docker for rendering the examples.
+* Fix DOI in colophon only report.
+* Add DOI.
+* Update instructions in README.
+
 # flandersqmd 0.0.2
 
 * `create_report()` doesn't open an empty project (#2).

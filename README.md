@@ -3,12 +3,13 @@
 
 <!-- badges: start -->
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18230608.svg)](https://doi.org/10.5281/zenodo.18230608)
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
 stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![GPL-3](https://img.shields.io/badge/License-GPL-3-brightgreen)](https://raw.githubusercontent.com/inbo/checklist/refs/heads/main/inst/generic_template/gplv3.md)
+[![GPL-3](https://img.shields.io/badge/License-GPL--3-brightgreen)](https://raw.githubusercontent.com/inbo/checklist/refs/heads/main/inst/generic_template/gplv3.md)
 [![Release](https://img.shields.io/github/release/inbo/flandersqmd.svg)](https://github.com/inbo/flandersqmd/releases)
 ![GitHub Workflow
 Status](https://github.com/inbo/flandersqmd/actions/workflows/check_on_main.yml/badge.svg)
@@ -123,9 +124,17 @@ This package contains the slides of a workshop. Run the code below to
 render and view the slides.
 
 ``` r
+workshop_path <- tempfile("flandersqmd_workshop")
+dir.create(workshop_path)
 system.file("workshop", package = "flandersqmd") |>
-  quarto::quarto_render()
-system.file("output/index.html", package = "flandersqmd") |>
+  file.copy(workshop_path, recursive = TRUE)
+oldwd <- getwd()
+file.path(workshop_path, "workshop") |>
+  setwd()
+quarto::quarto_add_extension("inbo/flandersqmd-revealjs", no_prompt = TRUE)
+quarto::quarto_render(as_job = FALSE)
+setwd(oldwd)
+file.path(workshop_path, "output", "index.html") |>
   browseURL()
 ```
 
