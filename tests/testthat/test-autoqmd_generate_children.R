@@ -1,3 +1,22 @@
+test_that("generated child files contain read-only warning", {
+  species <- paste("Iris", levels(iris$Species))
+  labels  <- gsub("\\s", ".", tolower(species))
+
+  out <- autoqmd_generate_children(
+    species   = species,
+    label     = labels,
+    template  = "_species_template.qmd",
+    child_dir = "child_qmd",
+    quiet     = TRUE
+  )
+
+  content <- readLines(out[1])
+
+  # First lines should contain the auto-generated warning
+  expect_true(any(grepl("AUTO-GENERATED", content)))
+  expect_true(any(grepl("DO NOT EDIT", content)))
+})
+
 test_that("autoqmd_generate_children works with the real species template", {
   # Define input data: iris species and corresponding labels
   species <- paste("Iris", levels(iris$Species))
@@ -8,7 +27,8 @@ test_that("autoqmd_generate_children works with the real species template", {
     species   = species,
     label     = labels,
     template  = "_species_template.qmd",
-    child_dir = "child_qmd"
+    child_dir = "child_qmd",
+    quiet     = TRUE
   )
 
   # 1. One output file should be generated per species
@@ -35,7 +55,8 @@ test_that("freeze = 'label' reuses real child documents", {
     label     = labels,
     template  = "_species_template.qmd",
     child_dir = "child_qmd",
-    freeze    = "label"
+    freeze    = "label",
+    quiet     = TRUE
   )
 
   # Record modification times of generated files
@@ -50,7 +71,8 @@ test_that("freeze = 'label' reuses real child documents", {
     label     = labels,
     template  = "_species_template.qmd",
     child_dir = "child_qmd",
-    freeze    = "label"
+    freeze    = "label",
+    quiet     = TRUE
   )
 
   # Record modification times again
@@ -61,6 +83,28 @@ test_that("freeze = 'label' reuses real child documents", {
 
   # 2. Modification times should be unchanged (files were reused)
   expect_equal(mtimes_before, mtimes_after)
+})
+
+test_that("error when no variables are provided", {
+  expect_error(
+    autoqmd_generate_children(
+      template  = "_species_template.qmd",
+      child_dir = "child_qmd"
+    ),
+    "You must provide at least one named argument"
+  )
+})
+
+test_that("error when variable lengths differ", {
+  expect_error(
+    autoqmd_generate_children(
+      species   = c("Iris setosa", "Iris versicolor"),
+      label     = "iris.setosa",
+      template  = "_species_template.qmd",
+      child_dir = "child_qmd"
+    ),
+    "All arguments in ... must have the same length"
+  )
 })
 
 # Remove child documents folder
