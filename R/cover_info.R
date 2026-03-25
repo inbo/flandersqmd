@@ -4,7 +4,7 @@ cover_info <- function(yml) {
     !is.na(yml$author$corresponding) & yml$author$corresponding
   ] |>
     paste(collapse = ", ") -> yml$corresponding
-  apply(yml$author$name, 1, paste, collapse = ", ") |>
+  paste(yml$author$name$given, yml$author$name$family) |>
     paste(collapse = ", ") -> yml$author
   yml$print <- format_print_order(yml)
   cover_txt <- sprintf(
