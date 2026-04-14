@@ -8,7 +8,7 @@ autoqmd_prepare(
   ...,
   template,
   child_dir,
-  qmd_file,
+  target_file,
   freeze = NULL,
   template_deps = NULL,
   delim = c("{{", "}}"),
@@ -28,7 +28,8 @@ one document to generate.}
 \item{child_dir}{Directory where the generated files should be written.
 The directory is created if it does not exist.}
 
-\item{qmd_file}{Path to the Quarto file to modify.}
+\item{target_file}{Path to the Quarto file to modify. Supported file types
+are \code{.qmd}, \code{.yml}, and \code{.yaml}.}
 
 \item{freeze}{Optional string giving the name of a variable in \code{...}
 whose values will be used for deterministic file names.
@@ -84,7 +85,7 @@ If a template is provided, dependency timestamps are included
 to trigger Quarto's freeze mechanism when relevant.
 }
 
-Input files (\code{template}, \code{qmd_file}) and marker presence are validated
+Input files (\code{template}, \code{target_file}) and marker presence are validated
 before generation occurs, preventing unnecessary computation.
 }
 \examples{
@@ -99,7 +100,7 @@ autoqmd_prepare(
   label = gsub("\\\\s", ".", tolower(my_species)),
   template = "_species_template.qmd",
   child_dir = "child_qmd",
-  qmd_file = "report.qmd",
+  target_file = "report.qmd",
   freeze = "label"
 )
 }

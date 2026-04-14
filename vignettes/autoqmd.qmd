@@ -186,7 +186,7 @@ out_files <- autoqmd_generate_children(
 
 # Include child files in report with page breaks
 autoqmd_insert_includes(
-  qmd_file = "iris_chapter.qmd",
+  target_file = "iris_chapter.qmd",
   child_files = out_files,
   template = "_species_template.qmd"
 )
@@ -219,7 +219,7 @@ autoqmd_prepare(
   label = gsub("\\s", ".", tolower(my_species)),
   template = "_species_template.qmd",
   child_dir = "child_qmd",
-  qmd_file = "iris_chapter.qmd"
+  target_file = "iris_chapter.qmd"
 )
 ```
 
@@ -381,7 +381,7 @@ out_files <- autoqmd_generate_children(
 
 # Insert includes into the chapter
 autoqmd_insert_includes(
-  qmd_file = "iris_chapter.qmd",
+  target_file = "iris_chapter.qmd",
   child_files = out_files,
   template = "_species_template.qmd"
 )
@@ -399,7 +399,7 @@ autoqmd_prepare(
   label = gsub("\\s", ".", tolower(my_species)),
   template = "_species_template.qmd",
   child_dir = "child_qmd",
-  qmd_file = "iris_chapter.qmd",
+  target_file = "iris_chapter.qmd",
   freeze = "label"
 )
 ```
@@ -428,7 +428,7 @@ autoqmd_prepare(
   label = gsub("\\s", ".", tolower(my_species)),
   template = "_species_template.qmd",
   child_dir = "child_qmd",
-  qmd_file = "iris_chapter.qmd",
+  target_file = "iris_chapter.qmd",
   freeze = "label",
   template_deps = c("R/load_species_data.R", "data/species_lookup.csv")
 )

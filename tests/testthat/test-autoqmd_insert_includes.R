@@ -23,7 +23,7 @@ test_that("autoqmd_insert_includes inserts child includes correctly", {
 
   # Insert child includes into the QMD file
   out <- autoqmd_insert_includes(
-    qmd_file      = qmd,
+    target_file   = qmd,
     child_files   = child_files,
     template      = "_species_template.qmd",
     template_deps = template_deps,
@@ -87,7 +87,7 @@ test_that("autoqmd_insert_includes adds page breaks when requested", {
 
   # Insert includes with LaTeX page breaks between them
   autoqmd_insert_includes(
-    qmd_file    = qmd,
+    target_file    = qmd,
     child_files = child_files,
     page_break  = "newpage",
     quiet       = TRUE
