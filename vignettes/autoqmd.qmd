@@ -278,7 +278,7 @@ message = c(
 
 # Clean report file and remove child files
 autoqmd_finalise(
-  qmd_files = "iris_chapter.qmd",
+  target_files = "iris_chapter.qmd",
   message = message,
   child_dirs_rm = "child_qmd"
 )
