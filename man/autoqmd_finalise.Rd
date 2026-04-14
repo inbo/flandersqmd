@@ -4,7 +4,7 @@
 \alias{autoqmd_finalise}
 \title{Finalise QMD files after rendering}
 \usage{
-autoqmd_finalise(qmd_files, message = "default", child_dirs_rm = NULL)
+autoqmd_finalise(qmd_files, message = "default", child_dirs_rm = NULL, ...)
 }
 \arguments{
 \item{qmd_files}{Character vector. Paths to QMD files to update.}
@@ -14,6 +14,8 @@ If set to \code{"default"}, a standard warning message is used.}
 
 \item{child_dirs_rm}{Character vector of directory paths to remove after
 cleanup. Directories are deleted recursively.}
+
+\item{...}{Other arguments passed to \link{autoqmd_cleanup}}
 }
 \value{
 Invisibly returns \code{NULL}. Files are modified on disk.

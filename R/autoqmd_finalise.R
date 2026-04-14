@@ -9,6 +9,7 @@
 #'   If set to `"default"`, a standard warning message is used.
 #' @param child_dirs_rm Character vector of directory paths to remove after
 #'   cleanup. Directories are deleted recursively.
+#' @param ... Other arguments passed to [autoqmd_cleanup]
 #'
 #' @return Invisibly returns `NULL`. Files are modified on disk.
 #'
@@ -48,7 +49,8 @@
 autoqmd_finalise <- function(
   qmd_files,
   message = "default",
-  child_dirs_rm = NULL
+  child_dirs_rm = NULL,
+  ...
 ) {
   # Validation
   stopifnot("`qmd_files` must be a path to QMD files to update." =
@@ -68,7 +70,7 @@ autoqmd_finalise <- function(
   }
 
   # Clean up qmd
-  lapply(qmd_files, autoqmd_cleanup, message = message)
+  lapply(qmd_files, autoqmd_cleanup, message = message, ...)
 
   # Remove child documents folder
   unlink(child_dirs_rm, recursive = TRUE)
