@@ -75,8 +75,7 @@ autoqmd_cleanup <- function(
     if (length(start) != 1 || length(end) != 1 || start > end) {
       stop("Markers not found or malformed in QMD file: ", target_file)
     }
-  }
-  else if (ext %in% c("yml", "yaml")) {
+  } else if (ext %in% c("yml", "yaml")) {
     if (length(start) != 1 || length(end) != 1 || start > end) {
       stop(
         "Markers not found or malformed in YAML file: ", target_file,
