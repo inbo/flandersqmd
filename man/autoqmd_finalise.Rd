@@ -15,7 +15,7 @@ If set to \code{"default"}, a standard warning message is used.}
 \item{child_dirs_rm}{Character vector of directory paths to remove after
 cleanup. Directories are deleted recursively.}
 
-\item{...}{Other arguments passed to \link{autoqmd_cleanup}}
+\item{...}{Other arguments passed to \code{\link[=autoqmd_cleanup]{autoqmd_cleanup()}}}
 }
 \value{
 Invisibly returns \code{NULL}. Files are modified on disk.
