@@ -9,7 +9,7 @@
 #'   If set to `"default"`, a standard warning message is used.
 #' @param child_dirs_rm Character vector of directory paths to remove after
 #'   cleanup. Directories are deleted recursively.
-#' @param ... Other arguments passed to [autoqmd_cleanup]
+#' @param ... Other arguments passed to [autoqmd_cleanup()]
 #'
 #' @return Invisibly returns `NULL`. Files are modified on disk.
 #'
