@@ -85,7 +85,7 @@ Outside these markers, the document remains entirely under manual control.
 
 ### Step 2: Create template from which to make child documents
 
-Next, define a template `.qmd` file that describes the structure of one repeated section. This template uses placeholder variables (e.g. `{{species}}` or `{{label}}`) that will be substituted during generation. The template can contain text, code chunks, figures, and cross-references, just like any other Quarto document. It is best to prefix the template filename with an underscore, so Quarto does not render it as a standalone document. By default, files starting with '_' are treated as non–top-level inputs and are excluded from rendering (more info on [the Quarto website](https://quarto.org/docs/websites/#render-targets).
+Next, define a template `.qmd` file that describes the structure of one repeated section. This template uses placeholder variables (e.g. `{{species}}` or `{{label}}`) that will be substituted during generation. The template can contain text, code chunks, figures, and cross-references, just like any other Quarto document. It is best to prefix the template filename with an underscore, so Quarto does not render it as a standalone document. By default, files starting with '_' are treated as non–top-level inputs and are excluded from rendering (more info on [the Quarto website](https://quarto.org/docs/websites/#render-targets)).
 
 Example: `_species_template.qmd`
 
