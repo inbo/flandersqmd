@@ -8,7 +8,7 @@
 #'
 #' @return A single string: an HTML comment with dependency `mtimes`.
 #'
-#' @seealso [autoqmd_insert_includes()]
+#' @seealso [autoqmd_insert_children()]
 #'
 #' @export
 #'

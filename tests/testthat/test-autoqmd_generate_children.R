@@ -42,6 +42,18 @@ test_that("autoqmd_generate_children works with the real species template", {
   content <- readLines(out[1])
   expect_true(any(grepl("Iris setosa", content)))
   expect_false(any(grepl("\\{\\{species\\}\\}", content)))
+
+  # 4. Test verbosity
+  expect_message(
+    autoqmd_generate_children(
+      species   = species,
+      label     = labels,
+      template  = "_species_template.qmd",
+      child_dir = "child_qmd"
+    ),
+    fixed = TRUE,
+    "Processed 3 QMD files (3 generated, 0 skipped) in 'child_qmd'."
+  )
 })
 
 test_that("freeze = 'label' reuses real child documents", {

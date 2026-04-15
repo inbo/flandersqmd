@@ -1,7 +1,7 @@
 #' Generate child QMDs and insert them into a parent document
 #'
 #' This function wraps [`autoqmd_generate_children()`] and
-#' [`autoqmd_insert_includes()`] to support typical Quarto
+#' [`autoqmd_insert_children()`] to support typical Quarto
 #' pre-render workflows: generating child `.qmd` files from a
 #' template and inserting the corresponding include directives
 #' into a parent QMD.
@@ -12,7 +12,8 @@
 #' @param template Path to a Quarto template (`.qmd`) file to expand.
 #' @param child_dir Directory where the generated files should be written.
 #'   The directory is created if it does not exist.
-#' @param qmd_file Path to the Quarto file to modify.
+#' @param target_file Path to the Quarto file to modify. Supported file types
+#'   are `.qmd`, `.yml`, and `.yaml`.
 #' @param freeze Optional string giving the name of a variable in `...`
 #'   whose values will be used for deterministic file names.
 #'   If provided, filenames will be of the form `"<value>.qmd"`,
@@ -46,7 +47,7 @@
 #'    If a template is provided, dependency timestamps are included
 #'    to trigger Quarto's freeze mechanism when relevant.
 #'
-#' Input files (`template`, `qmd_file`) and marker presence are validated
+#' Input files (`template`, `target_file`) and marker presence are validated
 #' before generation occurs, preventing unnecessary computation.
 #'
 #' @return
@@ -57,7 +58,7 @@
 #'   \item{dir}{Directory containing child documents}
 #' }
 #'
-#' @seealso [autoqmd_generate_children()], [autoqmd_insert_includes()]
+#' @seealso [autoqmd_generate_children()], [autoqmd_insert_children()]
 #'
 #' @export
 #'
@@ -73,7 +74,7 @@
 #'   label = gsub("\\s", ".", tolower(my_species)),
 #'   template = "_species_template.qmd",
 #'   child_dir = "child_qmd",
-#'   qmd_file = "report.qmd",
+#'   target_file = "report.qmd",
 #'   freeze = "label"
 #' )
 #' }
@@ -81,7 +82,7 @@ autoqmd_prepare <- function(
   ...,
   template,
   child_dir,
-  qmd_file,
+  target_file,
   freeze = NULL,
   template_deps = NULL,
   delim = c("{{", "}}"),
@@ -94,15 +95,15 @@ autoqmd_prepare <- function(
   if (!file.exists(template)) {
     stop("Template does not exist: ", template)
   }
-  if (!file.exists(qmd_file)) {
-    stop("Parent QMD does not exist: ", qmd_file)
+  if (!file.exists(target_file)) {
+    stop("Parent QMD does not exist: ", target_file)
   }
 
   # Ensure parent file contains the markers before generating anything
-  parent_lines <- readLines(qmd_file)
+  parent_lines <- readLines(target_file)
   if (!any(grepl(start_marker, parent_lines)) ||
         !any(grepl(end_marker,   parent_lines))) {
-    stop("Markers not found in parent QMD: ", qmd_file)
+    stop("Markers not found in parent QMD: ", target_file)
   }
 
   # Generate child documents from template
@@ -116,8 +117,8 @@ autoqmd_prepare <- function(
   )
 
   # Insert includes
-  autoqmd_insert_includes(
-    qmd_file = qmd_file,
+  autoqmd_insert_children(
+    target_file = target_file,
     child_files = child_files,
     start_marker = start_marker,
     end_marker = end_marker,
@@ -130,7 +131,7 @@ autoqmd_prepare <- function(
   # Return useful structured output
   invisible(list(
     children = child_files,
-    parent   = qmd_file,
+    parent   = target_file,
     dir      = child_dir
   ))
 }
