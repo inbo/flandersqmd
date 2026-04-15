@@ -1,7 +1,7 @@
 #' Generate child QMDs and insert them into a parent document
 #'
 #' This function wraps [`autoqmd_generate_children()`] and
-#' [`autoqmd_insert_includes()`] to support typical Quarto
+#' [`autoqmd_insert_children()`] to support typical Quarto
 #' pre-render workflows: generating child `.qmd` files from a
 #' template and inserting the corresponding include directives
 #' into a parent QMD.
@@ -58,7 +58,7 @@
 #'   \item{dir}{Directory containing child documents}
 #' }
 #'
-#' @seealso [autoqmd_generate_children()], [autoqmd_insert_includes()]
+#' @seealso [autoqmd_generate_children()], [autoqmd_insert_children()]
 #'
 #' @export
 #'
@@ -117,7 +117,7 @@ autoqmd_prepare <- function(
   )
 
   # Insert includes
-  autoqmd_insert_includes(
+  autoqmd_insert_children(
     target_file = target_file,
     child_files = child_files,
     start_marker = start_marker,

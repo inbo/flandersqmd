@@ -45,7 +45,7 @@ If the markers are missing or appear in the wrong order, the function
 stops with an error.
 
 This function is commonly used together with
-\code{\link[=autoqmd_generate_children]{autoqmd_generate_children()}} and \code{\link[=autoqmd_insert_includes]{autoqmd_insert_includes()}}
+\code{\link[=autoqmd_generate_children]{autoqmd_generate_children()}} and \code{\link[=autoqmd_insert_children]{autoqmd_insert_children()}}
 in a Quarto pre-/post-render workflow.
 }
 \examples{
@@ -60,6 +60,6 @@ autoqmd_cleanup(
 }
 }
 \seealso{
-\code{\link[=autoqmd_generate_children]{autoqmd_generate_children()}}, \code{\link[=autoqmd_insert_includes]{autoqmd_insert_includes()}},
+\code{\link[=autoqmd_generate_children]{autoqmd_generate_children()}}, \code{\link[=autoqmd_insert_children]{autoqmd_insert_children()}},
 \code{\link[=autoqmd_finalise]{autoqmd_finalise()}}
 }

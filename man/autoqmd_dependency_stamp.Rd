@@ -27,5 +27,5 @@ autoqmd_dependency_stamp(
 }
 }
 \seealso{
-\code{\link[=autoqmd_insert_includes]{autoqmd_insert_includes()}}
+\code{\link[=autoqmd_insert_children]{autoqmd_insert_children()}}
 }

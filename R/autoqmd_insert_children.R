@@ -76,7 +76,7 @@
 #' )
 #'
 #' # Include child files in report with page breaks
-#' autoqmd_insert_includes(
+#' autoqmd_insert_children(
 #'   target_file = "report.qmd",
 #'   child_files = out_files,
 #'   template = "_species_template.qmd",
@@ -84,7 +84,7 @@
 #'   page_break = "newpage"
 #' )
 #' }
-autoqmd_insert_includes <- function(
+autoqmd_insert_children <- function(
   target_file,
   child_files,
   child_labels = NULL,
@@ -180,7 +180,7 @@ autoqmd_insert_includes <- function(
   }
 
   # ---------------------------------------------------------------------------
-  # CASE 2: YAML FILE (_quarto.yml)
+  # CASE 2: YAML FILE
   # ---------------------------------------------------------------------------
   if (ext %in% c("yml", "yaml")) {
     # Read file

@@ -25,13 +25,13 @@
 #' stops with an error.
 #'
 #' This function is commonly used together with
-#' [`autoqmd_generate_children()`] and [`autoqmd_insert_includes()`]
+#' [`autoqmd_generate_children()`] and [`autoqmd_insert_children()`]
 #' in a Quarto pre-/post-render workflow.
 #'
 #' @return Invisibly returns the modified lines as a character vector.
 #'   The QMD file is also overwritten on disk.
 #'
-#' @seealso [autoqmd_generate_children()], [autoqmd_insert_includes()],
+#' @seealso [autoqmd_generate_children()], [autoqmd_insert_children()],
 #'   [autoqmd_finalise()]
 #'
 #' @export

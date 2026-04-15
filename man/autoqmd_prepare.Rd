@@ -67,7 +67,7 @@ Invisibly returns a list with:
 }
 \description{
 This function wraps \code{\link[=autoqmd_generate_children]{autoqmd_generate_children()}} and
-\code{\link[=autoqmd_insert_includes]{autoqmd_insert_includes()}} to support typical Quarto
+\code{\link[=autoqmd_insert_children]{autoqmd_insert_children()}} to support typical Quarto
 pre-render workflows: generating child \code{.qmd} files from a
 template and inserting the corresponding include directives
 into a parent QMD.
@@ -106,5 +106,5 @@ autoqmd_prepare(
 }
 }
 \seealso{
-\code{\link[=autoqmd_generate_children]{autoqmd_generate_children()}}, \code{\link[=autoqmd_insert_includes]{autoqmd_insert_includes()}}
+\code{\link[=autoqmd_generate_children]{autoqmd_generate_children()}}, \code{\link[=autoqmd_insert_children]{autoqmd_insert_children()}}
 }
