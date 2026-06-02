@@ -118,6 +118,23 @@ add_cover(
 quarto::quarto_render(file.path(path, "flandersqmd-book", "myreport"))
 ```
 
+### Working on a quarto website
+
+A quarto website with the corporate identity of the Flemish government
+can be generated using the same method as described above, except that
+the skeleton should be generated using function `create_website()`
+instead of `create_report()`.
+
+``` r
+# Create a report skeleton
+library(flandersqmd)
+create_website(file.path(path, "flandersqmd-website"), websitename = "mywebsite")
+```
+
+An example website is presented on
+<https://inbo.github.io/flandersqmd-website/> and it’s code on
+<https://github.com/inbo/flandersqmd-website>.
+
 ## Workshop
 
 This package contains the slides of a workshop. Run the code below to

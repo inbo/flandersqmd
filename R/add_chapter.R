@@ -1,14 +1,15 @@
-#' Add a chapter file to a Quarto report
+#' Add a chapter/webpage file to a Quarto report or website
 #'
 #' @description
-#' This function adds a chapter file to a Quarto report.
+#' This function adds a chapter file to a Quarto report or a webpage to a Quarto
+#' website.
 #' @inheritParams add_recommendations
-#' @param title The title of the chapter.
-#' If missing, the chapter is assumed the introduction with a default title
-#' based on the language.
-#' @param filename The name of the chapter file.
-#' If missing, the chapter is assumed the introduction with a default filename
-#' based on the language.
+#' @param title The title of the chapter/webpage.
+#' If missing, the chapter/webpage is assumed the introduction with a default
+#' title based on the language.
+#' @param filename The name of the chapter/webpage file.
+#' If missing, the chapter/webpage is assumed the introduction with a default
+#' filename based on the language.
 #' @param toc A logical value indicating whether to add a local table of
 #' contents.
 #' Defaults to `TRUE`.
@@ -23,12 +24,20 @@ add_chapter <- function(report_path = ".", title, filename, toc = TRUE) {
   target <- path(report_path, "_quarto.yml")
   stopifnot("no `_quarto.yml` found at `report_path`" = is_file(target))
   yaml <- read_yaml(target)
+  type <-
+    c("website"[has_name(yaml, "website")], "book"[has_name(yaml, "book")])
   stopifnot(
-    "No `book` entry in `_quarto.yml`" = has_name(yaml, "book"),
-    "No `chapters` entry under `book` in `_quarto.yml`" = has_name(
-      yaml$book,
-      "chapters"
-    ),
+    "No `book/website` entry in `_quarto.yml`" = length(type) == 1,
+    "No `chapters` entry under `book` in `_quarto.yml`" = type != "book" ||
+      has_name(
+        yaml$book,
+        "chapters"
+      ),
+    "No `sidebar/contents` entry under `website` in `_quarto.yml`" =
+      type != "website" ||
+      (has_name(yaml$website, "sidebar") &&
+        has_name(yaml$website$sidebar, "contents")
+      ),
     "No `lang` entry in `_quarto.yml`" = has_name(yaml, "lang")
   )
   lang <- yaml$lang
@@ -80,8 +89,19 @@ add_chapter <- function(report_path = ".", title, filename, toc = TRUE) {
     "**TO DO**"
   ) |>
     writeLines(con = path(report_path, filename))
-  if (!filename %in% yaml$book$chapters) {
-    yaml$book$chapters <- c(yaml$book$chapters, filename)
+  if (type == "book") {
+    if (!filename %in% yaml$book$chapters) {
+      yaml$book$chapters <- c(yaml$book$chapters, filename)
+    }
+  } else {
+    if (!filename %in% yaml$website$sidebar$contents) {
+      yaml$website$sidebar$contents <- c(
+        yaml$website$sidebar$contents,
+        list(
+          list(text = substr(filename, 1, nchar(filename) - 3), file = filename)
+        )
+      )
+    }
   }
   append_navbar(yaml, text = title, filename = filename) |>
     store_yaml(target = target)

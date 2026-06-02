@@ -31,7 +31,8 @@ Use \code{reportname} instead.}
 Create a template for a \code{flandersqmd} report
 }
 \seealso{
-Other utils: 
-\code{\link{inbo_website}()}
+Other utils:
+\code{\link[=create_website]{create_website()}},
+\code{\link[=inbo_website]{inbo_website()}}
 }
 \concept{utils}

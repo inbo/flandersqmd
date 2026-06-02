@@ -9,7 +9,7 @@ allowed:
 
       New submission
 
-      Strong dependencies not in mainstream repositories:
+      Strong dependencies not in the CRAN or BioC software repositories:
         checklist
       Availability using Additional_repositories specification:
         checklist   yes   https://inbo.r-universe.dev
@@ -20,7 +20,7 @@ allowed:
 
       New submission
 
-      Strong dependencies not in mainstream repositories:
+      Strong dependencies not in the CRAN or BioC software repositories:
         checklist
       Availability using Additional_repositories specification:
         checklist   yes   https://inbo.r-universe.dev

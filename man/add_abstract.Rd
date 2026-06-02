@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_abstract.R
 \name{add_abstract}
 \alias{add_abstract}
-\title{Add an abstract file to a Quarto report}
+\title{Add an abstract file to a Quarto report or website}
 \usage{
 add_abstract(report_path = ".")
 }
@@ -14,5 +14,5 @@ Defaults to the current working directory.}
 The name of the index file.
 }
 \description{
-This function adds an abstract file to a Quarto report.
+This function adds an abstract file to a Quarto report or website.
 }

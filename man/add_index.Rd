@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_index.R
 \name{add_index}
 \alias{add_index}
-\title{Add an index file to a Quarto report}
+\title{Add an index file to a Quarto report or website}
 \usage{
 add_index(report_path = ".")
 }
@@ -14,5 +14,5 @@ Defaults to the current working directory.}
 The name of the index file.
 }
 \description{
-This function adds an index file to a Quarto report.
+This function adds an index file to a Quarto report or website.
 }

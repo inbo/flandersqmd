@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_recommendations.R
 \name{add_recommendations}
 \alias{add_recommendations}
-\title{Add a recommendations section to a \code{flandersqmd} report}
+\title{Add a recommendations section to a \code{flandersqmd} report or website}
 \usage{
 add_recommendations(report_path = ".", lof = TRUE, lot = TRUE)
 }
@@ -19,7 +19,8 @@ Defaults to \code{TRUE}.
 If \code{TRUE}, a list of tables is added to the pdf version of the report.}
 }
 \description{
-This function adds a recommendations section to a \code{flandersqmd} report.
+This function adds a recommendations section to a \code{flandersqmd} report
+or website.
 The file also add a table of contents, a list of figures and a list of
 tables to the pdf version of the report.
 }

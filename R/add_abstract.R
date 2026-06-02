@@ -1,7 +1,7 @@
-#' Add an abstract file to a Quarto report
+#' Add an abstract file to a Quarto report or website
 #'
 #' @description
-#' This function adds an abstract file to a Quarto report.
+#' This function adds an abstract file to a Quarto report or website.
 #' @inheritParams add_recommendations
 #' @return The name of the index file.
 #' @export
@@ -14,12 +14,20 @@ add_abstract <- function(report_path = ".") {
   target <- path(report_path, "_quarto.yml")
   stopifnot("no `_quarto.yml` found at `report_path`" = is_file(target))
   yaml <- read_yaml(target)
+  type <-
+    c("website"[has_name(yaml, "website")], "book"[has_name(yaml, "book")])
   stopifnot(
-    "No `book` entry in `_quarto.yml`" = has_name(yaml, "book"),
-    "No `chapters` entry under `book` in `_quarto.yml`" = has_name(
-      yaml$book,
-      "chapters"
-    ),
+    "No `book/website` entry in `_quarto.yml`" = length(type) == 1,
+    "No `chapters` entry under `book` in `_quarto.yml`" = type != "book" ||
+      has_name(
+        yaml$book,
+        "chapters"
+      ),
+    "No `sidebar/contents` entry under `website` in `_quarto.yml`" =
+      type != "website" ||
+      (has_name(yaml$website, "sidebar") &&
+        has_name(yaml$website$sidebar, "contents")
+      ),
     "No `lang` entry in `_quarto.yml`" = has_name(yaml, "lang")
   )
   lang <- yaml$lang
@@ -47,14 +55,26 @@ add_abstract <- function(report_path = ".") {
     ":::"
   ) |>
     writeLines(con = path(report_path, filename))
-  if (filename %in% yaml$book$chapters) {
-    return(filename)
+  if (type == "book") {
+    if (filename %in% yaml$book$chapters) {
+      return(filename)
+    }
+    yaml$book$chapters <- c(
+      head(yaml$book$chapters, 1),
+      filename,
+      tail(yaml$book$chapters, -1)
+    )
+  } else {
+    if (filename %in% yaml$website$sidebar$contents) {
+      return(filename)
+    }
+    yaml$website$sidebar$contents <- c(
+      yaml$website$sidebar$contents,
+      list(
+        list(text = substr(filename, 1, nchar(filename) - 3), file = filename)
+      )
+    )
   }
-  yaml$book$chapters <- c(
-    head(yaml$book$chapters, 1),
-    filename,
-    tail(yaml$book$chapters, -1)
-  )
   store_yaml(yaml, target = target)
   return(filename)
 }
