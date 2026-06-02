@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_chapter.R
 \name{add_chapter}
 \alias{add_chapter}
-\title{Add a chapter file to a Quarto report}
+\title{Add a chapter/webpage file to a Quarto report or website}
 \usage{
 add_chapter(report_path = ".", title, filename, toc = TRUE)
 }
@@ -10,13 +10,13 @@ add_chapter(report_path = ".", title, filename, toc = TRUE)
 \item{report_path}{The path to the folder containing the report.
 Defaults to the current working directory.}
 
-\item{title}{The title of the chapter.
-If missing, the chapter is assumed the introduction with a default title
-based on the language.}
+\item{title}{The title of the chapter/webpage.
+If missing, the chapter/webpage is assumed the introduction with a default
+title based on the language.}
 
-\item{filename}{The name of the chapter file.
-If missing, the chapter is assumed the introduction with a default filename
-based on the language.}
+\item{filename}{The name of the chapter/webpage file.
+If missing, the chapter/webpage is assumed the introduction with a default
+filename based on the language.}
 
 \item{toc}{A logical value indicating whether to add a local table of
 contents.
@@ -26,5 +26,6 @@ Defaults to \code{TRUE}.}
 The name of the chapter file.
 }
 \description{
-This function adds a chapter file to a Quarto report.
+This function adds a chapter file to a Quarto report or a webpage to a Quarto
+website.
 }

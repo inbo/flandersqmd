@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_bibliography.R
 \name{add_bibliography}
 \alias{add_bibliography}
-\title{Add a bibliography file to a Quarto report}
+\title{Add a bibliography file to a Quarto report or website}
 \usage{
 add_bibliography(report_path = ".")
 }
@@ -14,5 +14,5 @@ Defaults to the current working directory.}
 The name of the bibliography file.
 }
 \description{
-This function adds a bibliography file to a Quarto report.
+This function adds a bibliography file to a Quarto report or website.
 }

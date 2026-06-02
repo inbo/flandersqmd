@@ -1,7 +1,8 @@
-#' Add a recommendations section to a `flandersqmd` report
+#' Add a recommendations section to a `flandersqmd` report or website
 #'
 #' @description
-#' This function adds a recommendations section to a `flandersqmd` report.
+#' This function adds a recommendations section to a `flandersqmd` report
+#' or website.
 #' The file also add a table of contents, a list of figures and a list of
 #' tables to the pdf version of the report.
 #' @param report_path The path to the folder containing the report.
@@ -34,12 +35,20 @@ add_recommendations <- function(
   target <- path(report_path, "_quarto.yml")
   stopifnot("no `_quarto.yml` found at `report_path`" = is_file(target))
   yaml <- read_yaml(target)
+  type <-
+    c("website"[has_name(yaml, "website")], "book"[has_name(yaml, "book")])
   stopifnot(
-    "No `book` entry in `_quarto.yml`" = has_name(yaml, "book"),
-    "No `chapters` entry under `book` in `_quarto.yml`" = has_name(
-      yaml$book,
-      "chapters"
-    ),
+    "No `book/website` entry in `_quarto.yml`" = length(type) == 1,
+    "No `chapters` entry under `book` in `_quarto.yml`" = type != "book" ||
+      has_name(
+        yaml$book,
+        "chapters"
+      ),
+    "No `sidebar/contents` entry under `website` in `_quarto.yml`" =
+      type != "website" ||
+      (has_name(yaml$website, "sidebar") &&
+        has_name(yaml$website$sidebar, "contents")
+      ),
     "No `lang` entry in `_quarto.yml`" = has_name(yaml, "lang")
   )
   lang <- yaml$lang
@@ -66,15 +75,17 @@ add_recommendations <- function(
     "",
     "**TO DO**",
     rep("", 5),
-    "<!-- This part adds the table of content in the pdf -->",
-    "<!-- Add it at the end of the last chapter of the frontmatter -->",
-    "<!-- spell-check: ignore:start-->",
-    "::: {.content-visible when-format=\"pdf\"}",
-    "\\clearpage",
-    "\\phantomsection",
-    "\\addcontentsline{toc}{chapter}{\\contentsname}",
-    "\\setcounter{tocdepth}{2}",
-    "\\tableofcontents"
+    "<!-- This part adds the table of content in the pdf -->"[type == "book"],
+    "<!-- Add it at the end of the last chapter of the frontmatter -->"[
+      type == "book"
+    ],
+    "<!-- spell-check: ignore:start-->"[type == "book"],
+    "::: {.content-visible when-format=\"pdf\"}"[type == "book"],
+    "\\clearpage"[type == "book"],
+    "\\phantomsection"[type == "book"],
+    "\\addcontentsline{toc}{chapter}{\\contentsname}"[type == "book"],
+    "\\setcounter{tocdepth}{2}"[type == "book"],
+    "\\tableofcontents"[type == "book"]
   ) -> md
   if (lot || lof) {
     c(
@@ -109,14 +120,16 @@ add_recommendations <- function(
       ) -> md
     }
   }
-  c(
-    md,
-    "",
-    "<!-- keep the lines below -->",
-    ":::",
-    "<!-- spell-check: ignore:end-->",
-    "<!-- This part adds the tables of contents in the pdf -->"
-  ) -> md
+  if (type == "book") {
+    c(
+      md,
+      "",
+      "<!-- keep the lines below -->",
+      ":::",
+      "<!-- spell-check: ignore:end-->",
+      "<!-- This part adds the tables of contents in the pdf -->"
+    ) -> md
+  }
   c(
     `nl-BE` = "aanbevelingen.md",
     `en-GB` = "recommendations.md",
@@ -124,13 +137,26 @@ add_recommendations <- function(
   )[lang] |>
     unname() -> filename
   writeLines(md, con = path(report_path, filename))
-  if (!filename %in% yaml$book$chapters) {
-    yaml$book$chapters <- c(
-      head(yaml$book$chapters, 2),
-      filename,
-      tail(yaml$book$chapters, -2)
-    )
+
+  if (type == "book") {
+    if (!filename %in% yaml$book$chapters) {
+      yaml$book$chapters <- c(
+        head(yaml$book$chapters, 2),
+        filename,
+        tail(yaml$book$chapters, -2)
+      )
+    }
+  } else {
+    if (!filename %in% yaml$website$sidebar$contents) {
+      yaml$website$sidebar$contents <- c(
+        yaml$website$sidebar$contents,
+        list(
+          list(text = substr(filename, 1, nchar(filename) - 3), file = filename)
+        )
+      )
+    }
   }
+
   append_navbar(
     yaml,
     text = c(
