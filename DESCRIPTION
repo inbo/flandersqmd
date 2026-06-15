@@ -1,10 +1,10 @@
 Package: flandersqmd
 Title: Auxiliary Function for the Flandersqmd Quarto Extensions
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: c(
     person("Thierry", "Onkelinx", , "thierry.onkelinx@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8804-4216", affiliation = "Research Institute for Nature and Forest (INBO)")),
-    person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"),
+    person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd", "pbl"),
            comment = c(ROR = "00j54wy13"))
   )
 Description: Prepare new documents using the Flandersqmd extensions.
@@ -28,7 +28,7 @@ Suggests:
 Additional_repositories: https://inbo.r-universe.dev
 Config/citeme/communities: inbo
 Config/citeme/keywords: corporate identity; quarto; inbo_version
+Config/roxygen2/version: 8.0.0
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.0.0
