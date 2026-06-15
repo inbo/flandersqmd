@@ -1,12 +1,13 @@
 {
   "title": "flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "GPL-3.0",
   "upload_type": "software",
   "description": "<p>Prepare new documents using the Flandersqmd extensions.<\/p>",
   "keywords": [
     "corporate identity",
-    "quarto"
+    "quarto",
+    "inbo_version"
   ],
   "access_right": "open",
   "language": "eng",
@@ -33,5 +34,6 @@
     {
       "identifier": "inbo"
     }
-  ]
+  ],
+  "publisher": "Research Institute for Nature and Forest (INBO)"
 }

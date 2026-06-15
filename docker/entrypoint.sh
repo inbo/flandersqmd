@@ -46,18 +46,27 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ "$GITHUB_REF_NAME" != "main" ] ; then
-    echo "\nNot on main branch, skipping update of gh-pages.\n";
-    exit 0;
+  echo "\nNot on main branch, skipping update of gh-pages.\n";
+  exit 0;
 fi
 
 cd /
-git clone --depth 1 -b gh-pages https://oauth2:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY ghpages
-cd /ghpages
+if [ $(git ls-remote --heads https://oauth2:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY refs/heads/ghpages | wc -l) -ne 0 ] ; then
+  git clone --depth 1 -b ghpages https://oauth2:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY ghpages
+  cd /ghpages
+else 
+  git clone --depth 1 -b main https://oauth2:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY ghpages
+  cd /ghpages
+  git switch --orphan ghpages
+  git commit --allow-empty -m "Initial commit on orphan branch"
+  git push -u origin ghpages
+fi
+
 git rm -rf --quiet .
 cp -R /check/output/. /ghpages/.
 git add --all
-git commit --amend -m "Automated update of gh-pages from flandersqmd"
-git push --force --set-upstream origin gh-pages
+git commit --amend -m "Automated update of ghpages from flandersqmd"
+git push --force --set-upstream origin ghpages
 
 if [ $? -ne 0 ]; then
     echo "\nUpdating failed. Please check the error message above.\n";

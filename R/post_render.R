@@ -9,10 +9,6 @@ post_render <- function() {
   if (length(candidates) == 0) {
     return(invisible(NULL))
   }
-  relevant <- candidates[grepl("\\.pdf$", candidates)]
-  if (length(relevant) == 0) {
-    return(invisible(NULL))
-  }
   yml <- quarto_inspect()
   # fmt: skip
   stopifnot(
@@ -21,6 +17,11 @@ post_render <- function() {
     "no `shorttitle` item in the `flandersqmd` section found in `_quarto.yml`" =
       "shorttitle" %in% names(yml$config$flandersqmd)
   )
+  cover_info(yml$config$flandersqmd)
+  relevant <- candidates[grepl("\\.pdf$", candidates)]
+  if (length(relevant) == 0) {
+    return(invisible(NULL))
+  }
   for (x in relevant) {
     dirname(x) |>
       file.path(

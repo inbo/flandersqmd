@@ -1,3 +1,7 @@
+# flandersqmd 0.0.4
+
+* Use `citeme` instead of `checklist` for citation management.
+
 # flandersqmd 0.0.3
 
 * Create Docker for rendering the examples.

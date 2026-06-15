@@ -92,7 +92,10 @@ create_quarto_yml <- function(this_colophon, path = ".") {
       reviewer = form2person(this_colophon$Reviewer),
       year = this_colophon$Jaartal,
       reportnr = this_colophon$Rapportnummer,
-      coverdescription = this_colophon$`Beschrijving coverfoto`,
+      coverdescription = sprintf(
+        "\"%s\"",
+        this_colophon$`Beschrijving coverfoto`
+      ),
       public_report = ifelse(
         this_colophon$`Type rapport` == "Intern rapport",
         "false",
@@ -169,7 +172,7 @@ generate_colophon <- function(pure_id, path = ".") {
   old_wd <- getwd()
   on.exit(setwd(old_wd), add = TRUE)
   setwd(path)
-  quarto::quarto_add_extension("inbo/flandersqmd-book@bugfix", no_prompt = TRUE)
+  quarto::quarto_add_extension("inbo/flandersqmd-book", no_prompt = TRUE)
   quarto::quarto_render(input = "index.md")
   unique(this_colophon$`PURE id`) |>
     sprintf(fmt = "colofon_%i.pdf") -> pdf_file

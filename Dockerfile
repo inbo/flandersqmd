@@ -34,6 +34,7 @@ ENV QUARTO_VERSION=1.8.27
 RUN  curl -L -O https://github.com/quarto-dev/quarto-cli/releases/download/v$QUARTO_VERSION/quarto-$QUARTO_VERSION-linux-amd64.deb \
   && dpkg -i quarto-${QUARTO_VERSION}-linux-amd64.deb \
   && quarto install tinytex --update-path \
+  && tlmgr update --self \
   && tlmgr install datetime2 emptypage etoolbox fancyhdr fontawesome5 footmisc geometry hyphen-dutch hyphen-french hyphen-german hyperref lastpage multirow parskip pdfpages titlesec tocloft url
 
 ## Install fonts
