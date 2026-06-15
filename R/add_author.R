@@ -6,6 +6,7 @@
 #' @return The path to the `_quarto.yml` file.
 #' @export
 #' @importFrom assertthat assert_that is.flag is.string has_name noNA
+#' @importFrom citeme select_individual
 #' @importFrom fs is_dir is_file path
 #' @importFrom yaml read_yaml
 add_author <- function(report_path = ".", reviewer = FALSE) {
@@ -23,7 +24,7 @@ add_author <- function(report_path = ".", reviewer = FALSE) {
     "No `flandersqmd` entry in `_quarto.yml`" = has_name(yaml, "flandersqmd"),
     "No `lang` entry in `_quarto.yml`" = has_name(yaml, "lang")
   )
-  use_author(lang = yaml$lang) |>
+  select_individual(lang = yaml$lang) |>
     author2list() -> extra
   if (reviewer) {
     yaml$flandersqmd$reviewer <- c(yaml$flandersqmd$reviewer, list(extra))

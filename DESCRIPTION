@@ -16,6 +16,7 @@ Depends:
 Imports:
     assertthat,
     checklist (>= 0.5.3),
+    citeme,
     fs,
     gert,
     pdftools,
@@ -24,9 +25,9 @@ Imports:
 Suggests:
     rstudioapi
 Additional_repositories: https://inbo.r-universe.dev
-Config/checklist/communities: inbo
-Config/checklist/keywords: corporate identity; quarto
+Config/citeme/communities: inbo
+Config/citeme/keywords: corporate identity; quarto; inbo_version
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0
