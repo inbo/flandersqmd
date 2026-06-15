@@ -19,6 +19,7 @@ Imports:
     citeme,
     fs,
     gert,
+    gh,
     pdftools,
     quarto,
     yaml

@@ -19,7 +19,7 @@
 #' @family utils
 #' @export
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom checklist get_branches_tags read_checklist
+#' @importFrom checklist read_checklist
 #' @importFrom citeme ask_yes_no menu_first select_individual
 #' @importFrom fs dir_create is_dir is_file path
 #' @importFrom gert git_find
