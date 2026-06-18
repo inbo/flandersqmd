@@ -1,3 +1,7 @@
+# flandersqmd 0.0.5
+
+* Fix `inbo_website()`.
+
 # flandersqmd 0.0.4
 
 * Use `citeme` instead of `checklist` for citation management.
