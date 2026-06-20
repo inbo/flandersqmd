@@ -82,7 +82,7 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
     prompt = "Enter the optional subtitle (leave empty to omit): "
   ) |>
     gsub(pattern = "[\"|']", replacement = "") -> subtitle
-  while (TRUE) {
+  repeat {
     short <- readline(
       prompt = "Enter the filename (without extension) used for the output: "
     )
