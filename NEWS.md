@@ -1,3 +1,8 @@
+# flandersqmd 0.0.5
+
+* Add automated pre-/post-render helper functions (#6)
+* Add tutorial on child documents with pre-/post-render functions
+
 # flandersqmd 0.0.4
 
 * Use `citeme` instead of `checklist` for citation management.

@@ -31,3 +31,5 @@ docs
 libs
 output
 renv/library
+**/.quarto/
+inst/doc

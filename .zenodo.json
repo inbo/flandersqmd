@@ -1,6 +1,6 @@
 {
   "title": "flandersqmd: Auxiliary Function for the Flandersqmd Quarto Extensions",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "GPL-3.0",
   "upload_type": "software",
   "description": "<p>Prepare new documents using the Flandersqmd extensions.<\/p>",
@@ -17,6 +17,12 @@
       "affiliation": "Research Institute for Nature and Forest (INBO)",
       "orcid": "0000-0001-8804-4216",
       "type": "contactperson"
+    },
+    {
+      "name": "Langeraert, Ward",
+      "affiliation": "Research Institute for Nature and Forest (INBO)",
+      "orcid": "0000-0002-5900-8109",
+      "type": "projectmember"
     },
     {
       "name": "Research Institute for Nature and Forest (INBO)",

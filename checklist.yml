@@ -14,10 +14,6 @@ allowed:
       Availability using Additional_repositories specification:
         checklist   yes   https://inbo.r-universe.dev
         citeme      yes   https://inbo.r-universe.dev
-  - motivation: To do in a later stage
-    value: |-
-      checking for code which exercises the package ... WARNING
-      No examples, no tests, no vignettes
   notes: []
 required:
 - CITATION
@@ -38,8 +34,12 @@ spelling:
   - .github
   - docs
   - LICENSE.md
+  - docs
+  - tests/testthat/_species_template.qmd
+  - tests/testthat/iris_chapter.qmd
 pak:
 - googledrive
 - googlesheets4
+- pdftools
 - stringr
 gha_install: []

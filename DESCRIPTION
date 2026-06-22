@@ -1,15 +1,18 @@
 Package: flandersqmd
 Title: Auxiliary Function for the Flandersqmd Quarto Extensions
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: c(
     person("Thierry", "Onkelinx", , "thierry.onkelinx@inbo.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8804-4216", affiliation = "Research Institute for Nature and Forest (INBO)")),
+    person("Ward", "Langeraert", , "ward.langeraert@inbo.be", role = "ctb",
+           comment = c(ORCID = "0000-0002-5900-8109", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd", "pbl"),
            comment = c(ROR = "00j54wy13"))
   )
 Description: Prepare new documents using the Flandersqmd extensions.
 License: GPL-3
-URL: https://inbo.github.io/flandersqmd/
+URL: https://github.com/inbo/flandersqmd,
+    https://inbo.github.io/flandersqmd/
 BugReports: https://github.com/inbo/flandersqmd/issues
 Depends:
     R (>= 4.1.0)
@@ -20,15 +23,21 @@ Imports:
     fs,
     gert,
     gh,
+    knitr,
     pdftools,
     quarto,
     yaml
 Suggests:
-    rstudioapi
+    rstudioapi,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    quarto
 Additional_repositories: https://inbo.r-universe.dev
-Config/citeme/communities: inbo
-Config/citeme/keywords: corporate identity; quarto; inbo_version
+Config/checklist/communities: inbo
+Config/checklist/keywords: corporate identity; quarto; inbo_version
+Config/Needs/website: quarto
 Config/roxygen2/version: 8.0.0
+Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
