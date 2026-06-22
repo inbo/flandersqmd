@@ -3,7 +3,7 @@
 #' @family utils
 #' @export
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom checklist citation_meta
+#' @importFrom citeme citation_meta
 #' @importFrom fs dir_ls dir_delete file_delete is_dir is_file path path_rel
 #' @importFrom utils zip
 inbo_website <- function(path = ".") {

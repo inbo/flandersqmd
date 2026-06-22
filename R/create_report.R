@@ -19,8 +19,8 @@
 #' @family utils
 #' @export
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom checklist ask_yes_no get_branches_tags menu_first read_checklist
-#'   use_author
+#' @importFrom checklist read_checklist
+#' @importFrom citeme ask_yes_no menu_first select_individual
 #' @importFrom fs dir_create is_dir is_file path
 #' @importFrom gert git_find
 #' @importFrom quarto quarto_add_extension
@@ -208,14 +208,14 @@ create_report <- function(path = ".", reportname, version = "main", shortname) {
   rstudioapi::openProject(path(path, reportname), newSession = TRUE)
 }
 
-#' @importFrom checklist ask_yes_no ask_rightsholder_funder author2df
-#' inbo_org_list
+#' @importFrom checklist ask_rightsholder_funder
+#' @importFrom citeme ask_yes_no inbo_org_list individual2df select_individual
 insert_author_reviewer <- function(lang) {
   cat("Please select the corresponding author")
-  authors <- use_author(lang = lang)
+  authors <- select_individual(lang = lang)
   c("  author:", author2yaml(authors, corresponding = TRUE)) -> yaml
   while (isTRUE(ask_yes_no("Add another author?", default = FALSE))) {
-    author <- use_author(lang = lang)
+    author <- select_individual(lang = lang)
     authors[, c("given", "family", "email")] |>
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
@@ -233,7 +233,7 @@ insert_author_reviewer <- function(lang) {
   cat("Please select the reviewer")
   duplo <- 1
   while (duplo > 0) {
-    author <- use_author(lang = lang)
+    author <- select_individual(lang = lang)
     authors[, c("given", "family", "email")] |>
       rbind(author[, c("given", "family", "email")]) |>
       anyDuplicated() -> duplo
@@ -260,7 +260,7 @@ insert_author_reviewer <- function(lang) {
     rh$selection,
     FUN = function(x) {
       org$get_person(x, role = "cph", lang = lang) |>
-        author2df() |>
+        individual2df() |>
         author2yaml() |>
         list()
     },
@@ -273,7 +273,7 @@ insert_author_reviewer <- function(lang) {
     fund$selection,
     FUN = function(x) {
       org$get_person(x, role = "fnd", lang = lang) |>
-        author2df() |>
+        individual2df() |>
         author2yaml() |>
         list()
     },

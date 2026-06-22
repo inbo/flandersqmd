@@ -6,7 +6,8 @@
   "description": "<p>Prepare new documents using the Flandersqmd extensions.<\/p>",
   "keywords": [
     "corporate identity",
-    "quarto"
+    "quarto",
+    "inbo_version"
   ],
   "access_right": "open",
   "language": "eng",
@@ -39,5 +40,6 @@
     {
       "identifier": "inbo"
     }
-  ]
+  ],
+  "publisher": "Research Institute for Nature and Forest (INBO)"
 }
