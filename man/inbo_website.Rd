@@ -13,7 +13,7 @@ inbo_website(path = ".")
 Render the report into a zip file for the INBO website
 }
 \seealso{
-Other utils: 
-\code{\link{create_report}()}
+Other utils:
+\code{\link[=create_report]{create_report()}}
 }
 \concept{utils}
