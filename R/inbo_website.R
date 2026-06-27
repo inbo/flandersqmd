@@ -51,12 +51,7 @@ inbo_website <- function(path = ".") {
     path_rel(output_dir) -> files
 
   setwd(output_dir)
-  path(output_dir, tolower(yml$config$flandersqmd$shorttitle), ext = "zip") |>
+  path(tolower(yml$config$flandersqmd$shorttitle), ext = "zip") |>
     zip(files = files, flags = "-r9XqT")
-  # remove output except zip archive
-  dir_ls(output_dir, type = "dir") |>
-    dir_delete()
-  dir_ls(output_dir, type = "file", regexp = "\\.zip", invert = TRUE) |>
-    file_delete()
   return(invisible(NULL))
 }

@@ -35,7 +35,7 @@
 
 # Structure of a Quarto project
 
-## Files 
+## Files
 
 - content
     - text only files: `*.md`
@@ -143,7 +143,7 @@
 
 ## The easy way: the `flandersqmd` package
 
-- `flandersqmd::add_author()`: add an author or reviewer to the report
+- `citeme::add_individual()`: add an author or reviewer to the report
 - `flandersqmd::add_address()`: add a client or cooperation partner to the report
 - `flandersqmd::add_abstract()`: add an abstract to the report
 - `flandersqmd::add_recommendations()`: add recommendations to the report

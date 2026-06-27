@@ -18,5 +18,6 @@ If \code{FALSE}, the person is added as an author.}
 The path to the \verb{_quarto.yml} file.
 }
 \description{
-Add an author or reviewer to the \verb{_quarto.yml} file
+This function is deprecated.
+Please use \code{citeme::add_individual()} instead.
 }
